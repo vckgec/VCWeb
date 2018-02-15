@@ -7,3 +7,4 @@ Twisted[tls,http2]
 django-widget-tweaks
 django-secure
 arrow
+Pillow
