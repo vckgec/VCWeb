@@ -1,0 +1,18 @@
+.search_bar input{
+	width: 75%;
+	/*border-radius: 5px;*/
+	height: 30px;
+}
+
+.search_bar button{
+	float: right;
+	width: 24%;
+}
+
+#tips{
+	display: none;
+}
+
+.tipsbutton{
+	float: right;
+}

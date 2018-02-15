@@ -1,0 +1,300 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <Name>VCWeb</Name>
+    <RootNamespace>VCWeb</RootNamespace>
+    <InterpreterId>Global|PythonCore|3.6</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>7c4a1f59-a04d-4474-9be6-f588cab15ae3</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <ProjectTypeGuids>{5F0BE9CA-D677-4A4D-8806-6076C0FAAD37};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <StartupFile>manage.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <LaunchProvider>Django launcher</LaunchProvider>
+    <DjangoSettingsModule>VCWeb.settings</DjangoSettingsModule>
+    <WebBrowserUrl>http://localhost</WebBrowserUrl>
+    <OutputPath>.</OutputPath>
+    <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="account\admin.py" />
+    <Compile Include="account\apps.py" />
+    <Compile Include="account\forms.py" />
+    <Compile Include="account\migrations\__init__.py" />
+    <Compile Include="account\models.py" />
+    <Compile Include="account\templatetags\set_variable.py" />
+    <Compile Include="account\templatetags\__init__.py" />
+    <Compile Include="account\tests.py" />
+    <Compile Include="account\urls.py" />
+    <Compile Include="account\views.py" />
+    <Compile Include="account\__init__.py" />
+    <Compile Include="chat\admin.py" />
+    <Compile Include="chat\apps.py" />
+    <Compile Include="chat\consumers.py" />
+    <Compile Include="chat\migrations\__init__.py" />
+    <Compile Include="chat\models.py" />
+    <Compile Include="chat\routing.py" />
+    <Compile Include="chat\templatetags\define_variable.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="chat\templatetags\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="chat\tests.py" />
+    <Compile Include="chat\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="chat\views.py" />
+    <Compile Include="chat\__init__.py" />
+    <Compile Include="contact\admin.py" />
+    <Compile Include="contact\apps.py" />
+    <Compile Include="contact\migrations\__init__.py" />
+    <Compile Include="contact\models.py" />
+    <Compile Include="contact\tests.py" />
+    <Compile Include="contact\urls.py" />
+    <Compile Include="contact\views.py" />
+    <Compile Include="contact\__init__.py" />
+    <Compile Include="gallery\admin.py" />
+    <Compile Include="gallery\apps.py" />
+    <Compile Include="gallery\migrations\__init__.py" />
+    <Compile Include="gallery\models.py" />
+    <Compile Include="gallery\tests.py" />
+    <Compile Include="gallery\urls.py" />
+    <Compile Include="gallery\views.py" />
+    <Compile Include="gallery\__init__.py" />
+    <Compile Include="home\admin.py" />
+    <Compile Include="home\apps.py" />
+    <Compile Include="home\migrations\__init__.py" />
+    <Compile Include="home\models.py" />
+    <Compile Include="home\templatetags\get_view.py" />
+    <Compile Include="home\templatetags\__init__.py" />
+    <Compile Include="home\tests.py" />
+    <Compile Include="home\urls.py" />
+    <Compile Include="home\views.py" />
+    <Compile Include="home\__init__.py" />
+    <Compile Include="library\admin.py" />
+    <Compile Include="library\apps.py" />
+    <Compile Include="library\forms.py" />
+    <Compile Include="library\libgen.py" />
+    <Compile Include="library\migrations\__init__.py" />
+    <Compile Include="library\models.py" />
+    <Compile Include="library\tests.py" />
+    <Compile Include="library\urls.py" />
+    <Compile Include="library\views.py" />
+    <Compile Include="library\__init__.py" />
+    <Compile Include="manage.py" />
+    <Compile Include="mess\admin.py" />
+    <Compile Include="mess\apps.py" />
+    <Compile Include="mess\consumers.py" />
+    <Compile Include="mess\forms.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="mess\migrations\__init__.py" />
+    <Compile Include="mess\models.py" />
+    <Compile Include="mess\routing.py" />
+    <Compile Include="mess\templatetags\custom_tags.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="mess\templatetags\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="mess\urls.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="mess\tests.py" />
+    <Compile Include="mess\views.py" />
+    <Compile Include="mess\__init__.py" />
+    <Compile Include="server.py" />
+    <Compile Include="VCWeb\asgi.py" />
+    <Compile Include="VCWeb\routing.py" />
+    <Compile Include="VCWeb\__init__.py" />
+    <Compile Include="VCWeb\settings.py" />
+    <Compile Include="VCWeb\urls.py" />
+    <Compile Include="VCWeb\wsgi.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="account\static\account\profile.js" />
+    <Content Include="account\static\account\login.js" />
+    <Content Include="account\static\account\profile.css" />
+    <Content Include="account\static\account\register.css" />
+    <Content Include="account\templates\account\forgotpassword.html" />
+    <Content Include="account\templates\account\changepassword.html" />
+    <Content Include="account\templates\account\home.html" />
+    <Content Include="account\templates\account\login.html" />
+    <Content Include="account\templates\account\logout.html" />
+    <Content Include="account\templates\account\register.html" />
+    <Content Include="chat\templates\chat\chat.html" />
+    <Content Include="gallery\static\gallery\sun.3GP" />
+    <Content Include="gallery\static\gallery\59187_20170704150114_gst_rate_list_with_hsn_code__all_items_list_v1.xlsx" />
+    <Content Include="gallery\templates\gallery\gallery.html" />
+    <Content Include="home\static\home\bootstrap.min.css" />
+    <Content Include="home\static\home\bootstrap.min.js" />
+    <Content Include="chat\static\chat\chat.css" />
+    <Content Include="chat\static\chat\chat.js" />
+    <Content Include="home\static\home\font-awesome.min.css" />
+    <Content Include="home\static\home\jquery.min.js" />
+    <Content Include="home\static\home\latofont.css" />
+    <Content Include="home\static\home\materialicons.css" />
+    <Content Include="home\static\home\montserratfont.css" />
+    <Content Include="library\static\library\library.js" />
+    <Content Include="mess\static\mess\storekeeper.css" />
+    <Content Include="mess\static\mess\storekeeper.js" />
+    <Content Include="mess\templates\mess\storekeeperedit.html" />
+    <Content Include="contact\templates\contact\contact.html" />
+    <Content Include="gallery\templates\gallery\youtube.html" />
+    <Content Include="home\static\home\favicon.ico" />
+    <Content Include="home\static\home\home.css" />
+    <Content Include="home\static\home\home.js" />
+    <Content Include="home\templates\home\base.html" />
+    <Content Include="home\templates\home\home.html" />
+    <Content Include="library\static\library\allbook.css" />
+    <Content Include="library\static\library\detail.css" />
+    <Content Include="library\static\library\esearch.js" />
+    <Content Include="library\static\library\library.css" />
+    <Content Include="library\static\library\request.css" />
+    <Content Include="library\static\library\request.js" />
+    <Content Include="library\static\library\search.css" />
+    <Content Include="library\templates\library\add.html" />
+    <Content Include="library\templates\library\detail.html" />
+    <Content Include="library\templates\library\edit_book.html" />
+    <Content Include="library\templates\library\form-template.html" />
+    <Content Include="library\templates\library\library.html" />
+    <Content Include="library\templates\library\index.html" />
+    <Content Include="library\templates\library\mininav.html" />
+    <Content Include="library\templates\library\new.html" />
+    <Content Include="library\templates\library\requests.html" />
+    <Content Include="library\templates\library\search.html" />
+    <Content Include="library\templates\library\todo.html" />
+    <Content Include="home\static\home\base.js" />
+    <Content Include="home\static\home\bleeding_cowboys-webfont.woff" />
+    <Content Include="home\static\home\bleeding_cowboys-webfont.woff2" />
+    <Content Include="home\static\home\base.css" />
+    <Content Include="media\account\default.png" />
+    <Content Include="media\account\Screenshot_1.png" />
+    <Content Include="media\account\Screenshot_10.png" />
+    <Content Include="media\account\Screenshot_1_okrzKZc.png" />
+    <Content Include="media\account\Screenshot_1_vMW1cUl.png" />
+    <Content Include="media\account\Screenshot_3.png" />
+    <Content Include="media\account\Screenshot_5.png" />
+    <Content Include="media\account\Screenshot_6.png" />
+    <Content Include="media\account\WIN_20171028_13_39_41_Pro.jpg" />
+    <Content Include="mess\static\mess\extraadjustment.js" />
+    <Content Include="mess\static\mess\guestmeal.js" />
+    <Content Include="mess\static\mess\mess.css" />
+    <Content Include="mess\static\mess\mess.js" />
+    <Content Include="home\static\home\vc_logo.png" />
+    <Content Include="mess\templates\mess\storekeeper.html" />
+    <Content Include="mess\templates\mess\extraadjustment.html" />
+    <Content Include="mess\templates\mess\guestmeal.html" />
+    <Content Include="mess\templates\mess\mess.html" />
+    <Content Include="account\templates\registration\login.html" />
+    <Content Include="mess\templates\mess\mininav.html" />
+    <Content Include="requirements.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="account\" />
+    <Folder Include="account\migrations\" />
+    <Folder Include="account\static\" />
+    <Folder Include="account\static\account\" />
+    <Folder Include="account\templates\" />
+    <Folder Include="account\templates\account\" />
+    <Folder Include="account\templatetags\" />
+    <Folder Include="chat\" />
+    <Folder Include="chat\migrations\" />
+    <Folder Include="chat\templatetags\" />
+    <Folder Include="chat\static\" />
+    <Folder Include="chat\static\chat\" />
+    <Folder Include="chat\templates\" />
+    <Folder Include="chat\templates\chat\" />
+    <Folder Include="contact\" />
+    <Folder Include="contact\migrations\" />
+    <Folder Include="contact\templates\" />
+    <Folder Include="contact\templates\contact\" />
+    <Folder Include="gallery\" />
+    <Folder Include="gallery\migrations\" />
+    <Folder Include="gallery\static\" />
+    <Folder Include="gallery\static\gallery\" />
+    <Folder Include="gallery\templates\" />
+    <Folder Include="gallery\templates\gallery\" />
+    <Folder Include="home\" />
+    <Folder Include="home\migrations\" />
+    <Folder Include="home\static\" />
+    <Folder Include="home\static\home\" />
+    <Folder Include="home\templates\" />
+    <Folder Include="home\templates\home\" />
+    <Folder Include="home\templatetags\" />
+    <Folder Include="library\" />
+    <Folder Include="library\migrations\" />
+    <Folder Include="library\static\" />
+    <Folder Include="library\static\library\" />
+    <Folder Include="library\templates\" />
+    <Folder Include="library\templates\library\" />
+    <Folder Include="account\templates\registration\" />
+    <Folder Include="media\account\" />
+    <Folder Include="mess\" />
+    <Folder Include="mess\migrations\" />
+    <Folder Include="mess\templatetags\" />
+    <Folder Include="mess\static\" />
+    <Folder Include="mess\static\mess\" />
+    <Folder Include="mess\templates\" />
+    <Folder Include="mess\templates\mess\" />
+    <Folder Include="media\" />
+    <Folder Include="VCWeb\" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.6" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
+  <!-- Specify pre- and post-build commands in the BeforeBuild and 
+       AfterBuild targets below. -->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <AutoAssignPort>True</AutoAssignPort>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

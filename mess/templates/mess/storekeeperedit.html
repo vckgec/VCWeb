@@ -1,0 +1,77 @@
+{% extends 'home/base.html' %}
+{% block title %} Edit | Store Keeper {% endblock %}
+{% block styles %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'mess/storekeeper.css' %}">
+{% endblock %}
+{% block mininav %}
+    {% include 'mess/mininav.html' %}
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <form class="form" method="post" action="{% url 'mess:storekeeperedit' %}">
+            {% csrf_token %}
+            <table style="margin-top:20px">
+                {% load custom_tags %}
+                {% define as prv_store_date %}
+                {% set  as count %}
+                {% define as rowheader %}
+                {% for junior in juniors %}
+                    {% if not rowheader %}
+                        {% define 'success' as rowheader %}
+                        <tr>
+                            <th><b>Date</b></th>
+                            <th><b>{{junior.get_store_half}}</b></th>
+                            {% define junior.Store_Half as prv_half %}
+                            {% if junior.Store_Half == '1MO' %}
+                                <th><b>Evening</b></th>
+                            {% else %}
+                                <th><b>Morning</b></th>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+                    {% if prv_store_date != junior.Store_Date %}
+
+                        {% if count == 0 %}
+                        <tr>
+                            <td>{{junior.Store_Date}}</td>
+                        {% else %}
+                            <td>{{None|get_form}}</td>
+                            </tr>
+                            {% set as count %}
+                            <tr>
+                                <td>{{junior.Store_Date}}</td>
+                        {% endif %}
+                        {% define junior.Store_Date as prv_store_date %}
+                        {% if junior.Store_Half == prv_half %}
+                            <td>{{junior.Store_Name|get_form}}</td>
+                            {% set count as count %}
+                            {% if forloop.counter == juniors.count %}
+                                    <td>{{None|get_form}}</td>
+                                </tr>
+                                {% set as count %}
+                            {% endif %}
+                        {% else %}
+                            <td>{{None|get_form}}</td>
+                            {% set count as count %}
+                            <td>{{junior.Store_Name|get_form}}</td>
+                            {% set count as count %}
+                            {% if count == 2 %}
+                                </tr>
+                                {% set as count %}
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        <td>{{junior.Store_Name|get_form}}</td>
+                        {% set count as count %}
+                        {% if count == 2 %}
+                            </tr>
+                            {% set as count %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </table><br />
+            <input type="submit" class="btn btn-success"value="Submit" />
+        </form><br />
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+.field{
+	float:left;
+	padding-right: 1px;
+	font-weight: bold;
+	width: 100px;
+}
+
+.value{
+	float: left;
+	color: brown;
+}
+
+.detail {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

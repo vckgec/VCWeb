@@ -1,0 +1,125 @@
+{% extends 'home/base.html' %}
+{% block title %} Mess | VC {% endblock %}
+{% block styles %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'mess/mess.css' %}">
+{% endblock %}
+{% block mininav %}
+    <a id="open" style="position:relative;float:left;margin-left:8px;margin-top:0px;background-color:transparent;border-color:transparent;cursor:pointer">
+        <i class="fa fa-sign-in open" aria-hidden="true"></i>
+    </a>
+    <div id="mysidenav" class="sidenav text-center">
+            <a id="close" style="position:absolute;right:0px;top:0px;cursor:pointer" class="material-icons" >&#xe5c9;</a>
+            {% include 'chat/chat.html' %}
+    </div>
+    {% include 'mess/mininav.html' %}
+{% endblock %}
+{% block content %}
+    <div class="container-fluid text-center">
+        <div class="col-sm-4 row">
+            {% if request.user.is_authenticated %}
+                <div class="col-sm-12 text-center" style="margin-bottom:-20px">
+                    <h3><b>{{request.user.boarder}}</b></h3>
+                </div>
+                <div style="width:33.30%;float:left;text-align:center"><b>Day</b><br>
+                    <label>
+                        <script>
+                            var x = new Date();
+                            var day = ["Sunday", "Monday", "Tuesday","Wednesday","Thrusday","Friday","Saturday"];
+                            document.write(day[x.getDay()]);
+                        </script>
+                    </label>
+                </div>
+                <div class="text-center" style="width:66.6%;float:left">
+                    <div class="text-center" style="width:50%;float:left;text-align:center"><b>Morning</b><br>
+                        <label class="switch" id="morning">
+                            {% csrf_token %}
+                            <input {{status_mo}} type="checkbox" id="MO" data-catid="{{request.user.boarder.id}}">
+                            <span class="slider" ></span>
+                        </label>
+                    </div> 
+                    <div style="width:50%;float:right;text-align:center"><b>Evening</b><br>
+                        <label class="switch"  id="evening">
+                            <input {{status_ev}} type="checkbox" id="EV" data-catid="{{request.user.boarder.id}}">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <marquee style="margin-top:-10px" id="id">
+                    <label>
+                        {% if id.id_date %}
+                            ID will be held on {{id.id_date}} at {{id.id_half}}
+                        {% else %}
+                        {% endif %}
+                        </label>
+                </marquee>
+                <div class="container-fluid" style="margin-top:-10px">
+                    <div class="panel-group">
+                        <div class="panel panel-primary">
+                            <button id="panelchange" type="button" data-toggle="collapse" data-target="#collapse1"class="btn btn-primary btn-block">On/Off</button>
+                            <div id="collapse1" class="panel-collapse collapse">
+                                <div class="panel-body" style="background-color:#86ABF5">
+                                    <form class="form" id="changeform" >
+                                        {% csrf_token %}
+                                        {% for field in changeform %}
+                                            {{ field.errors }}
+                                            {{ field }}<br />
+                                        {% endfor %}
+                                        <input class="btn btn-success" style="float:right" type="submit" value="Submit"/>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if request.user.is_staff %}
+                        <div class="panel-group">
+                            <div class="panel panel-primary">
+                                <button id="panelmeal" type="button" data-toggle="collapse" data-target="#collapse2"class="btn btn-primary btn-block">Meal</button>
+                                <div id="collapse2" class="panel-collapse collapse">
+                                    <div class="panel-body" style="background-color:#86ABF5">
+                                        <form id="mealform"> 
+                                            {% csrf_token %}
+                                            {% for field in mealform %}
+                                            {{ field.errors }}
+                                            {{ field }}<br />
+                                            {% endfor %}
+                                            <input class="btn btn-success" style="float:right" type="submit" value="Submit"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <b>Please Login to Change Status</b>
+            {% endif %}
+        </div>
+        <div class="row col-sm-8 container-fluid text-center" style="float:right">
+            {% load custom_tags %}
+            {% for meal in meals_today|sort %}
+                <div id="{{meal.meal_half}}_details" class="text-center col-sm-6 col-xs-12">
+                    <div class="panel panel-primary" style="padding-top:0px">
+                        <div class="panel-heading" style="height:50px;padding-top:1px">
+                            <h4><b style="color:whitesmoke">{{meal.meal_half}}</b></h4>
+                        </div>
+                        <div class="panel-body text-left">
+                            <b>Meal: {{ meal.meal_dishes }}</b><br />
+                            Boarder count: {{ meal.boarder.count }}<br />
+                            {% if meal.extra_meals %}
+                                Extra meals: {{ meal.extra_meals }}<br />
+                            {% endif %}
+                            {% if meal.get_absolute_string %}
+                                {% for item in meal.get_absolute_string %}
+                                    {{item}}<br />
+                                {% endfor %}
+                            {% endif %}
+                            <b> Total Meals: {{ meal.get_total_meals}}</b><br />
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="{% static 'mess/mess.js' %}" type="text/javascript"></script >
+{% endblock %}

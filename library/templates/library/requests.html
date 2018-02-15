@@ -1,0 +1,323 @@
+{% extends 'home/base.html' %}
+{% block title %} Requests | Library {% endblock %}
+{% load staticfiles %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'library/request.css' %}">
+{% endblock %}
+{% block mininav %}
+    {% include 'library/mininav.html' %}
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        {% if request.user.is_staff %}
+            <div class="container-fluid">
+                <div class="col-sm-12 row">
+                    <h1> Pending requests </h1>
+                    <div class="wrapper">
+                        {% for request in object_list %}
+                            {% if not request.status and not request.book.issued and not request.retstatus %}
+                                <div class="slot">
+                                    <div class="outslot">
+                                        <div class="inslot">
+                                            <span class="username">
+                                                {{ request.name }}<br> 
+                                            </span>
+                                            <div class="bookdetails">
+                                                <span class="booktitle">
+                                                    {{ request.book.title }}<br>
+                                                </span>
+                                                <span class="bookauthor">
+                                                    {% if not request.book.author == "Other" %}
+                                                        {{ request.book.author }}<br>
+                                                    {% endif %}
+                                                </span>
+                                                <span class="bookcode">
+                                                    {{ request.book.subject.code }}{{ request.book.id }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="slotoptions text-center">
+                                            <div class="bookcode">
+                                                {{ request.book.subject.code }}_{{ request.book.id }}
+                                            </div>
+                                            <br>
+                                            <a href={{ request.get_issue_url }}>
+                                                <div class="btn btn-success">
+                                                    Issue out
+                                                </div>
+                                            </a>
+                                            <br><br>
+                                            <div class="btn btn-info change">
+                                                <small>Change request</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="col-sm-12 row">
+                    <h1> Archived requests </h1>
+                    <div class="wrapper">
+                        {% for request in object_list %}
+                            {% if not request.status and request.book.issued %}
+                                <div class="slot">
+                                    <div class="outslot">
+                                        <div class="inslot">
+                                            <span class="username">
+                                                {{ request.name }}<br>
+                                            </span>
+                                            <div class="bookdetails">
+                                                <span class="booktitle">
+                                                    {{ request.book.title }}<br>
+                                                </span>
+                                                <span class="bookauthor">
+                                                    {% if not request.book.author == "Other" %}
+                                                        {{ request.book.author }}<br>
+                                                    {% endif %}
+                                                </span>
+                                                <span class="bookcode">
+                                                    {{ request.book.subject.code }}{{ request.book.id }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="slotoptions text-center">
+                                            <div class="bookcode">
+                                                {{ request.book.subject.code }}_{{ request.book.id }}
+                                            </div>
+                                            <br>
+                                            <a href="{{request.get_issue_url }}">
+                                                <div class="btn btn-success">
+                                                    Issue out
+                                                </div>
+                                            </a>
+                                            <br><br>
+                                            <div class="btn btn-info change">
+                                                <small>Change request</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="col-sm-12 row">
+                    <h1> Pending collections </h1>
+                    <div class="wrapper">
+                        {% for request in object_list %}
+                            {% if request.status and request.retstatus %}
+                                <div class="slot">
+                                    <div class="outslot">
+                                        <div class="inslot">
+                                            <span class="username">
+                                                {{ request.name }}<br> 
+                                            </span>
+                                            <div class="bookdetails">
+                                                <span class="booktitle">
+                                                    {{ request.book.title }}<br>
+                                                </span>
+                                                <span class="bookauthor">
+                                                    {% if not request.book.author == "Other" %}
+                                                        {{ request.book.author }}<br>
+                                                    {% endif %}
+                                                </span>
+                                                <span class="bookcode">
+                                                    {{ request.book.subject.code }}{{ request.book.id }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="slotoptions text-center">
+                                            <div class="bookcode">
+                                                {{ request.book.subject.code }}_{{ request.book.id }}
+                                            </div>
+                                            <br>
+                                            <a data-toggle="modal" data-target="#{{ request.book.subject.code }}_{{ request.book.id }}_collect">
+                                                <div class="btn btn-success">
+                                                    Collect
+                                                </div>
+                                            </a>
+                                            <br /><br />
+                                            <a data-toggle="modal" data-target="#{{ request.book.subject.code }}_{{ request.book.id }}_cancel_return">
+                                                <div class="btn btn-success undo">
+                                                    <small>Cancel Return</small>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="{{ request.book.subject.code }}_{{ request.book.id }}_collect" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h5 class="modal-title">Do you want to Collect this book?</h5>
+                                        </div>
+                                        <div class="modal-body"><br />
+                                                <span class="username">
+                                                {{ request.name }}<br> 
+                                            </span>
+                                            <div class="bookdetails">
+                                                <span class="booktitle">
+                                                    {{ request.book.title }}<br>
+                                                </span>
+                                                <span class="bookauthor">
+                                                    {% if not request.book.author == "Other" %}
+                                                        {{ request.book.author }}<br>{{request.book.issue_date }}<br>
+                                                    {% endif %}
+                                                </span>
+                                                <span class="bookcode">
+                                                    {{ request.book.subject.code }}{{ request.book.id }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <a id="btn" href="{{ request.get_collect_url }}" style="float:left">
+                                                <div class="btn btn-success">
+                                                    Yes
+                                                </div>
+                                            </a>    
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <!-- Modal -->
+                                    <!-- Modal -->
+                                <div class="modal fade" id="{{ request.book.subject.code }}_{{ request.book.id }}_cancel_return" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h5 class="modal-title">Do you want to cancel return of this book?</h5>
+                                        </div>
+                                        <div class="modal-body"><br />
+                                                <span class="username">
+                                                {{ request.name }}<br> 
+                                            </span>
+                                            <div class="bookdetails">
+                                                <span class="booktitle">
+                                                    {{ request.book.title }}<br>
+                                                </span>
+                                                <span class="bookauthor">
+                                                    {% if not request.book.author == "Other" %}
+                                                        {{ request.book.author }}<br>{{request.book.issue_date }}<br>
+                                                    {% endif %}
+                                                </span>
+                                                <span class="bookcode">
+                                                    {{ request.book.subject.code }}{{ request.book.id }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <a id="btn" href="{{ request.get_undo_url }}" style="float:left">
+                                                <div class="btn btn-success">
+                                                    Yes
+                                                </div>
+                                            </a>    
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="container-fluid">
+            <div class="col-sm-12 row">
+                <h1>Issued out books </h1>
+                <div class="wrapper">
+                    {% for request in object_list %}
+                        {% if request.status %}
+                            <div class="slot">
+                                <div class="outslot">
+                                    <div class="inslot">
+                                        <span class="username">
+                                            {{ request.name }}<br> 
+                                        </span>
+                                        <div class="bookdetails">
+                                            <span class="booktitle">
+                                                {{ request.book.title }}<br>
+                                            </span>
+                                            <span class="bookauthor">
+                                                {% if not request.book.author == "Other" %}
+                                                    {{ request.book.author }}<br>{{request.book.issue_date }}<br>
+                                                {% endif %}
+                                            </span>
+                                            <span class="bookcode">
+                                                {{ request.book.subject.code }}{{ request.book.id }}<br />
+                                                <small style="font-size:9px">{{ request.issue_date }}</small>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="slotoptions text-center">
+                                        <div class="bookcode">
+                                            {{ request.book.subject.code }}_{{ request.book.id }}
+                                        </div>
+                                        <br><br /><br />
+                                        <a data-toggle="modal" data-target="#{{ request.book.subject.code }}_{{ request.book.id }}_return">
+                                            <div class="btn btn-success">
+                                                <small>Return book</small>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="{{ request.book.subject.code }}_{{ request.book.id }}_return" role="dialog">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h5 class="modal-title">Do you want to return this book?</h5>
+                                        </div>
+                                        <div class="modal-body"><br />
+                                             <span class="username">
+                                                {{ request.name }}<br> 
+                                            </span>
+                                            <div class="bookdetails">
+                                                <span class="booktitle">
+                                                    {{ request.book.title }}<br>
+                                                </span>
+                                                <span class="bookauthor">
+                                                    {% if not request.book.author == "Other" %}
+                                                        {{ request.book.author }}<br>{{request.book.issue_date }}<br>
+                                                    {% endif %}
+                                                </span>
+                                                <span class="bookcode">
+                                                    {{ request.book.subject.code }}{{ request.book.id }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <a id="btn" href="{{ request.get_return_url }}" style="float:left">
+                                                <div class="btn btn-success">
+                                                    Yes
+                                                </div>
+                                            </a>    
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

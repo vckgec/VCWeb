@@ -1,0 +1,20 @@
+{% extends 'home/base.html' %}
+{% block title %} Gallery | VC {% endblock %}
+{% block content %}
+{% load staticfiles %}
+    <div class="container-fluid">
+        <h1>Youtube Channel</h1>
+        <div class="row">
+            {% for result in results %}
+            <a  class="container-fluid" href="{% static result %}">{{result}}</a>
+                {% if result %}
+                    <div class="col-sm-2 col-xs-12" style="height:200px">
+                        <a  class="container-fluid" href="https://www.youtube.com/embed/{{result.iframesrc}}"><img src="{{result.imgsrc}}"/>
+                            <span>{{result.text}}</span>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

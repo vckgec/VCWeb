@@ -1,0 +1,29 @@
+﻿<div class="container-fluid" style="margin-top:-30px">
+    <div class="navbar-header" >
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#miniNavbar" style="float:right;background-color:transparent;margin-bottom:0px;margin-top:0px;margin-right:0px;padding-top:5px">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse" id="miniNavbar" style="padding-top:0px">
+        <ul class="nav navbar-nav">
+            {% if not 'storekeeper' in request.resolver_match.url_name %}
+                <li><a  href="{% url 'mess:storekeeper' %}">Store Keeper</a></li>
+            {% else %}
+                <li class="active"><a>Store Keeper</a></li>
+            {% endif %}
+            {% if not 'guestmeal' in request.resolver_match.url_name %}
+                <li><a  href="{% url 'mess:guestmeal' %}">Guest Meal</a></li>
+            {% else %}
+                <li class="active"><a>Guest Meal</a></li>
+            {% endif %}
+            {% if request.user.is_staff %}
+                {% if not 'extraadjustment' in request.resolver_match.url_name %}
+                    <li><a  href="{% url 'mess:extraadjustment' %}">Extra meal/Adjustment</a></li>
+                {% else %}
+                    <li class="active"><a>Extra meal/Adjustment</a></li>
+                {% endif %}
+            {% endif %}
+        </ul>
+        <hr style="margin-top:0px"/>
+    </div>
+</div>

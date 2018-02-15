@@ -1,0 +1,76 @@
+{% extends 'home/base.html' %}
+{% block title %}Store Keeper | Mess {% endblock %}
+{% block styles %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'mess/storekeeper.css' %}">
+{% endblock %}
+{% block mininav %}
+    {% include 'mess/mininav.html' %}
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <button class="btn btn-link" onclick="printDiv('table')" style="float:right;border:none"><i class="fa fa-print printbtn" aria-hidden="true"> Print</i></button>
+        <a class="btn btn-link" style="float:right;color:black" href="{% url 'mess:storekeeperedit' %}"><b><i class="fa fa-edit" style="font-size:15px"></i>Edit</b></a>
+        <table style="margin-top:20px" id="table">
+            {% load custom_tags %}
+            {% define as prv_store_date %}
+            {% set  as count %}
+            {% define as rowheader %}
+            {% for junior in juniors %}
+                {% if not rowheader %}
+                    {% define 'success' as rowheader %}
+                    <tr>
+                        <th><b>Date</b></th>
+                        <th><b>{{junior.get_store_half}}</b></th>
+                        {% define junior.Store_Half as prv_half %}
+                        {% if junior.Store_Half == '1MO' %}
+                            <th><b>Evening</b></th>
+                        {% else %}
+                            <th><b>Morning</b></th>
+                        {% endif %}
+                    </tr>
+                {% endif %}
+                {% if prv_store_date != junior.Store_Date %}
+
+                    {% if count == 0 %}
+                    <tr>
+                        <td>{{junior.Store_Date}}</td>
+                    {% else %}
+                        <td>-</td>
+                        </tr>
+                        {% set as count %}
+                        <tr>
+                            <td>{{junior.Store_Date}}</td>
+                    {% endif %}
+                    {% define junior.Store_Date as prv_store_date %}
+                    {% if junior.Store_Half == prv_half %}
+                        <td>{{junior.Store_Name|get_absolute_value}}</td>
+                        {% set count as count %}
+                        {% if forloop.counter == juniors.count %}
+                                <td>-</td>
+                            </tr>
+                            {% set as count %}
+                        {% endif %}
+                    {% else %}
+                        <td>-</td>
+                        {% set count as count %}
+                        <td>{{junior.Store_Name|get_absolute_value}}</td>
+                        {% set count as count %}
+                        {% if count == 2 %}
+                            </tr>
+                            {% set as count %}
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <td>{{junior.Store_Name|get_absolute_value}}</td>
+                    {% set count as count %}
+                    {% if count == 2 %}
+                        </tr>
+                        {% set as count %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </table><br />
+    </div>
+    <script src="{% static 'mess/storekeeper.js' %}" type="text/javascript"></script >
+{% endblock %}
