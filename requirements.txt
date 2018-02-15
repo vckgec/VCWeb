@@ -5,4 +5,5 @@ docutils
 msgpack-python
 Twisted[tls,http2]
 django-widget-tweaks
-djangosecure
+django-secure
+arrow
