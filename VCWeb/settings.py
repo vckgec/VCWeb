@@ -48,13 +48,13 @@ CSRF_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     # Add your apps here to enable them
+    'account.apps.accountConfig',
     'home.apps.homeConfig',
     'contact.apps.contactConfig',
     'gallery.apps.galleryConfig',
     'library.apps.libraryConfig',
     'chat.apps.chatConfig',
-    'mess.apps.messConfig',
-    'account.apps.accountConfig',
+    'mess.apps.messConfig',    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
