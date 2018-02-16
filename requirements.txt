@@ -9,3 +9,4 @@ django-secure
 arrow
 Pillow
 dj_database_url
+psycopg2
