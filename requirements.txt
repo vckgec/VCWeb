@@ -8,3 +8,4 @@ django-widget-tweaks
 django-secure
 arrow
 Pillow
+dj_database_url
