@@ -279,7 +279,7 @@ class GuestMeal(models.Model):
 class StoreKeeper(models.Model):
     HALF_CHOICES = (('1MO', 'Morning'),
         ('2EV', 'Evening'),)
-    #Store_Name=models.ForeignKey(Boarder,on_delete=models.CASCADE,blank=True,null=True,limit_choices_to={'Year_Of_Passing':Boarder.objects.aggregate(Year_Of_Passing=Max('Year_Of_Passing'))['Year_Of_Passing']},unique_for_date='Store_Date')
+    Store_Name=models.ForeignKey(Boarder,on_delete=models.CASCADE,blank=True,null=True,limit_choices_to={'Year_Of_Passing':Boarder.objects.aggregate(Year_Of_Passing=Max('Year_Of_Passing'))['Year_Of_Passing']},unique_for_date='Store_Date')
     Store_Date = models.DateField()
     Store_Half = models.CharField(choices=HALF_CHOICES, unique_for_date='Store_Date', max_length=12)
     def get_store_half(self):

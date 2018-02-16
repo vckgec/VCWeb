@@ -37,5 +37,4 @@ class AdjustCountForm(forms.Form):
     half = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control','max_length': 16,'style':'height:34px'}),choices=HALF_CHOICES)
     adjust_count = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder':'Adjust Count','class':'form-control','max_length': 16,'value':0}))
 class StoreKeeperForm(forms.Form):
-    #Store_Name = forms.ModelChoiceField(widget=forms.Select(attrs={'max_length': 16,'class':'form-control'}),queryset = Boarder.objects.filter(Year_Of_Passing=Boarder.objects.aggregate(Year_Of_Passing=Max('Year_Of_Passing'))['Year_Of_Passing']))
-    pass
+    Store_Name = forms.ModelChoiceField(widget=forms.Select(attrs={'max_length': 16,'class':'form-control'}),queryset = Boarder.objects.filter(Year_Of_Passing=Boarder.objects.aggregate(Year_Of_Passing=Max('Year_Of_Passing'))['Year_Of_Passing']))
