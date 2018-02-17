@@ -10,5 +10,4 @@ urlpatterns = [
     url(r'^extraadjustment/$', views.ExtraAdjustment, name='extraadjustment'),
     url(r'^storekeeper/$', views.Store_Keeper, name='storekeeper'),
     url(r'^storekeeperedit/$', views.Store_Keeper_Edit, name='storekeeperedit'),
-    url(r'^we/b$', views.web, name='web'),
     ]
