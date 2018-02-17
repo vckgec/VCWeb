@@ -36,7 +36,7 @@ class JSON:
             write.close()
 
     def JsonLoad(self,table=None):
-        if self.filename:
+        if self.filename and not table:
             read=open(self.filename,'r')
         else:
             read=open(os.getcwd().replace('\\','/')+'/'+table+'.json','r')

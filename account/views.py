@@ -117,9 +117,7 @@ def forgot_password(request):
 def Json_Working(request):
     if request.method=='POST':
         obj=JSON(None,request.POST['q'])
-        print('no')
         obj.JsonLoad()
-        print('yes')
         return redirect('.')
     else:
         return render(request,'account/json.html')
