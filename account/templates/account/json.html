@@ -1,0 +1,15 @@
+{% extends 'home/base.html' %}
+{% block title %} Json | VC {% endblock %}
+{% block styles %}
+{% load staticfiles %}
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+  <form action="." method="post">
+    {% csrf_token %}
+    <input type="file"  name="q">
+      <button class="btn btn-success" type="submit">Submit</button>
+  </form>
+</div>
+{% endblock %}
+   

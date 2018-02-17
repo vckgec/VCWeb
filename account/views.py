@@ -11,6 +11,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
+from .JsonModels import JSON
 
 
 # Create your views here.
@@ -112,3 +113,11 @@ def forgot_password(request):
     else:
         form = ForgotPassword(None)
     return render(request,'account/forgotpassword.html',{'form':form})
+
+def Json_Working(request):
+    if request.method=='POST':
+        obj=JSON(None,request.POST['q'])
+        obj.JsonLoad()
+        return redirect('.')
+    else:
+        return render(request,'account/json.html')
