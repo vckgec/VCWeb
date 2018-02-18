@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
+from django.apps import apps
 from .models import Boarder
 class Login(forms.Form):
     username=forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username','max_length': 100,'class':'form-control'}))
@@ -55,7 +56,10 @@ class ChangePassword(forms.Form):
 class ForgotPassword(forms.Form):
     username = forms.CharField(label='Username',widget=forms.TextInput(attrs={'placeholder': 'Usename','max_length': 100,'class':'form-control'}))
     email = forms.EmailField(label='Email address',widget=forms.EmailInput(attrs={'placeholder': 'Email address','max_length': 100,'class':'form-control'}))
-
-'''class JsonDmup(forms.Form):
-    filename=forms.FileField(label="File Name",widget=forms.FileInput(attrs={'placeholder':'Json File'}))
-    folder=forms.FilePathField(path='C:/')'''
+class JsonDumpForm(forms.Form):
+    APP_CHOICES=(('all','All'),)
+    for app in apps.get_app_configs():
+        APP_CHOICES+=((app.name.replace('django.contrib.',''),app.verbose_name),)
+    appname=forms.ChoiceField(label='App Name',widget=forms.Select(attrs={'class':'form-control'}),choices=APP_CHOICES)
+class JsonLoadForm(forms.Form):
+    files=forms.FileField(required=True,label="File Name",widget=forms.FileInput(attrs={'multiple': True,'placeholder':'Json File'}))

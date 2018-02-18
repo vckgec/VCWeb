@@ -115,11 +115,31 @@ def forgot_password(request):
     return render(request,'account/forgotpassword.html',{'form':form})
 
 def Json_Working(request):
-    if request.method=='POST':
-        print(request.POST['q'])
-        obj=JSON(None,request.POST['q'])
-        obj.JsonLoad()
-        return redirect('.')
+    data=None
+    if request.method=='POST':        
+        dumpform = JsonDumpForm(request.POST)
+        loadform=JsonLoadForm(request.POST,request.FILES)
+        if dumpform.is_valid:
+            try:
+                obj=JSON(request.POST['appname'])
+                try:
+                    data=obj.JsonDump()
+                except:
+                    messages.warning(request,"Failed to dump")
+            except:
+                dumpform = JsonDumpForm(None)
+
+        if loadform.is_valid:
+            if request.POST.getlist("files"):
+                obj=JSON(None,request.POST.getlist("files"))
+                try:
+                    obj.JsonLoad()
+                    messages.success(request,"Successfully load data")
+                except:
+                    messages.warning(request,"Failed to load data")
+            else:
+                loadform=JsonLoadForm(None)
     else:
-        #form = JsonDmup(None)
-        return render(request,'account/json.html')
+        dumpform = JsonDumpForm(None)
+        loadform=JsonLoadForm(None)
+    return render(request,'account/json.html',{'dumpform':dumpform,'loadform':loadform,'data':data})
