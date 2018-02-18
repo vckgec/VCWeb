@@ -120,4 +120,5 @@ def Json_Working(request):
         obj.JsonLoad()
         return redirect('.')
     else:
-        return render(request,'account/json.html')
+        #form = JsonDmup(None)
+        return render(request,'account/json.html',{'form':form})
