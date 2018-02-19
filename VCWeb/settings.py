@@ -34,7 +34,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SECRET_KEY = 'bab9a676-9463-43ee-8bd9-b7d0a5463980'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['vckgec.herokuapp.com']
 ADMINS=(('Bibhas', 'bibhasmondal96@gmail.com'))
