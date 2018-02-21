@@ -26,16 +26,36 @@
   </div>
   <div id="position2" class="col-sm-6 col-xs-12" style="margin-top:20px;margin-bottom:20px">
       <div id="adjust" class="col-sm-6 col-xs-12" style="background-color:#86ABF5;padding-top:0px;padding-bottom:20px">
-          <h4 style="margin-bottom:10px"><b>Json Load</b></h4>
-          <p style="color:white">{% now "jS F Y" %}</p>
-          <form class="form" action="." method="post">
-              {% csrf_token %}
-              {% for field in loadform %}
-                  {{ field.errors }}
-                  {{ field }}<br />
-              {% endfor %}
-              <input class="btn btn-success" style="height:34px;" type="submit" value="Submit"/>
-          </form>
+            <h4 style="margin-bottom:10px"><b>Json Load</b></h4>
+            <p style="color:white">{% now "jS F Y" %}</p>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#home">SQL Lite</a></li>
+                <li><a data-toggle="tab" href="#menu1">Postgres</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                    <form class="form" action="." method="post">
+                        {% csrf_token %}
+                        {% for field in loadform %}
+                            {{ field.errors }}
+                            {{ field }}<br />
+                        {% endfor %}
+                        <input type="hidden" name="dbtype" value="sqllite">
+                        <input class="btn btn-success" style="height:34px;" type="submit" value="Submit"/>
+                    </form>
+                </div>
+                <div id="menu1" class="tab-pane fade">
+                    <form class="form" action="." method="post">
+                        {% csrf_token %}
+                        {% for field in loadform %}
+                            {{ field.errors }}
+                            {{ field }}<br />
+                        {% endfor %}
+                        <input type="hidden" name="dbtype" value="postgres">
+                        <input class="btn btn-success" style="height:34px;" type="submit" value="Submit"/>
+                    </form>
+                </div>
+            </div>
       </div>
   </div>
 </div>

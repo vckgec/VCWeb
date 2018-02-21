@@ -119,26 +119,20 @@ def Json_Working(request):
     if request.method=='POST':        
         dumpform = JsonDumpForm(request.POST)
         loadform=JsonLoadForm(request.POST,request.FILES)
-        if dumpform.is_valid:
+        if dumpform.is_valid():
+            obj=JSON(request.POST['appname'])
             try:
-                obj=JSON(request.POST['appname'])
-                try:
-                    data=obj.JsonDump()
-                except:
-                    messages.warning(request,"Failed to dump")
+                data=obj.JsonDump()
             except:
-                dumpform = JsonDumpForm(None)
+                messages.warning(request,"Failed to dump")
 
-        if loadform.is_valid:
-            if request.POST.getlist("files"):
-                obj=JSON(None,request.POST.getlist("files"))
-                try:
-                    obj.JsonLoad()
-                    messages.success(request,"Successfully load data")
-                except:
-                    messages.warning(request,"Failed to load data")
-            else:
-                loadform=JsonLoadForm(None)
+        if loadform.is_valid():
+            obj=JSON('all',request.POST.getlist("files"))
+            try:
+                obj.JsonLoad(request.POST['dbtype'])
+                messages.success(request,"Successfully load data")
+            except Exception as e:
+                messages.warning(request,e)
     else:
         dumpform = JsonDumpForm(None)
         loadform=JsonLoadForm(None)

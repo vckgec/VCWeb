@@ -62,4 +62,4 @@ class JsonDumpForm(forms.Form):
         APP_CHOICES+=((app.name.replace('django.contrib.',''),app.verbose_name),)
     appname=forms.ChoiceField(label='App Name',widget=forms.Select(attrs={'class':'form-control'}),choices=APP_CHOICES)
 class JsonLoadForm(forms.Form):
-    files=forms.FileField(required=True,label="File Name",widget=forms.FileInput(attrs={'multiple': True,'placeholder':'Json File'}))
+    files=forms.FileField(required=True,label="File Name",widget=forms.FileInput(attrs={'multiple': True}))

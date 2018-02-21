@@ -21,7 +21,7 @@ class Boarder(models.Model):
         ('MECE', 'MTech: Electronics and Communication'),
         )
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,blank=True,null=True,on_delete=models.CASCADE)
     dp=models.ImageField(upload_to='account',default='account/default.png',blank=True)
     Name = models.CharField(max_length = 50)
     Year_Of_Passing = models.DecimalField(max_digits = 4, decimal_places = 0)
