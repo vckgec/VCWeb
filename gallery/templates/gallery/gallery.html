@@ -5,8 +5,9 @@
     <div class="container-fluid">
         <h1>Gallery</h1>        
             {% for result in results %}
-<a style="width:120px;height:120px;margin-left:10px;margin-right:10px;margin-top:10px;margin-bottom:10px;float:left" href="{% static result %}">
-		<img src="{% static 'gallery/result' %}" style="width:100px;height:100px">	</a>            
+                <a style="width:120px;height:120px;margin-left:10px;margin-right:10px;margin-top:10px;margin-bottom:10px;float:left" href="{% static 'gallery/result' %}">
+                    {{result}}
+                </a>            
             {% endfor %}
     </div>
 {% endblock %}
