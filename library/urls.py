@@ -19,7 +19,9 @@ urlpatterns = [
 	url(r'^request/(?P<id>[0-9]+)/collect/$', views.CollectBook, name='collect'),
 	url(r'^request/(?P<id>[0-9]+)/undoreturn/$', views.UndoReturn, name='undoreturn'),
 	url(r'^search/$', views.Search, name='search'),
-        url(r'^search/$', views.Search, name='search'),
-        url(r'^libgen/$', views.libgen, name='libgen'),
+	url(r'^search/$', views.Search, name='search'),
+	url(r'^libgen/$', views.libgen, name='libgen'),
+	url(r'^temp/$', views.temp, name='temp'),
+        
         
 ]

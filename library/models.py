@@ -21,6 +21,7 @@ class Book(models.Model):
     image = models.ImageField(upload_to='library/images', blank=True)
     publisher = models.CharField(max_length=50, blank=True)
     issued = models.BooleanField(default=False)
+    name = models.CharField(max_length=30, default='')
 
     def get_edit_url(self):
         return reverse('library:edit', kwargs={'pk':self.id})
