@@ -243,7 +243,7 @@ class Presence(models.Model):
 class FutureBoarder(models.Model):
     HALF_CHOICES = (('MO', 'Morning'),
         ('EV', 'Evening'),)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,blank=True,null=True,on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     offdate=models.DateField(blank=True)
     offhalf = models.CharField(choices=HALF_CHOICES,max_length=12,blank=True)
     ondate=models.DateField(blank=True)
@@ -269,7 +269,7 @@ class MealDishes(models.Model):
 class GuestMeal(models.Model):
     HALF_CHOICES = (('MO', 'Morning'),
         ('EV', 'Evening'),)
-    user= models.ForeignKey(settings.AUTH_USER_MODEL,blank=True,null=True,on_delete=models.CASCADE)
+    user= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     Meal_Date = models.DateField()
     Meal_Half = models.CharField(choices=HALF_CHOICES, max_length=12)
     No_Of_Guest=models.IntegerField(default=0)
