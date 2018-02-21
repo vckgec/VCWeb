@@ -20,7 +20,7 @@
                                     <div class="col-sm-3"> {{ book.author }}</div>
                                     <div class="col-sm-7">
                                         {{book.title}}
-                                        {% if book.issued %}<sup>[Issued Out]</sup><sub style="margin-left:-55px">{{book.name}}</sub>{% endif %}
+                                        {% if book.issued %}<sup>[Issued Out]</sup><sub style="margin-left:-55px">{{book.request.name}}</sub>{% endif %}
                                     </div>
                                 </a>
                             </div>
