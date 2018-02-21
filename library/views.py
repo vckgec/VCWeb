@@ -172,11 +172,3 @@ def libgen(request):
 
 def LibHome(request):
     return render(request, 'library/library.html')
-
-def temp(request):
-    reqs=Request.objects.filter(status=True)
-    for req in reqs:
-        boo=Book.objects.get(pk=req.book.pk)
-        boo.name=req.name
-        boo.save()
-    return HttpResponse("OK")

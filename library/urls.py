@@ -21,7 +21,4 @@ urlpatterns = [
 	url(r'^search/$', views.Search, name='search'),
 	url(r'^search/$', views.Search, name='search'),
 	url(r'^libgen/$', views.libgen, name='libgen'),
-	url(r'^temp/$', views.temp, name='temp'),
-        
-        
 ]
