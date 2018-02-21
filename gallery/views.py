@@ -7,7 +7,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 
 def Home(request):
     mypath = 'static/gallery'
-    allfiles = ['gallery/'+f for f in listdir(mypath) if isfile(join(mypath, f))]
+    allfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
     return render(request,'gallery/gallery.html',{'results':allfiles})
 
 def Youtube(request):
