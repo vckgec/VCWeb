@@ -2,10 +2,11 @@
 {% block title %} Gallery | VC {% endblock %}
 {% block content %}
 {% load staticfiles %}
+{% load path_tags%}
     <div class="container-fluid">
         <h1>Gallery</h1>        
             {% for result in results %}
-                <a style="width:120px;height:120px;margin-left:10px;margin-right:10px;margin-top:10px;margin-bottom:10px;float:left" href="{% static 'gallery/' result %}">
+                <a style="width:120px;height:120px;margin-left:10px;margin-right:10px;margin-top:10px;margin-bottom:10px;float:left" href="{% static result|get_path:'gallery' %}">
                     {{result}}
                 </a>            
             {% endfor %}
