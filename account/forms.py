@@ -25,7 +25,7 @@ class UserRegistrationForm(forms.ModelForm):
 
 class BoarderRegistrationForm(forms.ModelForm):
     DEPT_CHOICES = (('ME', 'Mechanical Engineering'),
-        ('CSE', 'Computer Science'),
+        ('CSE', 'Computer Science and Engineering'),
         ('EE', 'Electrical Engineering'),
         ('IT', 'Information Technology'),
         ('ECE', 'Electronics and Communications'),
