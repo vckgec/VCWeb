@@ -114,13 +114,28 @@ def forgot_password(request):
         form = ForgotPassword(None)
     return render(request,'account/forgotpassword.html',{'form':form})
 
+def edit_details(request):
+    if request.method=='POST':
+        form=Edit_Details(request.POST,request.FILES)
+        if form.is_valid():
+            dp = open('media/account/'+form.cleaned_data['dp'].name, 'wb')
+            dp.write(form.cleaned_data['dp'].read())
+            dp.close()
+            request.user.boarder.dp = '/media/account/'+form.cleaned_data['dp'].name
+            request.user.boarder.save()
+            messages.success(request,"Successfully changed dp")        
+    else:
+        form=Edit_Details(None)
+    return render(request,'account/editdetails.html',{'form':form})
+
+
 def Json_Working(request):
     data=None
     if request.method=='POST':        
         dumpform = JsonDumpForm(request.POST)
         loadform=JsonLoadForm(request.POST,request.FILES)
         if dumpform.is_valid():
-            obj=JSON(request.POST['appname'])
+            obj=JSON(dumpform.cleaned_data['appname'])
             try:
                 data=obj.JsonDump()
             except:
@@ -128,7 +143,7 @@ def Json_Working(request):
 
         else:
             try:
-                obj=JSON('all',request.POST.getlist("files"))
+                obj=JSON('all',request.FILES.getlist("files"))
                 try:
                     obj.JsonLoad(request.POST['dbtype'])
                     messages.success(request,"Successfully load data")

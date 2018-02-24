@@ -31,7 +31,7 @@ def ws_message(message):
     temp={}
     user=User.objects.get(username=json.loads(message.get('text'))['username'])
     temp['username']=user.username
-    temp['dp']=user.boarder.dp.url
+    temp['dp']=user.boarder.dp
     temp['name']=str(user.boarder)
     temp['message']=json.loads(message.get('text'))['message']
     temp['time']=str(DateFormat(datetime.now()).format('g:i a'))
@@ -45,7 +45,7 @@ def ws_message(message):
     data.append(temp)
     chat=Chat()
     chat.username=user
-    chat.dp=user.boarder.dp.url
+    chat.dp=user.boarder.dp
     chat.name=user.boarder
     chat.message=json.loads(message.get('text'))['message']
     chat.chat_datetime=datetime.now()
