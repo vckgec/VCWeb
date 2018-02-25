@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 class Chat(models.Model):
     username=models.ForeignKey(User,on_delete=models.CASCADE)
-    dp = models.BinaryField(blank=True, editable=True)
+    dp = models.TextField(blank=True)
     name=models.CharField(max_length=200)
     message=models.CharField(max_length=1000)
     chat_datetime=models.DateTimeField()

@@ -118,7 +118,7 @@ def edit_details(request):
     if request.method=='POST':
         form=Edit_Details(request.POST,request.FILES)
         if form.is_valid():
-            request.user.boarder.dp = base64.encodestring(form.cleaned_data['dp'].read())
+            request.user.boarder.dp = base64.encodestring(form.cleaned_data['dp'].read()).decode('utf-8')
             request.user.boarder.save()            
     else:
         form=Edit_Details(None)

@@ -23,7 +23,7 @@ class Boarder(models.Model):
         )
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    dp = models.BinaryField(blank=True, editable = True, default=base64.encodestring(open('media/account/default.png','rb').read()))
+    dp = models.TextField(blank=True, default=base64.encodestring(open('media/account/default.png','rb').read()).decode('utf-8'))
     Name = models.CharField(max_length = 50)
     Year_Of_Passing = models.DecimalField(max_digits = 4, decimal_places = 0)
     Eats_Fish = models.BooleanField(default = True) #True if boarder eats fish

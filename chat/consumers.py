@@ -31,7 +31,7 @@ def ws_message(message):
     temp={}
     user=User.objects.get(username=json.loads(message.get('text'))['username'])
     temp['username']=user.username
-    temp['dp'] = user.boarder.dp.decode('utf-8')
+    temp['dp'] = user.boarder.dp
     temp['name']=str(user.boarder)
     temp['message']=json.loads(message.get('text'))['message']
     temp['time']=str(DateFormat(datetime.now()).format('g:i a'))
