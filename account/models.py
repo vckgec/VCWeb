@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import date
 from datetime import datetime
+import base64
 
 # Create your models here.
 
@@ -22,7 +23,7 @@ class Boarder(models.Model):
         )
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    dp = models.BinaryField(blank=True, editable = True)
+    dp = models.BinaryField(blank=True, editable = True, default=base64.encodestring(open('media/account/default.png','rb').read()))
     Name = models.CharField(max_length = 50)
     Year_Of_Passing = models.DecimalField(max_digits = 4, decimal_places = 0)
     Eats_Fish = models.BooleanField(default = True) #True if boarder eats fish

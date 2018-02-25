@@ -23,7 +23,7 @@ $(document).ready(function () {
                 '<span class="ms" ></span>' +
                 '<div class="mac" style="word-wrap:break-word">' +
                 '<div style="height:50px">' +
-                '<img src="' + JSON.parse(e.data)[0].dp + '" style="width:50px;height:50px;margin-top:0px;right:5px;position:absolute" class="img-circle" alt="vc">' +
+                '<img src="data:image/jpeg;base64,' + JSON.parse(e.data)[0].dp + '" style="width:50px;height:50px;margin-top:0px;right:5px;position:absolute" class="img-circle" alt="vc">' +
                 '</div>' +
                 '<small style="position:absolute; top:0px;right:55px">' + JSON.parse(e.data)[0].name + '</small>' +
                 '<small  style="position:absolute;bottom:0px;right:55px">' + JSON.parse(e.data)[0].time + '</small>' +
@@ -41,7 +41,7 @@ $(document).ready(function () {
                 '<div class="macro" style="word-wrap:break-word">' +
                 '<small style="float:right;position:absolute;top:0px;right:5px">' + JSON.parse(e.data)[0].name + '</small>' +
                 '<small style="float:right;position:absolute;bottom:0px;right:5px">' + JSON.parse(e.data)[0].time + '</small>' +
-                '<img src="' + JSON.parse(e.data)[0].dp + '" style="width:50px;height:50px;margin-top:0px;position:relative" class="img-circle" alt="vc">' +
+                '<img src="data:image/jpeg;base64,' + JSON.parse(e.data)[0].dp + '" style="width:50px;height:50px;margin-top:0px;position:relative" class="img-circle" alt="vc">' +
                 '<label style="margin-top:9px;margin-bottom:9px;position:relative;width:230px;text-align:left;margin-left:5px">' + JSON.parse(e.data)[0].message + '</label>' +
                 '</div>' +
                 '</div>' +
