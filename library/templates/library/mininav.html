@@ -31,7 +31,7 @@
             <form action="{% url 'library:search' %}" class="navbar-form" role="search">
                 <div class="input-group">
                     {% if 'search' in request.resolver_match.url_name %}
-                        <input type="text" class="form-control" placeholder="Search" name="q"  value="{{ query }}">
+                        <input type="text" id="query" class="form-control" placeholder="Search" name="q"  value="{{ query }}">
                     {% else %}
                         <input type="text" class="form-control" placeholder="Search" name="q">
                     {% endif %}

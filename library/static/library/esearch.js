@@ -9,8 +9,7 @@ $(document).ready(function () {
     ws.onopen = function (e) {
         i=0;
         row = ['row1', 'row2'];
-        console.log(e)
-        ws.send(JSON.stringify({ 'type': 'library', 'message': $('input').attr('value')}))
+        ws.send(JSON.stringify({ 'type': 'library', 'message': $('#query').val()}));
     };    
     ws.onmessage = function (e) {
         var ebooksdata = JSON.parse(e.data);
