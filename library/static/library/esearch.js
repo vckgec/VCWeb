@@ -3,7 +3,7 @@ $(function () {
     document.getElementById("loader").style.marginTop = $('nav').height() + "px";
 });
 $(document).ready(function () {
-    ws = new WebSocket("ws://socketvc.herokuapp.com")
+    ws = new WebSocket("wss://socketvc.herokuapp.com")
     var i;
     var row;
     ws.onopen = function (e) {
