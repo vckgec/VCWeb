@@ -10,7 +10,7 @@ $(document).ready(function () {
         i=0;
         row = ['row1', 'row2'];
         console.log(e)
-        ws.send($('input').attr('value'))
+        ws.send(JSON.stringify({ 'type': 'library', 'message': $('input').attr('value')}))
     };    
     ws.onmessage = function (e) {
         var ebooksdata = JSON.parse(e.data);
