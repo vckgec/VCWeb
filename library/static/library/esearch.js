@@ -9,6 +9,7 @@ $(document).ready(function () {
     ws.onopen = function (e) {
         i=0;
         row = ['row1', 'row2'];
+        console.log(e)
         ws.send(JSON.stringify({ 'type': 'library', 'message': $('#query').val()}));
     };    
     ws.onmessage = function (e) {
@@ -32,21 +33,23 @@ $(document).ready(function () {
         $('#ebooksdata').append(ebookshtml);
     };
     ws.onclose = function (e) {
-        if (i<1){
+        if (i < 1) {
             setTimeout(function () {
-            
+
+                document.getElementById("loader").style.display = "none";
+                $('#ebookscount').html('No ebook found.');
+            }, 3000);
+        }      
+        console.log(e)
+    };
+    ws.onerror = function (e) {
+        if (i < 1) {
+            setTimeout(function () {
+
                 document.getElementById("loader").style.display = "none";
                 $('#ebookscount').html('No ebook found.');
             }, 3000);
         }
-    };
-    ws.onerror = function (e) {
-        if (i<1){
-            setTimeout(function () {
-            
-                document.getElementById("loader").style.display = "none";
-                $('#ebookscount').html('No ebook found.');
-            }, 3000);
-        }        
+        console.log(e)
     };
 });
