@@ -28,23 +28,12 @@
                     </div>
             </div>
             <div class="col-sm-6 col-xs-12" id="results">
-                <div style="display:none" id="myDiv" class="animate-bottom">
-                    <h3 style="text-align:left">{{ eresults|length }} ebook{{ eresults|pluralize }} found.</h3>
-                     <div class="row container-fluid text-left">
-                            {% if eresults %}
-                                {% for ebook in eresults %}
-                                    <a href="{{ ebook.booklink }}">
-                                        <div class="container-fluid {% cycle 'row1' 'row2' %}">
-                                            <div class="col-sm-3"> {{ ebook.author }}</div>
-                                            <div class="col-sm-7">{{ebook.title}}</div>
-                                            <div class="col-sm-2"><i>{{ ebook.type }};{{ ebook.size }}</i></div>
-                                        </div>
-                                    </a>
-                                {% endfor %}
-                            {% endif %}
+                <div class="container-fluid">
+                    <h3 style="text-align:left" id="ebookscount">Searching ebooks...</h3>
+                     <div style="display:none" class="row text-left animate-bottom" id="ebooksdata">
+                            
                     </div>
                 </div>
-                <div><h4><b>Searching ebooks...</b></h4></div>
                 <div id="loader"></div>
             </div>
         </div>

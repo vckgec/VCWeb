@@ -13,10 +13,20 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from .JsonModels import JSON
 import base64
-
+import websocket
+import json
 
 # Create your views here.
 
+def send(message):
+    try:
+        ws = websocket.create_connection("ws://socketvc.herokuapp.com")
+        ws.send(json.dumps({'type': 'account', 'message':message }))
+        result=ws.recv()
+        ws.close()
+        return result
+    except:
+        return False
 
 #@csrf_exempt
 def login_user(request):
@@ -100,16 +110,18 @@ def change_password(request):
 def forgot_password(request):
     if request.method=='POST':
         form = ForgotPassword(request.POST)
-        if form.is_valid():
+        if form.is_valid():            
             try:
                 user=User.objects.get(username=form.cleaned_data['username'])
                 reset_password=user.password[-11:-1]
-                user.set_password(reset_password)
-                user.save()
-                send_mail('Password reset', 'Your password is '+reset_password,settings.EMAIL_HOST_USER,[form.cleaned_data['email']], fail_silently=False)
+                #asyncio.get_event_loop().run_until_complete(hello(reset_password))                
+                if send({'email': form.cleaned_data['email'], 'password': reset_password}):
+                    user.set_password(reset_password)
+                    user.save()
+                    messages.success(request, 'Password is send to '+form.cleaned_data['email'])
             except Exception as e:
                 messages.warning(request, e)
-            messages.success(request, 'Password is send to '+form.cleaned_data['email'])
+
             return redirect('.')
     else:
         form = ForgotPassword(None)
@@ -118,7 +130,8 @@ def edit_details(request):
     if request.method=='POST':
         form=Edit_Details(request.POST,request.FILES)
         if form.is_valid():
-            request.user.boarder.dp = base64.encodestring(form.cleaned_data['dp'].read()).decode('utf-8')
+            request.user.boarder.dp = base64.encodestring(
+                form.cleaned_data['dp'].read()).decode('utf-8')
             request.user.boarder.save()            
     else:
         form=Edit_Details(None)

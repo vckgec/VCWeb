@@ -9,4 +9,5 @@ django-secure
 arrow
 Pillow
 dj_database_url
+websocket-client
 psycopg2
