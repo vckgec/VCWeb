@@ -34,7 +34,7 @@
             </ul>
             <div class="tab-content">
                 <div id="home" class="tab-pane fade in active">
-                    <form class="form" action="." method="post" enctype="multipart/form-data">
+                    <form class="form" action="." method="post">
                         {% csrf_token %}
                         {% for field in loadform %}
                             {{ field.errors }}
@@ -45,7 +45,7 @@
                     </form>
                 </div>
                 <div id="menu1" class="tab-pane fade">
-                    <form class="form" action="." method="post" enctype="multipart/form-data">
+                    <form class="form" action="." method="post">
                         {% csrf_token %}
                         {% for field in loadform %}
                             {{ field.errors }}

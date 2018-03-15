@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .libgen import searchbooks as searchebooks
 from account.forms import JsonLoadForm
+import json
 global query
 # Create your views here.
 
