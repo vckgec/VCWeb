@@ -10,6 +10,7 @@ from .models import Book
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .libgen import searchbooks as searchebooks
+from account.forms import JsonLoadForm
 global query
 # Create your views here.
 
