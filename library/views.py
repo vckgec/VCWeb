@@ -172,3 +172,22 @@ def libgen(request):
 
 def LibHome(request):
     return render(request, 'library/library.html')
+
+def dateFix(request):
+    if request.method=='POST':
+        loadform = JsonLoadForm(request.POST)
+        file = request.POST['files']
+        fields=json.loads(open(file).read())
+        for field in fields:
+            del field['fields']['book']
+            issue_date = field['fields']['issue_date']
+            del field['fields']['issue_date']
+            req = Request.objects.filter(**field['fields'])
+            if req:
+                req[0].issue_date = datetime.date(
+                    int(issue_date.split('-')[0]), int(issue_date.split('-')[1]), int(issue_date.split('-')[2]))
+                req[0].save()
+        return HttpResponse("Successfull")
+    else:
+        loadform = JsonLoadForm(None)
+        return render(request, 'account/json.html', {'dumpform': None, 'loadform': loadform})
