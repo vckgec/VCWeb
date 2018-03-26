@@ -7,4 +7,47 @@ $(document).ready(function () {
             },
         });
     });
+    $('#myNavbar,#appview').click(function () {
+        $('#demo').collapse('hide');
+    });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
