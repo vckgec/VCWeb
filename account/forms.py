@@ -39,9 +39,11 @@ class BoarderRegistrationForm(forms.ModelForm):
     Year_Of_Passing = forms.IntegerField(label='Year of passing',widget=forms.TextInput(attrs={'placeholder':'Year of passing','class':'form-control','max_length': 16}))
     Room_Number = forms.IntegerField(label='Room number',widget=forms.TextInput(attrs={'placeholder':'Room number','class':'form-control','max_length': 16}))
     Department = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control','max_length': 16}),choices=DEPT_CHOICES)
+    Address = forms.CharField(label='Address', widget=forms.Textarea(attrs={'placeholder': 'Address', 'class': 'form-control', 'style': 'height:60px'}))
+    Mobile_No = forms.DecimalField(label='Mobile No.', widget=forms.TextInput(attrs={'placeholder': 'Mobile No.', 'class': 'form-control'}))
     class Meta:
         model = Boarder
-        fields = ('Department','Year_Of_Passing','Room_Number','Eats_Fish','Eats_Chicken','Eats_Mutton','Eats_Egg')
+        fields = ('Department','Year_Of_Passing','Room_Number','Address','Mobile_No','Eats_Fish','Eats_Chicken','Eats_Mutton','Eats_Egg')
 
 class ChangePassword(forms.Form):
     old_password = forms.CharField(label='Old Password',widget=forms.PasswordInput(attrs={'placeholder': 'Old Password','max_length': 100,'class':'form-control'}))

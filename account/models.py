@@ -35,7 +35,8 @@ class Boarder(models.Model):
     Evening_Presence = models.BooleanField(default = False)
     Presence_Date=models.DateField(null=True)
     Department = models.CharField(choices = DEPT_CHOICES, max_length=40)
+    Address=models.TextField(blank=True)
+    Mobile_No=models.DecimalField(max_digits=14,decimal_places=0,blank=True,null=True)
     Current_Boarder = models.BooleanField(default=True)
-
     def __str__(self):
         return self.Name
