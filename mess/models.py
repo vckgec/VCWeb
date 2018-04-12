@@ -44,9 +44,8 @@ def get_string(string):
 
 
 class Presence(models.Model):
-    HALF_CHOICES = (('MO', 'Morning'),
-        ('EV', 'Evening'),)
-    boarder = models.ManyToManyField(Boarder, blank=True)
+    HALF_CHOICES = (('MO', 'Morning'),('EV', 'Evening'),)
+    boarder = models.ManyToManyField(Boarder, limit_choices_to={'Current_Boarder': True}, blank=True)
     meal_date = models.DateField()
     half = models.CharField(choices=HALF_CHOICES, unique_for_date='meal_date', max_length=12)
     change_by = models.DateTimeField()

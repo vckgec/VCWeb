@@ -91,15 +91,18 @@ $(document).ready(function () {
                 csrfmiddlewaretoken:document.getElementsByName('csrfmiddlewaretoken')[0].value,
             },
             success: function(data) {
-            /*alert("Success: "+data);*/
-                /*socket_mess.addEventListener('open', function (event) {*/
-                    socket_mess.send(JSON.stringify({
-                        'half': data
-                    }));
-                /*});*/
+                    if (data.length==2){
+                        socket_mess.send(JSON.stringify({
+                            'half': data
+                        }));
+                    }
+                    else{                        
+                        $(e.target).prop("checked", status == 'True' ? false : true);
+                        alert(data);
+                    }
             },
             error: function(xhr, textStatus, errorThrown){
-            alert("Please report this error: " + errorThrown + xhr.status + xhr.responseText);
+                alert("Please report this error: " + errorThrown + xhr.status + xhr.responseText);
             }
         });
     });

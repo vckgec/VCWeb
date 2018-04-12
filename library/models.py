@@ -18,7 +18,7 @@ class Book(models.Model):
     author = models.CharField(max_length=250)
     title = models.CharField(max_length=500, unique=True)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='library', blank=True)
+    image = models.ImageField(upload_to='library/images', blank=True)
     publisher = models.CharField(max_length=50, blank=True)
     issued = models.BooleanField(default=False)
     name = models.CharField(max_length=30, default='')

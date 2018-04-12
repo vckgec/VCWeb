@@ -20,11 +20,15 @@ import json
 
 def send(message):
     try:
-        ws = websocket.create_connection("ws://socketvc.herokuapp.com")
+        ws = websocket.create_connection("ws://127.0.0.1:8000/account/")
         ws.send(json.dumps({'type': 'account', 'message':message }))
         result=ws.recv()
+        print(result)
         ws.close()
-        return result
+        if result == 'Head client not found':
+            return False
+        else:
+            return True
     except:
         return False
 
@@ -119,6 +123,8 @@ def forgot_password(request):
                     user.set_password(reset_password)
                     user.save()
                     messages.success(request, 'Password is send to '+form.cleaned_data['email'])
+                else:
+                    messages.warning(request,'Head client not found')
             except Exception as e:
                 messages.warning(request, e)
 

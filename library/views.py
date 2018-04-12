@@ -10,10 +10,11 @@ from .models import Book
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .libgen import searchbooks as searchebooks
-from account.forms import JsonLoadForm
 import json
 import datetime
 global query
+from account.forms import JsonLoadForm
+
 # Create your views here.
 
 """class Subject(CreateView):
@@ -194,3 +195,4 @@ def dateFix(request):
     else:
         loadform = JsonLoadForm(None)
         return render(request, 'account/json.html', {'dumpform': None, 'loadform': loadform})
+

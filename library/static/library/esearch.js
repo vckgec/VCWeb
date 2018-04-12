@@ -4,7 +4,7 @@ $(function () {
 });
 $(document).ready(function () {
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-    ws = new WebSocket(ws_scheme +"://socketvc.herokuapp.com");
+    ws = new WebSocket(ws_scheme + '://' + window.location.host + "/account/");
     var i;
     var row;
     ws.onopen = function (e) {
@@ -14,24 +14,31 @@ $(document).ready(function () {
         ws.send(JSON.stringify({ 'type': 'library', 'message': $('#query').val()}));
     };    
     ws.onmessage = function (e) {
-        var ebooksdata = JSON.parse(e.data);
-        ebookshtml = '<a href=' + ebooksdata.booklink + '>' +
-            '<div class="container-fluid '+row[i%2]+'">' +
-            '<div class="col-sm-3">' + ebooksdata.author + '</div>' +
-            '<div class="col-sm-7">' + ebooksdata.title + '</div>' +
-            '<div class="col-sm-2"><i>' + ebooksdata.type + ';' + ebooksdata.size + '</i></div>' +
-            '</div>' +
-            '</a>';
-        i+=1;
-        if (i>1){
-            $('#ebookscount').html(i+' ebooks found.');
+        if (e.data != 'Head client not found'){
+            var ebooksdata = JSON.parse(e.data);
+            ebookshtml = '<a href=' + ebooksdata.booklink + '>' +
+                '<div class="container-fluid '+row[i%2]+'">' +
+                '<div class="col-sm-3">' + ebooksdata.author + '</div>' +
+                '<div class="col-sm-7">' + ebooksdata.title + '</div>' +
+                '<div class="col-sm-2"><i>' + ebooksdata.type + ';' + ebooksdata.size + '</i></div>' +
+                '</div>' +
+                '</a>';
+            i+=1;
+            if (i>1){
+                $('#ebookscount').html(i+' ebooks found.');
+            }
+            else{
+                $('#ebookscount').html(i + ' ebook found.');
+            }        
+            document.getElementById("ebooksdata").style.display = "block";
+            document.getElementById("loader").style.display = "none";
+            $('#ebooksdata').append(ebookshtml);
         }
         else{
-            $('#ebookscount').html(i + ' ebook found.');
-        }        
-        document.getElementById("ebooksdata").style.display = "block";
-        document.getElementById("loader").style.display = "none";
-        $('#ebooksdata').append(ebookshtml);
+            document.getElementById("ebooksdata").style.display = "block";
+            document.getElementById("loader").style.display = "none";
+            $('#ebookscount').html('Head client not found.');
+        }    
     };
     ws.onclose = function (e) {
         if (i < 1) {

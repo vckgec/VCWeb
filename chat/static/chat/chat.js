@@ -15,7 +15,8 @@ $(document).ready(function () {
                 '<label style="background-color:black;color:white;margin-top:10px;padding-left:5px;padding-right:5px">' + JSON.parse(e.data)[0].chat_datetime +'</label>'
             )
         }
-        if (JSON.parse(e.data)[0].username == $('#chatbox').attr('username')) 
+        if (JSON.parse(e.data)[0].username == $('#chatbox').attr('username'))
+            
         {
             $('#box').append(
                 '<div style="margin-right:-20px">' +

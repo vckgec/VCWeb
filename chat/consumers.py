@@ -9,6 +9,7 @@ from django.utils.dateformat import DateFormat
 import json
 from django.core.files import File
 from django.core.files.base import ContentFile
+import base64
 
 # Connected to websocket.connect
 

@@ -2,7 +2,7 @@ from django.conf.urls import url
 from . import views
 app_name = 'mess'
 urlpatterns = [
-    url(r'^$', views.Home, name='home'),
+    url(r'^$', views.index, name='home'),
     url(r'^change/$', views.Change_Current_Status, name='change'),
     url(r'^future/$', views.Future, name='future'),
     url(r'^mealdish/$', views.Meal_Dish, name='mealdish'),

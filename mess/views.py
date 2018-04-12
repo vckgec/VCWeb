@@ -43,7 +43,7 @@ def Decrypt(status):
     #temp['3']=20
     #print(gen(temp,'123'))
 
-def Home(request):
+def index(request):
     boarder=Boarder.objects.filter(user=request.user.id)
     meal_today=Presence.objects.filter(meal_date=date.today())
     changeform = ChangeForm()
@@ -70,7 +70,8 @@ def Home(request):
         context={'changeform':changeform,'mealform': mealform,'meals_today':meal_today,'id':id}
     return render(request,'mess/mess.html',context)
 
-def Presence_Update(half): # after on/off status, this function will be invoke for presence update
+def Presence_Update(request): # after on/off status, this function will be invoke for presence update
+    half=request.POST['half']
     presence=Presence.objects.filter(meal_date=date.today(),half=half)
     if not presence:
         presence=Presence()
@@ -80,11 +81,17 @@ def Presence_Update(half): # after on/off status, this function will be invoke f
         presence.save()
     presence=Presence.objects.get(meal_date=date.today(),half=half)
     if half=='MO':
-        presence.boarder.remove(*Boarder.objects.filter(Morning_Presence=False,Presence_Date=date.today()))
-        presence.boarder.add(*Boarder.objects.filter(Morning_Presence=True,Presence_Date=date.today()))
+            presence.extra_meals -= Boarder.objects.filter(user=request.user, Morning_Presence=False, Presence_Date=date.today(), Current_Boarder=False).count()
+            presence.extra_meals += Boarder.objects.filter(user=request.user, Morning_Presence=True, Presence_Date=date.today(), Current_Boarder=False).count()
+            presence.save()
+            presence.boarder.remove(*Boarder.objects.filter(Morning_Presence=False,Presence_Date=date.today(),Current_Boarder=True))
+            presence.boarder.add(*Boarder.objects.filter(Morning_Presence=True,Presence_Date=date.today(), Current_Boarder=True))
     else:
-        presence.boarder.remove(*Boarder.objects.filter(Evening_Presence=False,Presence_Date=date.today()))
-        presence.boarder.add(*Boarder.objects.filter(Evening_Presence=True,Presence_Date=date.today()))
+        presence.extra_meals -= Boarder.objects.filter(user=request.user, Evening_Presence=False, Presence_Date=date.today(), Current_Boarder=False).count()
+        presence.extra_meals += Boarder.objects.filter(user=request.user, Evening_Presence=True, Presence_Date=date.today(), Current_Boarder=False).count()
+        presence.save()
+        presence.boarder.remove(*Boarder.objects.filter(Evening_Presence=False,Presence_Date=date.today(), Current_Boarder=True))
+        presence.boarder.add(*Boarder.objects.filter(Evening_Presence=True,Presence_Date=date.today(), Current_Boarder=True))
     return HttpResponse(half)
 
 @login_required
@@ -92,13 +99,22 @@ def Change_Current_Status(request): # for slider switch
     if request.method=='POST':
         boarder=Boarder.objects.get(pk=request.POST['username'])
         boarder.Presence_Date=date.today() #arrow.get(request.POST['date'],'MM/D/YYYY').format('YYYY-MM-DD')
-        half=request.POST['half']
-        if half=='MO':
-            boarder.Morning_Presence=request.POST['status']
-        else:
-            boarder.Evening_Presence=request.POST['status']
-        boarder.save()
-    return Presence_Update(half)
+        try:
+            if request.POST['half'] == 'MO':
+                if datetime.now().hour <=7:
+                    boarder.Morning_Presence=request.POST['status']
+                else:
+                    raise Exception('Can\'t change morning status after 7 a.m.')
+            else:
+                if datetime.now().hour <= 17:
+                    boarder.Evening_Presence=request.POST['status']
+                else:
+                    raise Exception('Can\'t change evening status after 5 p.m.')
+            boarder.save()
+        except Exception as e:
+            return HttpResponse(e)
+    return Presence_Update(request)
+
 
 
 def Meal_Update(half):  # after input meal_dish in the database, this func will invoke to update meal and other related option in presence
@@ -195,15 +211,18 @@ def Presence_Create(): # Every day at 00:00 it will create MO and EV presence of
         presence_ev=Presence()
         presence_ev.half='EV'
         presence_ev.meal_date=date.today()
-        presence_ev.change_by=datetime.now() 
+        presence_ev.change_by=datetime.now()
+        presence_ev.extra_meals += Boarder.objects.filter(Evening_Presence=True,Presence_Date=date.today(), Current_Boarder=False).count()
         presence_ev.save()
-        presence_ev.boarder.add(*Boarder.objects.filter(Evening_Presence=True,Presence_Date=date.today()))
+        presence_ev.boarder.add(*Boarder.objects.filter(Evening_Presence=True,Presence_Date=date.today(), Current_Boarder=True))
+        
         presence_mo=Presence()
         presence_mo.half='MO'
         presence_mo.meal_date=date.today()
         presence_mo.change_by=datetime.now()
+        presence_mo.extra_meals += Boarder.objects.filter(Morning_Presence=True,Presence_Date=date.today(), Current_Boarder=False).count()
         presence_mo.save()
-        presence_mo.boarder.add(*Boarder.objects.filter(Morning_Presence=True,Presence_Date=date.today()))
+        presence_mo.boarder.add(*Boarder.objects.filter(Morning_Presence=True,Presence_Date=date.today(), Current_Boarder=True))
         presences=Presence.objects.filter(meal_date=date.today())
         for presence in presences:
             guestscount=GuestMeal.objects.filter(Meal_Date=date.today(),Meal_Half=presence.half)
