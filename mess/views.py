@@ -5,15 +5,17 @@ from django.shortcuts import render_to_response
 from django.template import loader
 from django.contrib import messages
 from datetime import datetime
+import datetime as timedate
 import calendar
 from .models import *
 from django.db.models import Min,Max
 from account.models import *
 from .forms import *
 import arrow
-import time
 import threading
 #from weasyprint import HTML
+
+global idDate,idHalf
 
 # Create your views here.
 
@@ -53,7 +55,7 @@ def index(request):
         last_meal=MealDishes.objects.latest('Meal_Date')
         if last_meal.Meal_Date >= date.today():
             if last_meal.Meal_Dish.lower().find("biriyani")!=-1 or last_meal.Meal_Dish.lower().find("id")!=-1:
-                id_date=str(last_meal.Meal_Date)
+                id_date=last_meal.Meal_Date
                 id_half=last_meal.Half()
             else:
                 id_date=None
@@ -64,6 +66,10 @@ def index(request):
     else:
         id_date=None
         id_half=None
+    global idDate,idHalf
+    idDate=id_date
+    idHalf=id_half
+
     if boarder:
         context={'status_mo':Decrypt(boarder[0].Morning_Presence),'status_ev':Decrypt(boarder[0].Evening_Presence),'changeform':changeform,'mealform': mealform,'meals_today':meal_today,'id':{'id_date':id_date,'id_half':id_half}}
     else:
@@ -97,6 +103,8 @@ def Presence_Update(request): # after on/off status, this function will be invok
 @login_required
 def Change_Current_Status(request): # for slider switch
     if request.method=='POST':
+        if idDate == date.today() and idHalf[0:2].upper() == request.POST['half']:
+            return HttpResponse('Can\'t change, as id time is less than 24 hours')
         boarder=Boarder.objects.get(pk=request.POST['username'])
         boarder.Presence_Date=date.today() #arrow.get(request.POST['date'],'MM/D/YYYY').format('YYYY-MM-DD')
         try:
@@ -114,7 +122,7 @@ def Change_Current_Status(request): # for slider switch
         except Exception as e:
             return HttpResponse(e)
     return Presence_Update(request)
-
+            
 
 
 def Meal_Update(half):  # after input meal_dish in the database, this func will invoke to update meal and other related option in presence
@@ -279,6 +287,10 @@ def Boarder_Update(): # Every day at 00:00 it will update what will be the board
 @login_required
 def Future(request): # save on/off status in this model
     if request.method=='POST':
+        if str(idDate) == request.POST['date'] and idHalf[0:2].upper() == request.POST['half']:
+            if not (datetime.combine(idDate,timedate.time())-datetime.now()).days > 0:
+                return HttpResponse('Can\'t change, as id time is less than 24 hours')
+
         futureboarder=FutureBoarder.objects.filter(user=request.user.id)
         if not futureboarder:
             future=FutureBoarder()

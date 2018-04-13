@@ -148,25 +148,32 @@ $(document).on('submit', '#changeform', function (e) {
         success: function (data) {
             /*$("#paneloff").removeAttr("disabled");*/
             /*alert(new Date(data.date) + " --" + new Date(new Date().getFullYear() + " " + (new Date().getMonth() + 1) + " " + new Date().getDate() + " 05:30:00"));*/
-            if (new Date(data.date).toLocaleDateString() == new Date().toLocaleDateString())
-            {
-                if (data.status == "unchecked") {
-                    $('input[id=' + data.half + ']').prop('checked', false);
-                }
-                else {
-                    $('input[id=' + data.half + ']').prop('checked', data.status);
-                }
-
-                $('input[id=' + data.half + ']').change();
+            if (typeof data.status === 'undefined'){
+                alert(data);
             }
+            else{
+                if (new Date(data.date).toLocaleDateString() == new Date().toLocaleDateString())
+                {
+                    if (data.status == "unchecked") {
+                        $('input[id=' + data.half + ']').prop('checked', false);
+                    }
+                    else {
+                        $('input[id=' + data.half + ']').prop('checked', data.status);
+                    }
 
+                    $('input[id=' + data.half + ']').change();
+                }
+                else{
+                    alert("Succecss");
+                }
+            }
             $(e.target).parents('.panel-collapse').collapse('hide');
             /*$('#panelon').click();*/
             /*$('.panel-collapse').slideUp("slow");*/
         },
-        complete: function (data) {
+        /*complete: function (data) {
             alert("Sucecss");
-        }
+        }*/
     });
   
 });
