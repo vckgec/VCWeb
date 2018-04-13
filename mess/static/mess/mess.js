@@ -125,57 +125,44 @@ $(document).ready(function () {
         mysidenav.style.width = "0px"; 
         $('#open').css("visibility", "visible");
     });
-
     /*$('a[data-toggle="tab"]').click(function(event) {
     // only do this if navigation is visible, otherwise you see jump in navigation while collapse() is called 
         if ($(".navbar-collapse").is(":visible") && $(".navbar-toggle").is(":visible") ) {
             $('.navbar-collapse').collapse('toggle');
         }
     });*/
-
 });
+
 $(document).on('submit', '#changeform', function (e) {
     e.preventDefault();
-    $.ajax({
-        type: "POST",
-        url:"/mess/future/",
-        data: {
-            csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
-            date: $(this).serializeArray()[1].value,
-            half: $(this).serializeArray()[2].value,
-            status:$(this).serializeArray()[3].value,
-        },
-        success: function (data) {
-            /*$("#paneloff").removeAttr("disabled");*/
-            /*alert(new Date(data.date) + " --" + new Date(new Date().getFullYear() + " " + (new Date().getMonth() + 1) + " " + new Date().getDate() + " 05:30:00"));*/
-            if (typeof data.status === 'undefined'){
+    if (new Date($(this).serializeArray()[1].value).toLocaleDateString() == new Date().toLocaleDateString()) {
+        if($('input[id=' + $(this).serializeArray()[2].value + ']').prop('checked') != ($(this).serializeArray()[3].value == 'off' ? false : true)){
+            $('input[id=' + $(this).serializeArray()[2].value + ']').prop('checked', $(this).serializeArray()[3].value == 'off' ? false : true)
+            $('input[id=' + $(this).serializeArray()[2].value + ']').change();
+        }        
+    }
+    else{
+        $.ajax({
+            type: "POST",
+            url:"/mess/future/",
+            data: {
+                csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                date: $(this).serializeArray()[1].value,
+                half: $(this).serializeArray()[2].value,
+                status:$(this).serializeArray()[3].value,
+            },
+            success: function (data) {
                 alert(data);
-            }
-            else{
-                if (new Date(data.date).toLocaleDateString() == new Date().toLocaleDateString())
-                {
-                    if (data.status == "unchecked") {
-                        $('input[id=' + data.half + ']').prop('checked', false);
-                    }
-                    else {
-                        $('input[id=' + data.half + ']').prop('checked', data.status);
-                    }
-
-                    $('input[id=' + data.half + ']').change();
-                }
-                else{
-                    alert("Succecss");
-                }
-            }
-            $(e.target).parents('.panel-collapse').collapse('hide');
-            /*$('#panelon').click();*/
-            /*$('.panel-collapse').slideUp("slow");*/
-        },
-        /*complete: function (data) {
-            alert("Sucecss");
-        }*/
-    });
-  
+            },
+            /*complete: function (data) {
+                $("#paneloff").removeAttr("disabled");
+                alert(new Date(data.date) + " --" + new Date(new Date().getFullYear() + " " + (new Date().getMonth() + 1) + " " + new Date().getDate() + " 05:30:00"));
+                $('#panelon').click();
+                $('.panel-collapse').slideUp("slow");
+            }*/
+        });
+    }
+    $(e.target).parents('.panel-collapse').collapse('hide');
 });
 
 $(document).on('submit', '#mealform', function (e) {

@@ -309,7 +309,8 @@ def Future(request): # save on/off status in this model
             futureboarder.offdate=request.POST['date']
             futureboarder.offhalf=request.POST['half']
         futureboarder.save()
-    return JsonResponse({'date':request.POST['date'],'half':request.POST['half'],'status':Decrypt(request.POST['status'])})
+    return HttpResponse("Success")
+    #return JsonResponse({'date':request.POST['date'],'half':request.POST['half'],'status':Decrypt(request.POST['status'])})
 
 @login_required
 def guestmeal(request): # guest meal dtails wil be input from user
