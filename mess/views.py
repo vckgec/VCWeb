@@ -101,12 +101,12 @@ def Change_Current_Status(request): # for slider switch
         boarder.Presence_Date=date.today() #arrow.get(request.POST['date'],'MM/D/YYYY').format('YYYY-MM-DD')
         try:
             if request.POST['half'] == 'MO':
-                if datetime.now().hour <=7:
+                if datetime.now().hour <7:
                     boarder.Morning_Presence=request.POST['status']
                 else:
                     raise Exception('Can\'t change morning status after 7 a.m.')
             else:
-                if datetime.now().hour <= 17:
+                if datetime.now().hour <17:
                     boarder.Evening_Presence=request.POST['status']
                 else:
                     raise Exception('Can\'t change evening status after 5 p.m.')
