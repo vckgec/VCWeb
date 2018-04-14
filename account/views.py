@@ -20,7 +20,7 @@ import json
 
 def send(message):
     try:
-        ws = websocket.create_connection("ws://127.0.0.1:8000/account/")
+        ws = websocket.create_connection("wss://socketvc.herokuapp.com/")
         ws.send(json.dumps({'type': 'account', 'message':message }))
         result=ws.recv()
         print(result)
