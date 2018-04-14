@@ -7,7 +7,7 @@ $(document).ready(function () {
             },
         });
     });
-    $('#myNavbar,#appview').click(function () {
+    $('#myNavbar,#myBody').click(function () {
         $('#demo').collapse('hide');
     });
 });

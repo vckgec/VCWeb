@@ -59,7 +59,7 @@
                                     <b style="font-size:15px;color:black">{{request.user.boarder}}</b><br />
                                     <label style="font-size:11px;letter-spacing:0px">{{request.user.email}}</label>
                                 </div><br />
-                                <button id="logout" class="btn btn-primary" style="float:right">Sign out</button><br />
+                                <button id="logout" class="btn btn-primary" style="float:right;letter-spacing:2px">Sign out</button><br />
                             </div>
                         {% else %}
                             {% include 'account/login.html' %}
@@ -115,7 +115,7 @@
 
             </nav>
 
-            <div style="position:absolute;left:0;right:0;top:70px;bottom:64px;overflow-y:auto;overflow-x:hidden">
+            <div id="myBody" style="position:absolute;left:0;right:0;top:70px;bottom:64px;overflow-y:auto;overflow-x:hidden">
                 {% block mininav %}
                 {% endblock %}
         {% else %}
@@ -132,7 +132,7 @@
                 </div>
             {% endif %}
 
-            <div id="appview">
+            <div class="container-fluid row">
                 {% block content %}
                 {% endblock %}
             </div>
