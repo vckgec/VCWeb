@@ -3,7 +3,7 @@ from .models import *
 
 class BookRequest(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Name','max_length': 100}))
-    remarks = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Remarks','max_length': 100}))
+    remarks = forms.CharField(required=False,widget=forms.Textarea(attrs={'placeholder': 'Remarks','max_length': 100}))
     class Meta:
         model = Request
         fields = ['name','remarks'] 
