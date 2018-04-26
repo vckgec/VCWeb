@@ -61,4 +61,8 @@ $(document).ready(function () {
         }
         console.log(e)
     };
+    $('#ebooksdata').click(function (e) {
+        e.preventDefault();
+        window.open($(e.target).parents('a').attr('href'));
+    });
 });
