@@ -11,4 +11,4 @@ Pillow
 dj_database_url
 websocket-client
 psycopg2
-numpy=1.14
+numpy==1.14
