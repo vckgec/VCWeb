@@ -13,9 +13,6 @@ from account.models import *
 from .forms import *
 import arrow
 import threading
-#from weasyprint import HTML
-
-global idDate,idHalf
 
 # Create your views here.
 
@@ -26,24 +23,6 @@ def Decrypt(status):
     else:
         return 'unchecked'
 
-#def gen(xxx,yyy):
-    #lenth=len(yyy)
-    #yyy=yyy[-1]+yyy+yyy[0]
-    #veg=0
-    #for i in range(lenth):
-        #veg+=(xxx[yyy[i+1]]-xxx[yyy[i:i+2]]-xxx[yyy[i+1:i+3]]+xxx[yyy[i:i+3]])+(xxx[yyy[i+1:i+3]]-xxx[yyy[i:i+3]]-xxx[yyy[i+1:i+4]]+xxx[yyy[1:lenth+1]])+(xxx[yyy[i+1:i+4]]-xxx[yyy[1:lenth+1]])
-    #veg+=xxx[yyy[1:lenth+1]]
-    #return veg
-    #temp={}
-    #temp['312']=temp['123']=5
-    #temp['231']=5
-    #temp['31']=10
-    #temp['12']=10
-    #temp['23']=10
-    #temp['1']=20
-    #temp['2']=20
-    #temp['3']=20
-    #print(gen(temp,'123'))
 
 def index(request):
     boarder=Boarder.objects.filter(user=request.user.id)
@@ -66,9 +45,6 @@ def index(request):
     else:
         id_date=None
         id_half=None
-    global idDate,idHalf
-    idDate=id_date
-    idHalf=id_half
 
     if boarder:
         context={'status_mo':Decrypt(boarder[0].Morning_Presence),'status_ev':Decrypt(boarder[0].Evening_Presence),'changeform':changeform,'mealform': mealform,'meals_today':meal_today,'id':{'id_date':id_date,'id_half':id_half}}
@@ -103,8 +79,14 @@ def Presence_Update(request): # after on/off status, this function will be invok
 @login_required
 def Change_Current_Status(request): # for slider switch
     if request.method=='POST':
-        if idDate == date.today() and idHalf[0:2].upper() == request.POST['half']:
-            return HttpResponse('Can\'t change, as id time is less than 24 hours')
+        try:
+            last_meal = MealDishes.objects.latest('Meal_Date')
+            if last_meal.Meal_Date >= date.today():
+                if last_meal.Meal_Dish.lower().find("biriyani") != -1 or last_meal.Meal_Dish.lower().find("id") != -1:
+                    if last_meal.Meal_Date == date.today() and last_meal.Meal_Half == request.POST['half']:
+                        return HttpResponse('Can\'t change, as id time is less than 24 hours')
+        except:
+            pass
         boarder=Boarder.objects.get(pk=request.POST['username'])
         boarder.Presence_Date=date.today() #arrow.get(request.POST['date'],'MM/D/YYYY').format('YYYY-MM-DD')
         try:
@@ -287,10 +269,15 @@ def Boarder_Update(): # Every day at 00:00 it will update what will be the board
 @login_required
 def Future(request): # save on/off status in this model
     if request.method=='POST':
-        if str(idDate) == request.POST['date'] and idHalf[0:2].upper() == request.POST['half']:
-            if not (datetime.combine(idDate,timedate.time())-datetime.now()).days > 0:
-                return HttpResponse('Can\'t change, as id time is less than 24 hours')
-
+        try:
+            last_meal = MealDishes.objects.latest('Meal_Date')
+            if last_meal.Meal_Date >= date.today():
+                if last_meal.Meal_Dish.lower().find("biriyani") != -1 or last_meal.Meal_Dish.lower().find("id") != -1:
+                    if str(last_meal.Meal_Date) == request.POST['date'] and last_meal.Meal_Half == request.POST['half']:
+                        if not (datetime.combine(idDate,timedate.time())-datetime.now()).days > 0:
+                            return HttpResponse('Can\'t change, as id time is less than 24 hours')
+        except:
+            pass
         futureboarder=FutureBoarder.objects.filter(user=request.user.id)
         if not futureboarder:
             future=FutureBoarder()
@@ -396,19 +383,3 @@ def Store_Keeper_Edit(request):
         messages.success(request,"Successfully submitted data")
         return redirect('mess:storekeeper')
     return render(request,'mess/storekeeperedit.html',{'juniors':second_year})
-
-
-#def html_to_pdf_view(request):
-    #second_year=StoreKeeper.objects.filter(Store_Date__month=datetime.now().month).order_by('Store_Date','Store_Half')
-    #html_string = render_to_string('mess/storekeeper.html',{'juniors':second_year})
-
-    #html = HTML(string=html_string)
-    #html.write_pdf(target='/tmp/mypdf.pdf');
-
-    #fs = FileSystemStorage('/tmp')
-    #with fs.open('mypdf.pdf') as pdf:
-        #response = HttpResponse(pdf, content_type='application/pdf')
-        #response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
-        #return response
-
-    #return response
