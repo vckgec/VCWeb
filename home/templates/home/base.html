@@ -108,6 +108,13 @@
                     {% else %}
                         <li><a href="{% url 'mess:home' %}">MESS</a></li>
                     {% endif %}
+                    {% if request.user.is_authenticated %}
+                        {% if 'dues' in request.resolver_match.app_name %}
+                            <li class="active"><a href="{% url 'dues:home' %}">DUES</a></li>
+                        {% else %}
+                            <li><a href="{% url 'dues:home' %}">DUES</a></li>
+                        {% endif %}
+                    {% endif %}
                   </ul>
                 </div>
 
