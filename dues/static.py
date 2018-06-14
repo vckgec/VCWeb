@@ -4,11 +4,11 @@ class Static:
             '#%s {\n' % input_box +\
                 'font-size: 15px;\n'+\
                 'border-bottom: 1px solid #ddd;\n'+\
-                'cursor: default;\n' +\
             '}\n'+\
             '.dropdown-content {\n'+\
-                'visibility: hidden;\n' +\
+                'visibility: hidden;\n'+\
                 'position: absolute;\n'+\
+                'max-height: 308px;\n'+\
                 'background-color:#f6f6f6;\n'+\
                 'overflow: auto;\n'+\
                 'border: 1px solid #ddd;\n'+\
@@ -19,7 +19,7 @@ class Static:
                 'padding: 12px 16px;\n'+\
                 'text-decoration: none;\n'+\
                 'display: block;\n'+\
-                'cursor: pointer;\n' +\
+                'cursor: pointer;\n'+\
             '}\n'+\
             '.dropdown-content a:hover {\n' +\
                 'background-color: #ddd;\n'+\
@@ -33,7 +33,7 @@ class Static:
                     'input_hidden=document.getElementById("%s_hidden");\n' % input_box +\
                     'div = document.getElementById("%s");\n' %dropdown_div +\
                     'visible_a = a = div.getElementsByTagName("a");\n'+\
-                    'div.style.width=input.offsetWidth+"px";\n' +\
+                    'div.style.width=input.clientWidth+"px";\n' +\
                     'input.addEventListener("click", function(event){\n'+\
                         'if(div.style.visibility==="visible"){\n' +\
                             'div.style.visibility="hidden";\n' +\
