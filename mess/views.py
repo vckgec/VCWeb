@@ -13,9 +13,10 @@ from account.models import *
 from .forms import *
 import arrow
 import threading
+from dateutil.relativedelta import relativedelta
+#from weasyprint import HTML
 
 # Create your views here.
-
 
 def Decrypt(status):
     if status==True or status=="on":
@@ -23,6 +24,24 @@ def Decrypt(status):
     else:
         return 'unchecked'
 
+#def gen(xxx,yyy):
+    #lenth=len(yyy)
+    #yyy=yyy[-1]+yyy+yyy[0]
+    #veg=0
+    #for i in range(lenth):
+        #veg+=(xxx[yyy[i+1]]-xxx[yyy[i:i+2]]-xxx[yyy[i+1:i+3]]+xxx[yyy[i:i+3]])+(xxx[yyy[i+1:i+3]]-xxx[yyy[i:i+3]]-xxx[yyy[i+1:i+4]]+xxx[yyy[1:lenth+1]])+(xxx[yyy[i+1:i+4]]-xxx[yyy[1:lenth+1]])
+    #veg+=xxx[yyy[1:lenth+1]]
+    #return veg
+    #temp={}
+    #temp['312']=temp['123']=5
+    #temp['231']=5
+    #temp['31']=10
+    #temp['12']=10
+    #temp['23']=10
+    #temp['1']=20
+    #temp['2']=20
+    #temp['3']=20
+    #print(gen(temp,'123'))
 
 def index(request):
     boarder=Boarder.objects.filter(user=request.user.id)
@@ -231,6 +250,10 @@ def Boarder_Update(): # Every day at 00:00 it will update what will be the board
     threading.Timer(60.0, Boarder_Update).start()
     presence=Presence.objects.filter(meal_date=date.today())
     if not presence:
+        last_year = Boarder.objects.filter(Current_Boarder=True).aggregate(Year_Of_Passing=Min('Year_Of_Passing'))['Year_Of_Passing']
+        if last_year:
+            if not relativedelta(datetime.now(), datetime(last_year, 7, 1)).years:
+                Boarder.objects.filter(Year_Of_Passing=last_year).update(Current_Boarder=False)
         boarders=Boarder.objects.all()
         for boarder in boarders:
             if boarder.Evening_Presence:

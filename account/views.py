@@ -18,12 +18,12 @@ import json
 
 # Create your views here.
 
-def send(message):
+def send(request,message):
     try:
-        ws = websocket.create_connection("wss://socketvc.herokuapp.com/")
+        ws_scheme = "wss" if request.is_secure() else "ws"        
+        ws = websocket.create_connection(ws_scheme+"://"+request.get_host()+"/account/")
         ws.send(json.dumps({'type': 'account', 'message':message }))
         result=ws.recv()
-        print(result)
         ws.close()
         if result == 'Head client not found':
             return False
@@ -119,7 +119,7 @@ def forgot_password(request):
                 user=User.objects.get(username=form.cleaned_data['username'])
                 reset_password=user.password[-11:-1]
                 #asyncio.get_event_loop().run_until_complete(hello(reset_password))                
-                if send({'email': form.cleaned_data['email'], 'password': reset_password}):
+                if send(request,{'email': form.cleaned_data['email'], 'password': reset_password}):
                     user.set_password(reset_password)
                     user.save()
                     messages.success(request, 'Password is send to '+form.cleaned_data['email'])

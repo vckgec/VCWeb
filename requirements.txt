@@ -12,3 +12,4 @@ dj_database_url
 websocket-client
 psycopg2
 numpy==1.14
+django-relativedelta==1.0.3
