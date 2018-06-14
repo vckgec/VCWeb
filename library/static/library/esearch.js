@@ -4,8 +4,7 @@ $(function () {
 });
 $(document).ready(function () {
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-    //ws = new WebSocket(ws_scheme + '://' + window.location.host + "/account/");
-    ws = new WebSocket(ws_scheme + '://' + "socketvc.herokuapp.com" + "/");
+    ws = new WebSocket(ws_scheme + '://' + window.location.host + "/account/");
     var i;
     var row;
     ws.onopen = function (e) {
