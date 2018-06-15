@@ -6,9 +6,8 @@ class Static:
                 'border-bottom: 1px solid #ddd;\n'+\
             '}\n'+\
             '.dropdown-content {\n'+\
-                'visibility: hidden;\n'+\
+                'visibility: hidden;\n' +\
                 'position: absolute;\n'+\
-                'max-height: 308px;\n'+\
                 'background-color:#f6f6f6;\n'+\
                 'overflow: auto;\n'+\
                 'border: 1px solid #ddd;\n'+\
@@ -17,9 +16,10 @@ class Static:
             '.dropdown-content a {\n'+\
                 'color: black;\n'+\
                 'padding: 12px 16px;\n'+\
+                'max-height: 308px;\n'+\
                 'text-decoration: none;\n'+\
                 'display: block;\n'+\
-                'cursor: pointer;\n'+\
+                'cursor: pointer;\n' +\
             '}\n'+\
             '.dropdown-content a:hover {\n' +\
                 'background-color: #ddd;\n'+\

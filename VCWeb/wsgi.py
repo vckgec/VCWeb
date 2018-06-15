@@ -14,7 +14,7 @@ framework.
 
 """
 import os
-from asgiref.wsgi import WsgiToAsgi
+#from asgiref.wsgi import WsgiToAsgi
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "VCWeb.settings")
@@ -23,7 +23,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "VCWeb.settings")
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
 from django.core.wsgi import get_wsgi_application
-application = WsgiToAsgi(get_wsgi_application())
+application = get_wsgi_application()#WsgiToAsgi(get_wsgi_application())
 
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication

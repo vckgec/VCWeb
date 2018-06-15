@@ -3,7 +3,56 @@
 {% block mininav %}
     {% include 'dues/mininav.html' %}
 {% endblock %}
+{% block styles %} 
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'dues/table.css' %}">
+{% endblock %}
 {% block content %}
+    {% load get_data %}
     <div class="container-fluid">
+        {% regroup dues by Year_Of_Passing as year_wise_dues_list %}
+        <ul class="nav nav-tabs" style="border:none">
+            {% for year_wise_dues in year_wise_dues_list %}
+                {% if forloop.counter == 1 %}
+                    <li class="active"><a data-toggle="tab" href="#{{year_wise_dues.grouper}}">Batch {{year_wise_dues.grouper}}</a></li>
+                {% else %}
+                    <li><a data-toggle="tab" href="#{{year_wise_dues.grouper}}">Batch {{year_wise_dues.grouper}}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>        
+        <div class="tab-content">
+            {% for year_wise_dues in year_wise_dues_list %}
+                {% if forloop.counter == 1 %}
+                    <div id="{{year_wise_dues.grouper}}" class="tab-pane fade in active">
+                {% else %}
+                    <div id="{{ year_wise_dues.grouper}}" class="tab-pane fade">
+                {% endif %}
+                <table>
+                    <tr>
+                        {% for field in fields %}
+                            {% if field|getName != None %}
+                                <th>{{field|getName}}</th>
+                            {% endif %}
+                        {% endfor %}
+                        <th>TOTAL NET</th>
+                        <th>TOTAL MESS</th>
+                        <th>TOTAL</th>
+                    </tr>
+                    {% for due in year_wise_dues.list %}
+                        <tr>
+                            {% for field in fields %}
+                                {% if due|getValue:field != None %}
+                                    <td>{{due|getValue:field}}</td>
+                                {% endif %}
+                            {% endfor %}
+                            <td>{{due|getTotal:'Net'}}</td>
+                            <td>{{due|getTotal:'Mess'}}</td>
+                            <td>{{due|getTotal}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                </div>
+            {% endfor %}
+        </div>        
     </div>
 {% endblock %}

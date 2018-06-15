@@ -2,10 +2,16 @@ from django.shortcuts import render
 from .forms import PrintScan
 from account.models import Boarder
 from.models import *
+from django.db.models import Count,Max
 # Create your views here.
 
 def index(request):
-    return render(request,'dues/dues.html')
+    #fields=['Name','First charge','Net','Print & Scan','Canteen','Recreation','Mess','Mess Bill']
+    fields=Dues._meta.fields
+    dues = Dues.objects.all().values().annotate(Year_Of_Passing=Max(
+        'name__Year_Of_Passing')).order_by('-Year_Of_Passing')
+    print(Dues.objects.all().values().annotate(Year_Of_Passing=Max('name__Year_Of_Passing')).order_by('-Year_Of_Passing'))
+    return render(request,'dues/dues.html',{'fields':fields,'dues':dues})
 
 def printScan(request):
     if request.POST:

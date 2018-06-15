@@ -12,5 +12,13 @@ class Dues(models.Model):
     mess = models.FloatField(default=0.0)
     mess_bill = models.FloatField(blank=True, default=0.0)
     library = models.FloatField(default=0.0)
+
+    def getTotalNet(self):
+        return self.net+self.print_scan
+    def getTotalMess(self):
+        return self.mess+self.mess_bill
+    def getTotal(self):
+        return self.first_charge+self.net+self.print_scan+self.canteen+self.recreation+self.mess+self.library+self.mess_bill
+
     def __str__(self):
         return "%s's total due in hostel(₹%s)" %(self.name,self.first_charge+self.net+self.print_scan+self.canteen+self.recreation+self.mess+self.library)
