@@ -21,4 +21,5 @@ urlpatterns = [
 	url(r'^search/$', views.Search, name='search'),
 	url(r'^libgen/$', views.libgen, name='libgen'),
     url(r'^date/$', views.dateFix, name='date'),
+	url(r'^dashboard/$', views.UserDashboard, name='user_dashboard')
 ]
