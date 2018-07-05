@@ -1,74 +1,69 @@
 {% extends 'home/base.html' %} 
-{% block title %} Print & Scan | Dues {% endblock %} 
-{% block styles %} 
-{% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'dues/table.css' %}">
-{% endblock %}
+{% block title %} Print & Scan | Dues {% endblock %}
 {% block mininav %}
     {% include 'dues/mininav.html' %}
 {% endblock %}
 {% block content %}
-    <div class="container-fluid">
-        <div class="col-sm-6 col-sm-offset-3 text-center" style="margin-top:-25px;padding-bottom:10px">
-            <h2>Print and Scan</h2>
-        </div>
-<div class="col-sm-7" style="padding-bottom:10px">
-            <form class="form-horizontal" action="." method="post" enctype="multipart/form-data">
+    <div class="container-fluid row">
+        <div class="col-sm-7" style="padding-top:25px;padding-bottom:10px">
+            <form class="form" action="." method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                        {% csrf_token %} 
-                        {% for field in form %}
-                            <div class="col-sm-12" style="padding-bottom:20px">                       
-                                <div class="col-sm-6 row">
-                                    {{ field.label_tag }}
-                                </div>
-                                <div class="col-sm-6 row">
-                                    <label class="text-danger small" style="position:absolute;margin-top:-20px;">
-                                        {{ field.errors }}
-                                    </label>
-                                    {{ field }}
-                                </div>
-                            </div>
-                        {% endfor %}
-                    {% if request.user.is_staff %}
-                        <div class="container-fluid">
-                            <button type="submit" class="btn btn-success">Submit</button>
+                {% for field in form %}
+                    <div class="col-sm-12" style="padding-bottom:20px">                       
+                        <div class="col-sm-6 row">
+                            {{ field.label_tag }}
                         </div>
-                    {% endif %}
+                        <div class="col-sm-6 row">
+                            <label class="text-danger small" style="position:absolute;margin-top:-20px;">
+                                {{ field.errors }}
+                            </label>
+                            {{ field }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if request.user.is_staff %}
+                    <div class="container-fluid">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                {% endif %}
             </form>
         </div>
         <div class="col-sm-5" style="margin-top:-10px">
             <h2>Cost Details</h2>
-            <table>
-                <tr>
-                    <th>Items</th>
-                    <th>Cost/Item(₹)</th>
-                </tr>
-                <tr>
-                    <td>A4 Page</td>
-                    <td>0.40</td>
-                </tr>
-                <tr>
-                    <td>B/W Prints or Xerox(Singlde Side)</td>
-                    <td>0.80</td>
-                </tr>
-                <tr>
-                    <td>B/W Prints or Xerox(Double Side)</td>
-                    <td>1.20</td>
-                </tr>
-                <tr>
-                    <td>Color Prints</td>
-                    <td>4.00</td>
-                </tr>
-                <tr>
-                    <td>Photo Strip(5 Pics) Prints</td>
-                    <td>20.00</td>
-                </tr>
-                <tr>
-                    <td>Photo Paper Prints</td>
-                    <td>100.00</td>
-                </tr>
+            <table class="table table-striped" style="border:1px solid #ddd">
+                <thead>
+                    <tr>
+                        <th>Items</th>
+                        <th>Cost/Item(₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A4 Page</td>
+                        <td>0.40</td>
+                    </tr>
+                    <tr>
+                        <td>B/W Print or Xerox(Singlde Side)</td>
+                        <td>0.80</td>
+                    </tr>
+                    <tr>
+                        <td>B/W Print or Xerox(Double Side)</td>
+                        <td>1.20</td>
+                    </tr>
+                    <tr>
+                        <td>Color Print</td>
+                        <td>4.00</td>
+                    </tr>
+                    <tr>
+                        <td>Photo Strip(5 Pics) Print</td>
+                        <td>20.00</td>
+                    </tr>
+                    <tr>
+                        <td>Photo Paper Print</td>
+                        <td>100.00</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
-    
 {% endblock %}

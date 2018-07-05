@@ -1,0 +1,52 @@
+{% extends 'home/base.html' %}
+{% block title %} {{logs.first.boarder}} | Dues{% endblock %}
+{% block mininav %}
+    {% include 'dues/mininav.html' %}
+{% endblock %}
+{% block content %}
+    {% load get_data %}
+    <div class="container-fluid">
+        {% regroup logs by name as name_wise_logs_list %}
+        <ul class="nav nav-tabs">
+            {% for name_wise_logs in name_wise_logs_list %}
+                {% if forloop.counter == 1 %}
+                    <li class="active"><a data-toggle="tab" href="#{{name_wise_logs.grouper}}">{{name_wise_logs.grouper|title}}</a></li>
+                {% else %}
+                    <li><a data-toggle="tab" href="#{{name_wise_logs.grouper}}">{{name_wise_logs.grouper|title}}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>        
+        <div class="tab-content">
+            {% for name_wise_logs in name_wise_logs_list %}
+                {% if forloop.counter == 1 %}
+                    <div id="{{name_wise_logs.grouper}}" class="tab-pane fade in active">
+                {% else %}
+                    <div id="{{name_wise_logs.grouper}}" class="tab-pane fade">
+                {% endif %}
+                <table class="table table-striped" style="border:1px solid #ddd;border-top:none">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Dues Added</th>
+                            <th scope="col">Dues Paid</th>
+                            <th scope="col">Current Dues</th>
+                            <th scope="col">Cause</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in name_wise_logs.list %}                            
+                            <tr>
+                                <td>{{log.action_time}}</td>
+                                <td>{{log.added}}</td>
+                                <td>{{log.paid}}</td>
+                                <td>{{log|getCurrent}}</td>
+                                <td>{{log.remarks}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            {% endfor %}
+        </div>        
+    </div>
+{% endblock %}

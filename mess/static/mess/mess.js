@@ -2,31 +2,31 @@ $(document).ready(function () {
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
     socket_mess = new WebSocket(ws_scheme + '://' + window.location.host + "/mess/");
     socket_mess.onmessage = function (e) {
-        if (JSON.parse(e.data)[0].id.id_date) {
-            $('#id').html('<label>ID will be held on ' + JSON.parse(e.data)[0].id.id_date + ' at ' + JSON.parse(e.data)[0].id.id_half +'</label>')
+        if (JSON.parse(e.data).id.id_date) {
+            $('#id').html('<label>ID will be held on ' + JSON.parse(e.data).id.id_date + ' at ' + JSON.parse(e.data).id.id_half +'</label>')
         }
         else {
             $('#id').html('')
         }
         var extra_details = ""
-        if (JSON.parse(e.data)[0].extra_meals != 0) {
-            extra_details += "Extra meals: " + JSON.parse(e.data)[0].extra_meals + "<br>"
+        if (JSON.parse(e.data).extra_meals != 0) {
+            extra_details += "Extra meals: " + JSON.parse(e.data).extra_meals + "<br>"
         }
-        if (JSON.parse(e.data)[0].non_count != '') {
-            for (i in JSON.parse(e.data)[0].non_count) {
-                extra_details += JSON.parse(e.data)[0].non_count[i] + '<br>'
+        if (JSON.parse(e.data).non_count != '') {
+            for (i in JSON.parse(e.data).non_count) {
+                extra_details += JSON.parse(e.data).non_count[i] + '<br>'
             }
         }
-        $('#' + JSON.parse(e.data)[0].meal_half + '_details').html(
+        $('#' + JSON.parse(e.data).half + '_details').html(
             '<div class="panel panel-primary" style="padding-top:0px">'+
             '<div class="panel-heading" style="height:50px;padding-top:1px">' +
-            '<h4><b style="color:whitesmoke">' + JSON.parse(e.data)[0].meal_half + '</b></h4>' +
+            '<h4><b style="color:whitesmoke">' + JSON.parse(e.data).half + '</b></h4>' +
             '</div>' +
             '<div class="panel-body text-left">'+
-            "<b>Meal: " + JSON.parse(e.data)[0].meal_dishes + "</b><br>" +
-            "Boarder count: " + JSON.parse(e.data)[0].boarder_count + "<br>" +
+            "<b>Meal: " + JSON.parse(e.data).dish + "</b><br>" +
+            "Boarder count: " + JSON.parse(e.data).presence_count + "<br>" +
             extra_details +
-            "<b>Total Meals: " + JSON.parse(e.data)[0].total_count + "</b><br>" +
+            "<b>Total Meals: " + JSON.parse(e.data).total_count + "</b><br>" +
             '</div >'+
             '</div >'
         );
@@ -34,14 +34,14 @@ $(document).ready(function () {
     if (socket_mess.readyState == 0) {
         socket_mess.addEventListener('open', function (event) {
             socket_mess.send(JSON.stringify({
-                'half': 'MO'
+                'half': '1MO'
             }));
         });
     }
     else {
         if (socket_mess.readyState != 3) {
             socket_mess.send(JSON.stringify({
-                'half': 'MO'
+                'half': '1MO'
             }));
         }
         else {
@@ -51,14 +51,14 @@ $(document).ready(function () {
     if (socket_mess.readyState == 0) {
         socket_mess.addEventListener('open', function (event) {
             socket_mess.send(JSON.stringify({
-                'half': 'EV'
+                'half': '2EV'
             }));
         });
     }
     else {
         if (socket_mess.readyState != 3) {
             socket_mess.send(JSON.stringify({
-                'half': 'EV'
+                'half': '2EV'
             }));
         }
         else {
@@ -74,30 +74,29 @@ $(document).ready(function () {
     $('.switch').change(function (e) {
         var status="";
         if($(e.target).prop("checked") == true){
-        status = "True";
+        status = "on";
         }
         else
         {
-        status = "False";
+        status = "off";
         /*$("#panelchange").attr("disabled","disabled")*/
         };
         $.ajax({
             type: "POST",
             url:"/mess/change/",
             data:{
-            username:$(e.target).attr("data-catid"),
                 status:status,
                 half:$(e.target).attr("id"),
                 csrfmiddlewaretoken:document.getElementsByName('csrfmiddlewaretoken')[0].value,
             },
             success: function(data) {
-                    if (data.length==2){
+                    if (data.length==3){
                         socket_mess.send(JSON.stringify({
                             'half': data
                         }));
                     }
                     else{                        
-                        $(e.target).prop("checked", status == 'True' ? false : true);
+                        $(e.target).prop("checked", status == 'on' ? false : true);
                         alert(data);
                     }
             },
@@ -144,7 +143,7 @@ $(document).on('submit', '#changeform', function (e) {
     else{
         $.ajax({
             type: "POST",
-            url:"/mess/future/",
+            url:"/mess/change/",
             data: {
                 csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
                 date: $(this).serializeArray()[1].value,
@@ -172,7 +171,7 @@ $(document).on('submit', '#mealform', function (e) {
         url: "/mess/mealdish/",
         data: {
             csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
-            meal: $(this).serializeArray()[1].value,
+            dish: $(this).serializeArray()[1].value,
             half: $(this).serializeArray()[2].value,
             date: $(this).serializeArray()[3].value
         },

@@ -23,7 +23,6 @@ class Boarder(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     dp = models.TextField(blank=True, default=base64.encodestring(open('media/account/default.png', 'rb').read()).decode('utf-8'))
-    #dp=models.ImageField(upload_to='account',default='account/default.png',blank=True)
     Name = models.CharField(max_length = 50)
     Year_Of_Passing = models.DecimalField(max_digits = 4, decimal_places = 0)
     Eats_Fish = models.BooleanField(default = True) #True if boarder eats fish
@@ -31,9 +30,6 @@ class Boarder(models.Model):
     Eats_Mutton = models.BooleanField(default = True)
     Eats_Egg = models.BooleanField(default = True)
     Room_Number = models.CharField(max_length = 4)
-    Morning_Presence = models.BooleanField(default = False) #True if the person is a current boarder
-    Evening_Presence = models.BooleanField(default = False)
-    Presence_Date=models.DateField(null=True)
     Department = models.CharField(choices = DEPT_CHOICES, max_length=40)
     Address=models.TextField(blank=True)
     Mobile_No=models.DecimalField(max_digits=14,decimal_places=0,blank=True,null=True)

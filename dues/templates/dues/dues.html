@@ -3,15 +3,11 @@
 {% block mininav %}
     {% include 'dues/mininav.html' %}
 {% endblock %}
-{% block styles %} 
-    {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'dues/table.css' %}">
-{% endblock %}
 {% block content %}
-    {% load get_data %}
+    {% load get_data %} 
     <div class="container-fluid">
-        {% regroup dues by Year_Of_Passing as year_wise_dues_list %}
-        <ul class="nav nav-tabs" style="border:none">
+        {% regroup dues by boarder.Year_Of_Passing as year_wise_dues_list %}
+        <ul class="nav nav-tabs">
             {% for year_wise_dues in year_wise_dues_list %}
                 {% if forloop.counter == 1 %}
                     <li class="active"><a data-toggle="tab" href="#{{year_wise_dues.grouper}}">Batch {{year_wise_dues.grouper}}</a></li>
@@ -27,29 +23,36 @@
                 {% else %}
                     <div id="{{ year_wise_dues.grouper}}" class="tab-pane fade">
                 {% endif %}
-                <table>
-                    <tr>
-                        {% for field in fields %}
-                            {% if field|getName != None %}
-                                <th>{{field|getName}}</th>
-                            {% endif %}
-                        {% endfor %}
-                        <th>TOTAL NET</th>
-                        <th>TOTAL MESS</th>
-                        <th>TOTAL</th>
-                    </tr>
-                    {% for due in year_wise_dues.list %}
+                <table class="table table-striped" style="border:1px solid #ddd;border-top:none">
+                    <thead>
                         <tr>
+                            <th scope="col">Name</th>
                             {% for field in fields %}
-                                {% if due|getValue:field != None %}
-                                    <td>{{due|getValue:field}}</td>
+                                {% if field|getName != None %}
+                                    <th scope="col">{{field|getName}}</th>
                                 {% endif %}
                             {% endfor %}
-                            <td>{{due|getTotal:'Net'}}</td>
-                            <td>{{due|getTotal:'Mess'}}</td>
-                            <td>{{due|getTotal}}</td>
+                            <th scope="col">Total Net</th>
+                            <th scope="col">Total Mess</th>
+                            <th scope="col">Total</th>
                         </tr>
-                    {% endfor %}
+                    </thead>
+                    <tbody>
+                        {% regroup year_wise_dues.list by boarder.id as boarder_year_dues_list %}
+                        {% for boarder_year_dues in boarder_year_dues_list %}
+                            <tr>
+                                <td scope="row"><a href="{% url 'dues:getlogs' boarder_year_dues.grouper %}">{{boarder_year_dues.grouper|Name}}</a></td>
+                                {% for field in fields %}
+                                    {% if boarder_year_dues.list|getValue:field != None %}
+                                        <td>{{boarder_year_dues.list|getValue:field}}</td>
+                                    {% endif %}
+                                {% endfor %}
+                                <td>{{boarder_year_dues.list|getTotal:'Net'}}</td>
+                                <td>{{boarder_year_dues.list|getTotal:'Mess'}}</td>
+                                <td>{{boarder_year_dues.list|getTotal}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
                 </div>
             {% endfor %}

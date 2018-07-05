@@ -1,0 +1,55 @@
+{% extends 'home/base.html' %}
+{% load get_data %}
+{% block title %}Committee | VC{% endblock %}
+{% block mininav %}
+    {% include 'committee/mininav.html' %}
+{% endblock %}
+{% block content %}
+    {% load get %}
+    <div class="container-fluid">
+        {% regroup accounts by committee.name as committee_wise_accounts_list %}
+        <ul class="nav nav-tabs">
+            {% for committee_wise_accounts in committee_wise_accounts_list %}
+                {% if forloop.counter == 1 %}
+                    <li class="active"><a data-toggle="tab" href="#{{committee_wise_accounts.grouper}}">{{committee_wise_accounts.grouper|title}}</a></li>
+                {% else %}
+                    <li><a data-toggle="tab" href="#{{committee_wise_accounts.grouper}}">{{committee_wise_accounts.grouper|title}}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <div class="tab-content">
+            {% for committee_wise_accounts in committee_wise_accounts_list %}
+                {% if forloop.counter == 1 %}
+                    <div id="{{committee_wise_accounts.grouper}}" class="tab-pane fade in active">
+                {% else %}
+                    <div id="{{committee_wise_accounts.grouper}}" class="tab-pane fade">
+                {% endif %}
+                <table class="table table-striped" style="border:1px solid #ddd;border-top:none">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Credit</th>
+                            <th scope="col">Debit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% regroup committee_wise_accounts.list by changed_by.id as chenged_by_wise_committee_dues_list %}
+                        {% for chenged_by_wise_committee_dues in chenged_by_wise_committee_dues_list %}                          
+                            <tr>
+                                <td scope="row"><a href="{% url 'committee:account' chenged_by_wise_committee_dues.grouper %}">{{chenged_by_wise_committee_dues.grouper|Name}}</a></td>
+                                <td>{{chenged_by_wise_committee_dues.list|total:'credit'}}</td>
+                                <td>{{chenged_by_wise_committee_dues.list|total:'debit'}}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td><a href="{% url 'committee:logs' committee_wise_accounts.grouper %}">Committee</a></td>
+                            <td>{{committee_wise_accounts.grouper|whole:'credit'}}</td>
+                            <td>{{committee_wise_accounts.grouper|whole:'debit'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            {% endfor %}
+        </div>        
+    </div>
+{% endblock %}

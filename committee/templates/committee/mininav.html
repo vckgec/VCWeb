@@ -1,0 +1,24 @@
+﻿<div class="container-fluid" style="margin-top:-30px">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#miniNavbar" style="float:left;background-color:transparent;margin-bottom:0px;margin-top:0px;margin-right:0px;padding-top:5px">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse" id="miniNavbar" style="padding-top:0px">
+        <ul class="nav navbar-nav">
+            {% load get %}
+            {% define as committees %}
+            {% for committee in committees %}
+                {% if committee|get:0 != request.path_info|getType %}
+                    <li>
+                        <a href="{% url 'committee:manage' committee|get:0 %}">{{committee|get:1}}</a>
+                    </li>
+                {% else %}
+                    <li class="active">
+                        <a href="{% url 'committee:manage' committee|get:0 %}">{{committee|get:1}}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

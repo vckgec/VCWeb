@@ -24,14 +24,6 @@ class JSON:
             for key,value in self.models.items():
                 data = serializers.serialize("json", value.objects.all())
                 write.append({'filename':key,'filecontent':ContentFile(data)})
-                # if key=='book':
-                #     f=open('xx.json','w')
-                #     f.write(data)
-                #     f.close()
-                '''write=open(os.getcwd().replace('\\','/')+'/'+key+'.json','w')
-                write.write(data)
-                write.close()'''
-            
         else:
             if table in self.models.items():
                 data = serializers.serialize("json", self.models[table].objects.all())
@@ -73,7 +65,7 @@ class JSON:
             missing_objects=0
             while len(read)>completed:
                 for key, value in read.items():
-                    if self.models[key].objects.count() < len(read[key])-missing_objects:#not self.models[key].objects.all():
+                    if self.models[key].objects.count() < len(read[key])-missing_objects:
                         for field in self.models[key]._meta.fields:
                             if field.is_relation:
                                 if field.related_model._meta.model_name in read.keys():
@@ -122,121 +114,3 @@ class JSON:
                                     missing_objects+=1
                     else:
                         completed+=1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
-
-
-            '''
-            //////////////////////for user model only ///////////////////////
-            for key,value in read.items():
-                for item in value:
-                    temp={}
-                    temp['username']=item['fields']['username']
-                    temp['password']=item['fields']['password']
-                    us=User(**temp)
-                    us.save()'''
-
-            # control=0
-            # while len(read)>control:
-            #     for key,value in read.items():
-            #         if not self.models[key].objects.all():
-            #             dependent_model_fields=[]                        
-            #             for field in self.models[key]._meta.fields:
-            #                 if field.name in self.models.keys():
-            #                     dependent_model_fields.append(field)
-            #             if len(dependent_model_fields)>0:
-            #                 is_modify=False
-            #                 for field in dependent_model_fields:
-            #                     if field.name not in read.keys():
-            #                         if not self.models[field.name].objects.all():
-            #                             raise KeyError(field.name+'.json does not exist')
-            #                         else:
-            #                             pass
-            #                     else:
-            #                         if self.models[field.name].objects.all():
-            #                             for i in range(len(value)):
-            #                                 for independ in read[field.name]:
-            #                                     deleted_fild={}
-            #                                     if value[i]['fields'][field.name]==independ['pk']:
-            #                                         independent_model_fields=[]
-            #                                         for fild in self.models[field.name]._meta.fields:
-            #                                             if fild.name in self.models.keys():
-            #                                                 independent_model_fields.append(fild)
-            #                                         for fild in independent_model_fields:
-            #                                             deleted_fild[fild.name]=independ['fields'][fild.name]                                               
-            #                                             del independ['fields'][fild.name]
-            #                                         value[i]['fields'][field.name]=self.models[field.name].objects.get(**independ['fields'])                                                
-            #                                         is_modify=True
-            #                                         if deleted_fild:
-            #                                             independ['fields'][fild.name]=deleted_fild[fild.name]   
-            #                                         break
-            #                         else:
-            #                             independent_model_fields=[]
-            #                             for fild in self.models[field.name]._meta.fields:
-            #                                 if fild.name in self.models.keys():
-            #                                     independent_model_fields.append(fild)
-            #                             if len(independent_model_fields)<1:
-            #                                 for totaly_independ in read[field.name]:
-            #                                     self.models[field.name].objects.create(**totaly_independ['fields'])
-            #                     if is_modify:
-            #                         for depend in value:
-            #                             self.models[key].objects.create(**depend['fields'])
-            #             else:
-            #                 for totaly_independ in value:
-            #                     self.models[key].objects.create(**totaly_independ['fields'])
-            #         if self.models[key].objects.count()==len(value):                    
-            #             control+=1
-
-
-            '''if len(reads)>1:
-                re1=json.loads(reads[1].read())
-                re0=json.loads(reads[0].read())
-                for read1 in re1:#req
-                    for read0 in re0:#book
-                        if read1['fields']['book']==read0['pk']:
-                            del read1['fields']['book']
-                            print(read0['fields'])
-                            sub=read0['fields']['subject']
-                            del read0['fields']['subject']
-                            print(read0['fields'])
-                            req=Request(book=Book.objects.get(**read0['fields']),**read1['fields'])
-                            req.save()
-                            read0['fields']['subject']=sub
-                            break
-            else:
-                re0=json.loads(reads[0].read())
-                for read0 in re0:
-                    try:
-                        bk=User(**read0['fields'])
-                        bk.save()
-                    except:
-                        pass'''
