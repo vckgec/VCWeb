@@ -1,9 +1,11 @@
 from __future__ import unicode_literals
+from datetime import datetime, timedelta
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User as AuthUser
 
 # Create your models here.
+
 
 class Subject(models.Model):
     title = models.CharField(max_length=50)
@@ -24,16 +26,17 @@ class Book(models.Model):
     name = models.CharField(max_length=30, default='')
 
     def get_edit_url(self):
-        return reverse('library:edit', kwargs={'pk':self.id})
+        return reverse('library:edit', kwargs={'pk': self.id})
 
     def get_absolute_url(self):
-        return reverse('library:detail', kwargs={'id':self.id})
+        return reverse('library:detail', kwargs={'id': self.id})
 
     class Meta:
-        ordering = ('issued','subject','-title','-author',)
+        ordering = ('issued', 'subject', '-title', '-author',)
 
     def __str__(self):
         return self.author + '-' + self.title + ' ---- ' + (self.subject).code + str(self.pk)
+
 
 class Request(models.Model):
 
@@ -50,36 +53,47 @@ class Request(models.Model):
     """
 
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    # user = models.ForeignKey(AuthUser, blank=True, null=True, default=None, related_name='requests')
-    name = models.CharField(max_length=30)
-    remarks = models.TextField(blank=True)
+    user = models.ForeignKey(AuthUser, blank=True,
+                             null=True, default=None, related_name='requests')
+    # name = models.CharField(max_length=30)
+    # remarks = models.TextField(blank=True)
     status = models.BooleanField(default=False)
     retstatus = models.BooleanField(default=False)
-    issue_date = models.DateField(auto_now_add=True)
-    return_date = models.DateField(blank=True, null=True, default=None) #Not sure anymore if I even want this so..
-    issued_by = models.ForeignKey(AuthUser, blank=True, null=True, default=None, on_delete=models.CASCADE,related_name='requests_completed')
-    returned_by = models.ForeignKey(AuthUser, blank=True, null=True, default=None,on_delete=models.CASCADE, related_name='returns_completed')
+    request_date = models.DateField(auto_now_add=True)
+    issue_date = models.DateField(blank=True, null=True)
+    return_request_date = models.DateField(blank=True, null=True)
+    return_date = models.DateField(blank=True, null=True)
+    issued_by = models.ForeignKey(AuthUser, blank=True, null=True, default=None,
+                                  on_delete=models.CASCADE, related_name='requests_completed')
+    returned_by = models.ForeignKey(AuthUser, blank=True, null=True, default=None,
+                                    on_delete=models.CASCADE, related_name='returns_completed')
 
+    def due_date(self):
+        '''Adds 21 days to the issue date and returns a date when the book should be returned if it has been
+        requeested by somebody else. A soft limit.'''
+
+        return self.issue_date + timedelta(days=15)
 
     def __str__(self):
         if self.status == True:
-            return self.name + "'s request completed."
-        return self.name + ' requested a Book'
+            return str(self.user) + "'s request completed. Until: " + str(self.due_date())
+        return str(self.user) + ' requested a Book'
 
     def get_absolute_url(self):
         return reverse('library:req')
 
     def get_issue_url(self):
-        return reverse('library:issue', kwargs={'id':self.id})
+        return reverse('library:issue', kwargs={'id': self.id})
 
     def get_return_url(self):
-        return reverse('library:return', kwargs={'id':self.id})
+        return reverse('library:return', kwargs={'id': self.id})
 
     def get_collect_url(self):
-        return reverse('library:collect', kwargs={'id':self.id})
+        return reverse('library:collect', kwargs={'id': self.id})
 
     def get_undo_url(self):
-        return reverse('library:undoreturn', kwargs={'id':self.id})
+        return reverse('library:undoreturn', kwargs={'id': self.id})
+
 
 class New(models.Model):
     details = models.TextField()

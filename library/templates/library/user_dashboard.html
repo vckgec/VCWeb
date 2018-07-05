@@ -1,0 +1,13 @@
+{% extends 'home/base.html' %}
+{% block title %} Library | Dashboard | VC {% endblock %}
+{% block styles %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'library.css'%}">
+{% endblock %}
+{% block mininav %}
+    {% include 'library/mininav.html' %}
+{% endblock %}
+{% block content %}
+    {{ requests_01 }}
+    <script src="{% static 'library/dashboard.js' %}" type="text/javascript"></script >
+{% endblock %}
