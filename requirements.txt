@@ -8,3 +8,4 @@ dj_database_url==0.4.2
 websocket-client==0.47.0
 numpy==1.14
 django-relativedelta==1.0.3
+psycopg2-binary==2.7.5
