@@ -159,7 +159,7 @@ def Json_Working(request):
 
         else:
             try:
-                obj=JSON('all',request.POST.getlist("files"))
+                obj=JSON('all',request.FILES.getlist("files"))
                 try:
                     obj.JsonLoad(request.POST['dbtype'])
                     messages.success(request,"Successfully load data")
