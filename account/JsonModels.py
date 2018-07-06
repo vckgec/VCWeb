@@ -37,10 +37,10 @@ class JSON:
         if self.files and not table:
             for file in self.files:
                 if dbtype=='sqllite':
-                    json_data=open(file,'r').read()
+                    json_data=file.read()
                     read[json.loads(json_data)[0]['model'].split('.')[1]]=json_data
                 else:
-                    json_data=json.loads(open(file,'r').read())
+                    json_data=json.loads(file.read())
                     read[json_data[0]['model'].split('.')[1]]=json_data
         else:
             if table:
