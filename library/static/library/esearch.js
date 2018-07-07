@@ -1,7 +1,3 @@
-$(function () {
-    document.getElementById("loader").style.marginLeft = ($('#results').width() / 2 - $('#loader').width() / 2) + "px";
-    document.getElementById("loader").style.marginTop = $('nav').height() + "px";
-});
 $(document).ready(function () {
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
     ws = new WebSocket(ws_scheme + '://' + window.location.host + "/account/");
