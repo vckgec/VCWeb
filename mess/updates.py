@@ -34,7 +34,7 @@ def storeKeeperCreate(half):
                 value = {'half': store_keeper[i].half,'name':store_keeper[i].name}
             except:
                 value = {'half': half[i % 2], 'name': None}
-            StoreKeeper.objects.create(date=datetime.datetime(now.year, now.month, int(i/2+1)).date())
+            StoreKeeper.objects.create(date=datetime.datetime(now.year, now.month, int(i/2+1)).date(),**value)
     return storeCreate(half)
 
 def messManagerCreate(half):
