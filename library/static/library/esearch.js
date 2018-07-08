@@ -6,8 +6,10 @@ $(document).ready(function () {
     ws.onopen = function (e) {
         i=0;
         row = ['row1', 'row2'];
-        console.log(e)
-        ws.send(JSON.stringify({ 'type': 'library', 'message': $('#query').val()}));
+        console.log(e);
+        window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value){
+            ws.send(JSON.stringify({ 'type': 'library', 'message': value}));
+        });
     };    
     ws.onmessage = function (e) {
         if (e.data != 'Head client not found'){
