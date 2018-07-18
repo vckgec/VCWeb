@@ -62,7 +62,7 @@ def presenceCreate():
             previous_presence = Presence.objects.filter(half=half[1-i],date=datetime.date.today()-datetime.timedelta(days=1-i)).exclude(boarder__in=Subquery(presence_today.values('boarder'))).values('boarder','status')        
             for presence in previous_presence:
                 presence_objs.append(Presence(boarder_id=presence['boarder'], date=datetime.date.today(), status=presence['status'], half=half[i]))
-        Presence.objects.bulk_create(presence_objs)
+            Presence.objects.bulk_create(presence_objs)
         return mealDishCreate(half)
     else:
         return 'Already Created'

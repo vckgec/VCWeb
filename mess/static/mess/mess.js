@@ -94,6 +94,12 @@ $(document).ready(function () {
                         socket_mess.send(JSON.stringify({
                             'half': data
                         }));
+                        if (data == '1MO' && status=='on') {
+                            if ($('input[id="2EV"]').prop('checked')==false){
+                                $('input[id="2EV"]').prop('checked',true)
+                                $('input[id="2EV"]').change(); 
+                            }
+                        }
                     }
                     else{                        
                         $(e.target).prop("checked", status == 'on' ? false : true);
