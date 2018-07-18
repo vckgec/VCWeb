@@ -56,8 +56,8 @@ def presenceCreate():
     store = Store.objects.filter(date=datetime.date.today())
     if not store:
         half=['1MO','2EV']
-        presence_objs = []
         for i in range(2):
+            presence_objs = []
             presence_today=Presence.objects.filter(half=half[i],date=datetime.date.today())
             previous_presence = Presence.objects.filter(half=half[1-i],date=datetime.date.today()-datetime.timedelta(days=1-i)).exclude(boarder__in=Subquery(presence_today.values('boarder'))).values('boarder','status')        
             for presence in previous_presence:
