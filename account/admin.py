@@ -3,4 +3,10 @@ from .models import *
 
 # Register your models here.
 
-admin.site.register(Boarder)
+
+class BoarderAdmin(admin.ModelAdmin):
+    list_filter = ('Year_Of_Passing', 'Eats_Fish', 'Eats_Chicken', 'Eats_Egg',
+                   'Morning_Presence', 'Evening_Presence', 'Department', 'Current_Boarder')
+
+
+admin.site.register(Boarder, BoarderAdmin)
