@@ -15,6 +15,8 @@ from .JsonModels import JSON
 import base64
 import websocket
 import json
+from library.models import Request 
+from mess.models import Presence
 
 # Create your views here.
 
@@ -171,3 +173,17 @@ def Json_Working(request):
         dumpform = JsonDumpForm(None)
         loadform=JsonLoadForm(None)
     return render(request,'account/json.html',{'dumpform':dumpform,'loadform':loadform,'data':data})
+
+def dashboard(request):
+    lib_data1=Request.objects.filter(user=request.user)
+    lib_data2=lib_data1.filter(status=False,retstatus=False)
+    lib_data3=lib_data1.filter(status=True)
+    issued_count=lib_data3.count()
+    requested_count=lib_data2.count()
+    presence=Presence.objects.filter(boarder=request.user.boarder, date=date.today())
+    status_mo = presence.get(half='1MO').status
+    status_ev = presence.get(half='2EV').status
+
+    context={"iss_cnt":issued_count,"req_cnt":requested_count,"st_ev":status_ev,"st_mo":status_mo}
+
+    return render(request,'dashboard/dashboard.html',context)

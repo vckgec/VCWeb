@@ -6,7 +6,7 @@ div{
    
 }
 div:hover{
-    border:1px blue solid;
+    /* border:1px blue solid; */
 }
 .container{
     padding:2px;
