@@ -1,3 +1,10 @@
+@font-face {
+    font-family: bleeding_cowboys;
+    src: url(../fonts/bleeding_cowboys-webfont.woff2) format('woff2'),
+    url(../fonts/bleeding_cowboys-webfont.woff) format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 body {
     font: 400 15px/1.8 Lato, sans-serif;
     color: #777;

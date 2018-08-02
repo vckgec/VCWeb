@@ -1,7 +1,3 @@
-$(function () {
-    document.getElementById("loader").style.marginLeft = ($('#results').width() / 2 - $('#loader').width() / 2) + "px";
-    document.getElementById("loader").style.marginTop = $('nav').height() + "px";
-});
 $(document).ready(function () {
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
     ws = new WebSocket(ws_scheme + '://' + window.location.host + "/account/");
@@ -10,8 +6,10 @@ $(document).ready(function () {
     ws.onopen = function (e) {
         i=0;
         row = ['row1', 'row2'];
-        console.log(e)
-        ws.send(JSON.stringify({ 'type': 'library', 'message': $('#query').val()}));
+        console.log(e);
+        window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value){
+            ws.send(JSON.stringify({ 'type': 'library', 'message': value}));
+        });
     };    
     ws.onmessage = function (e) {
         if (e.data != 'Head client not found'){

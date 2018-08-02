@@ -132,6 +132,7 @@ def forgot_password(request):
     else:
         form = ForgotPassword(None)
     return render(request,'account/forgotpassword.html',{'form':form})
+
 def edit_details(request):
     if request.method=='POST':
         form=Edit_Details(request.POST,request.FILES)
@@ -143,7 +144,7 @@ def edit_details(request):
         form=Edit_Details(None)
     return render(request,'account/editdetails.html',{'form':form})
 
-
+@login_required
 def Json_Working(request):
     data=None
     if request.method=='POST':        
@@ -158,7 +159,7 @@ def Json_Working(request):
 
         else:
             try:
-                obj=JSON('all',request.POST.getlist("files"))
+                obj=JSON('all',request.FILES.getlist("files"))
                 try:
                     obj.JsonLoad(request.POST['dbtype'])
                     messages.success(request,"Successfully load data")

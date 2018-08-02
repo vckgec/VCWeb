@@ -1,0 +1,52 @@
+{% extends 'home/base.html' %}
+{% block title %} {{logs.first.changed_by}} | Committee {% endblock %}
+{% block mininav %}
+    {% include 'committee/mininav.html' %}
+{% endblock %}
+{% block content %}
+    {% load get %}
+    <div class="container-fluid">
+        {% regroup logs by committee.name as committee_wise_logs_list %}
+        <ul class="nav nav-tabs">
+            {% for committee_wise_logs in committee_wise_logs_list %}
+                {% if forloop.counter == 1 %}
+                    <li class="active"><a data-toggle="tab" href="#{{committee_wise_logs.grouper}}">{{committee_wise_logs.grouper|title}}</a></li>
+                {% else %}
+                    <li><a data-toggle="tab" href="#{{committee_wise_logs.grouper}}">{{committee_wise_logs.grouper|title}}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>        
+        <div class="tab-content">
+            {% for committee_wise_logs in committee_wise_logs_list %}
+                {% if forloop.counter == 1 %}
+                    <div id="{{committee_wise_logs.grouper}}" class="tab-pane fade in active">
+                {% else %}
+                    <div id="{{committee_wise_logs.grouper}}" class="tab-pane fade">
+                {% endif %}
+                <table class="table table-striped" style="border:1px solid #ddd;border-top:none">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Credit</th>
+                            <th scope="col">Debit</th>
+                            <th scope="col">Balance</th>
+                            <th scope="col">Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in committee_wise_logs.list %}                            
+                            <tr>
+                                <td>{{log.action_time}}</td>
+                                <td>{{log.credit}}</td>
+                                <td>{{log.debit}}</td>
+                                <td>{{log|balance}}</td>
+                                <td>{{log.remarks}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            {% endfor %}
+        </div>        
+    </div>
+{% endblock %}

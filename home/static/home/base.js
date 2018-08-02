@@ -7,47 +7,7 @@ $(document).ready(function () {
             },
         });
     });
-    $('#myNavbar,#myBody').click(function () {
-        $('#demo').collapse('hide');
+    $('#myNavbar,#myBody,.navbar-header').click(function () {
+        $('#navLogin').collapse('hide');
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

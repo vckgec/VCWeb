@@ -1,15 +1,11 @@
 asgiref==1.1.2
 channels==1.1.8
 Django==1.11.9
-docutils==0.14
-msgpack-python==0.5.5
 Twisted[tls,http2]==17.9.0
-django-widget-tweaks
-django-secure==1.0.1
-arrow==0.12.1
+django-widget-tweaks==1.4.1
 Pillow==5.0.0
 dj_database_url==0.4.2
 websocket-client==0.47.0
-psycopg2==2.7.4
 numpy==1.14
 django-relativedelta==1.0.3
+psycopg2-binary==2.7.5

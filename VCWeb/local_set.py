@@ -49,6 +49,7 @@ ADMINS=(('Bibhas', 'bibhasmondal96@gmail.com'))
 INSTALLED_APPS = [
     # Add your apps here to enable them
     'account.apps.accountConfig',
+    'committee.apps.CommitteeConfig',
     'home.apps.homeConfig',
     'contact.apps.contactConfig',
     'gallery.apps.galleryConfig',
@@ -64,11 +65,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'channels',
     'widget_tweaks',
-    'djangosecure',
 ]
 
-
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -77,7 +76,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'djangosecure.middleware.SecurityMiddleware'
 ]
 
 ROOT_URLCONF = 'VCWeb.urls'
@@ -86,7 +84,6 @@ ROOT_URLCONF = 'VCWeb.urls'
 # http://channels.readthedocs.org/en/latest/deploying.html#setting-up-a-channel-backend
 CHANNEL_LAYERS = {
     "default": {
-        # This example app uses the Redis channel layer implementation asgi_redis
         "BACKEND": "VCWeb.inmemory.MyChannelLayer",
         "ROUTING": "VCWeb.routing.channel_routing",
     },
@@ -163,6 +160,6 @@ DATABASES['default'].update(db_from_env)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static').replace('\\', '/')#posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
+STATIC_ROOT = os.path.join(BASE_DIR, 'static').replace('\\', '/')
 MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
