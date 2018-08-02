@@ -3,6 +3,8 @@
 {% block styles %}
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'library.css'%}">
+    <link rel="stylesheet" href="{% static 'library/dashboard.css'%}">
+
     <!--script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script-->
 {% endblock %}
@@ -12,12 +14,25 @@
 {% block content %}
     {{ req_01 }}<br><br>
     {% for req in req_01 %}
-        <div class=req_outer>
-            <div
-            <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
-            {{ req.book.title }}<br>
-            {{ req.book.author }}<br>
-            =========<br><br>
+        <div class="req_outer col-sm-4 col-md-3">
+            <div class="req_inner">
+                <div class="topbar">
+                    <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
+                    {{ req.book.title }}
+                    <div class="toggler"><i class="fa fa-arrow-right"></i></div>
+                </div>
+                <div class="body"> 
+                    <div class="book">{{ req.book.title }}</div>
+                    <div class="author"><span class="title">Author</span>
+                        {{ req.book.author }}</div>
+                    <div class="date"><span class="title">Date requested</span>
+                        {{ req.request_date }}</div>
+                    <div class="btn btn-warning">Cancel</div>
+                            
+                </div>
+                <br><br>
+            </div>
+        </div>
 
     {% endfor %}
 

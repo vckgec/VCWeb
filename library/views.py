@@ -236,3 +236,7 @@ def UserDashboard(request):
     # context['req_01'] = context['req_01'].filter(self.due_date()>datetime.datetime.today())
 
     return render(request, 'library/user_dashboard.html', context)
+
+def deleteRequest(request, id):
+    """View to delete """
+    pass
