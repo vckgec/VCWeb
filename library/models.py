@@ -73,6 +73,10 @@ class Request(models.Model):
         requeested by somebody else. A soft limit.'''
 
         return self.issue_date + timedelta(days=15)
+    
+    def is_overdue(self):
+        """Return Boolean depending on whether the book is overdue."""
+        return datetime.today() > self.due_date()
 
     def __str__(self):
         if self.status == True:
