@@ -7,33 +7,39 @@
 {% block content %}
 <style>
     @font-face {
-    font-family: Roboto;
-    src: url('{% static 'account/Roboto/Roboto-Black.ttf' %}');
-    src: url('{% static 'account/Roboto/Roboto-BlackItalic.ttf' %}');
+    font-family: RobotoBlack;
+    /* src: url('{% static 'account/Roboto/Roboto-Black.ttf' %}');*/
+     src: url('{% static 'account/Roboto/Roboto-BoldItalic.ttf' %}');
+   
+}
+@font-face {
+    font-family: RobotoLight;
+    /* src: url('{% static 'account/Roboto/Roboto-Black.ttf' %}'); */
+    /* src: url('{% static 'account/Roboto/Roboto-BlackItalic.ttf' %}');
     src: url('{% static 'account/Roboto/Roboto-Bold.ttf' %}');
     src: url('{% static 'account/Roboto/Roboto-BoldItalic.ttf' %}');
     src: url('{% static 'account/Roboto/Roboto-Italic.ttf' %}');
     src: url('{% static 'account/Roboto/Roboto-LightItalic.ttf' %}');
     src: url('{% static 'account/Roboto/Roboto-Medium.ttf' %}');
     src: url('{% static 'account/Roboto/Roboto-MediumItalic.ttf' %}');
-    src: url('{% static 'account/Roboto/Roboto-Regular.ttf' %}');
+    src: url('{% static 'account/Roboto/Roboto-Regular.ttf' %}'); */
     src: url('{% static 'account/Roboto/Roboto-Thin.ttf' %}');
-    src: url('{% static 'account/Roboto/Roboto-ThinItalic.ttf' %}');
+    /* src: url('{% static 'account/Roboto/Roboto-ThinItalic.ttf' %}'); */
 }
 </style>
 <div id="db-panel" class="container">
     <div class="row">
-       <div class="col-md-9" style="background-image:">
+       <div class="col-md-9 col-sm-12" style="padding-top: 1em;">
             <div class="row">
                     <div class="col-sm-5">
                             <div class="card" style="width: 35rem;">
                                     <div class="card-body">
-                                      <h3 class="card-title"><center>LIBRARY</center></h3>
-                                      <hr>
+                                      <h3 class="card-title"><center><b>LIBRARY</b></center></h3>
+                                    
                                       
                                      <div class="row card-primary">
-                                         <div class="col-sm-4">24</div>
-                                         <div class="col-sm-4">12</div>
+                                         <div class="col-sm-4">{{iss_cnt}}</div>
+                                         <div class="col-sm-4">{{req_cnt}}</div>
                                          <div class="col-sm-4">₹100</div>
                                      </div>
                                      <div class="row card-secondary">
@@ -48,11 +54,11 @@
                             <div class="card" style="width: 35rem;">
                                     <div class="card-body">
                                       <h3 class="card-title"><center>MESS</center></h3>
-                                      <hr>
+                                      
                                      <div class="row card-primary">
                                          <div class="col-sm-6">Chicken and Salad</div>
-                                         <div class="col-sm-3">ON</div>
-                                         <div class="col-sm-3">ON</div>
+                                         <div class="col-sm-3">{{st_mo}}</div>
+                                         <div class="col-sm-3">{{st_ev}}</div>
                                      </div>
                                      <div class="row card-secondary">
                                          <div class="col-sm-6">Meal Today</div>
@@ -64,13 +70,13 @@
                     </div>
                     
             </div>
-            <hr>
+            
             <div class="row">
                     <div class="col-sm-5">
                             <div class="card" style="width: 35rem;">
                                     <div class="card-body">
                                       <h3 class="card-title"><center>NET</center></h3>
-                                      <hr>
+                                      
                                      <div class="row card-primary">
                                          <div class="col-sm-6">24 days</div>
                                          <div class="col-sm-4">₹100</div>
@@ -88,7 +94,7 @@
                             <div class="card" style="width: 35rem;">
                                     <div class="card-body">
                                       <h3 class="card-title"><center>OTHERS</center></h3>
-                                      <hr>
+                                      
                                      <div class="row card-primary">
                                          <div class="col-sm-12"><center>₹100</center></div>
                                         

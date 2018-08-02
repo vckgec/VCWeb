@@ -11,29 +11,40 @@ div:hover{
 .container{
     padding:2px;
 }
+#myBody{
+    background-image:url('/static/db_bg.jpg')!important;
+    background-size: cover;
+}
 #db-panel *{
-    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    
+    /* font-family:Roboto;; */
     font-weight: 300 ;
     letter-spacing: 0px!important;
 }
 .card-title{
+    font-family: RobotoBlack;
     font-size: 2em;
-    color: rgba(42, 8, 238, 0.558);
+    color: rgba(138, 8, 238, 0.558);
     
 }
 .card{
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.748);
     padding:2%;
     margin: 5px;
+    margin-bottom: 10px;
+    min-height: 15em;
     box-shadow: 0px 0px 5px rgba(8, 8, 8, 0.585);
 }
 .card-primary{
     font-size: 1.6em;
     color: red;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+   
 }
 .card-secondary{
-    font-size: 0.8em;
-    color:grey;
+    font-size: 1.2em;
+    color:rgb(0, 0, 0);
+    font-family: RobotoLight;
 }
 .activities .row{
     margin: 2px;
@@ -46,5 +57,6 @@ div:hover{
     padding:5px;
 }
 .activities .wrapper{
+    background-color: white;
     border: 3px rgba(3, 21, 111, 0.36) solid;
 }
