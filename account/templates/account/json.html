@@ -4,61 +4,56 @@
 {% load staticfiles %}
 {% endblock %}
 {% block content %}
-<div class="container-fluid">
-  <div id="position1" class="col-sm-6 col-xs-12" style="margin-top:20px;margin-bottom:20px">
-      <div id="extra" class="col-sm-6 col-xs-12" style="background-color:#86ABF5;padding-top:0px;padding-bottom:20px">
-          <h4 style="margin-bottom:10px"><b>Json Dump</b></h4>
-          <p style="color:white">{% now "jS F Y" %}</p>
-          <form class="form" action="." method="post">
-              {% csrf_token %}
-              {% for field in dumpform %}
-                  {{ field.errors }}
-                  {{ field }}<br />
-              {% endfor %}
-              <input class="btn btn-success" style="height:34px;" type="submit" value="Submit"/>
-          </form>
-          {% if data %}
-            {% for element in data %}
-              <a href="data:text/json;charset=UTF-8,{{element.filecontent.read}}" download="{{element.filename}}.json">{{element.filename}}</a><br />
+<div class="container-fluid" style="padding:10% 0">
+    <div class="col-sm-3 col-xs-12 col-sm-offset-2" style="background-color:#86ABF5;padding-top:0px;padding-bottom:20px">
+        <h4 style="margin-bottom:10px"><b>Json Dump</b></h4>
+        <p style="color:white">{% now "jS F Y" %}</p>
+        <form class="form" action="." method="post">
+            {% csrf_token %}
+            {% for field in dumpform %}
+                {{ field.errors }}
+                {{ field }}<br />
             {% endfor %}
-          {% endif %}
-      </div>
-  </div>
-  <div id="position2" class="col-sm-6 col-xs-12" style="margin-top:20px;margin-bottom:20px">
-      <div id="adjust" class="col-sm-6 col-xs-12" style="background-color:#86ABF5;padding-top:0px;padding-bottom:20px">
-            <h4 style="margin-bottom:10px"><b>Json Load</b></h4>
-            <p style="color:white">{% now "jS F Y" %}</p>
-            <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#home">SQL Lite</a></li>
-                <li><a data-toggle="tab" href="#menu1">Postgres</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="home" class="tab-pane fade in active">
-                    <form class="form" action="." method="post">
-                        {% csrf_token %}
-                        {% for field in loadform %}
-                            {{ field.errors }}
-                            {{ field }}<br />
-                        {% endfor %}
-                        <input type="hidden" name="dbtype" value="sqllite">
-                        <input class="btn btn-success" style="height:34px;" type="submit" value="Submit"/>
-                    </form>
-                </div>
-                <div id="menu1" class="tab-pane fade">
-                    <form class="form" action="." method="post">
-                        {% csrf_token %}
-                        {% for field in loadform %}
-                            {{ field.errors }}
-                            {{ field }}<br />
-                        {% endfor %}
-                        <input type="hidden" name="dbtype" value="postgres">
-                        <input class="btn btn-success" style="height:34px;" type="submit" value="Submit"/>
-                    </form>
-                </div>
+            <input class="btn btn-success" style="height:34px;" type="submit" value="Submit"/>
+        </form>
+        {% if data %}
+            {% for element in data %}
+            <a href="data:text/json;charset=UTF-8,{{element.filecontent.read}}" download="{{element.filename}}.json">{{element.filename}}</a><br />
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="col-sm-3 col-xs-12 col-sm-offset-2" style="background-color:#86ABF5;padding-top:0px;padding-bottom:20px">
+        <h4 style="margin-bottom:10px"><b>Json Load</b></h4>
+        <p style="color:white">{% now "jS F Y" %}</p>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#home">SQL Lite</a></li>
+            <li><a data-toggle="tab" href="#menu1">Postgres</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <form class="form" action="." method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in loadform %}
+                        {{ field.errors }}
+                        {{ field }}<br />
+                    {% endfor %}
+                    <input type="hidden" name="dbtype" value="sqllite">
+                    <input class="btn btn-success" style="height:34px;" type="submit" value="Submit"/>
+                </form>
             </div>
-      </div>
-  </div>
+            <div id="menu1" class="tab-pane fade">
+                <form class="form" action="." method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in loadform %}
+                        {{ field.errors }}
+                        {{ field }}<br />
+                    {% endfor %}
+                    <input type="hidden" name="dbtype" value="postgres">
+                    <input class="btn btn-success" style="height:34px;" type="submit" value="Submit"/>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-<script src="{% static 'mess/extraadjustment.js' %}" type="text/javascript"></script >
 {% endblock %}
    

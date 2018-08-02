@@ -1,7 +1,4 @@
 from channels import include
-from mess.views import Boarder_Update
-
-Boarder_Update()
 
 # The channel routing defines what channels get handled by what consumers,
 # including optional matching on message attributes. In this example, we match

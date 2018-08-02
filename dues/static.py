@@ -26,92 +26,93 @@ class Static:
             '}\n'+\
         '</style>\n'
         return style
-    def getScript(self,input_box,dropdown_div):
+    def getScript(self,input_box,default_value):
         script= '<script>\n'+\
-                    'var input, filter, ul, li, a, i, select = -1, visible_a;\n'+\
-                    'input = document.getElementById("%s");\n' %input_box +\
-                    'input_hidden=document.getElementById("%s_hidden");\n' % input_box +\
-                    'div = document.getElementById("%s");\n' %dropdown_div +\
-                    'visible_a = a = div.getElementsByTagName("a");\n'+\
-                    'div.style.width=input.clientWidth+"px";\n'+\
-                    'input.addEventListener("click", function(event){\n'+\
-                        'if(div.style.visibility==="visible"){\n'+\
-                            'div.style.visibility="hidden";\n'+\
-                        '}\n'+\
-                        'else{\n'+\
-                            'div.style.visibility="visible";\n'+\
-                        '}\n'+\
+                    'var input_%s, a_%s, i, select_%s = -1, visible_a_%s;\n'% (input_box,input_box,input_box,input_box)+\
+                    'input_%s = document.getElementById("%s");\n' %(input_box,input_box) +\
+                    'input_%s_hidden=document.getElementById("%s_hidden");\n' % (input_box, input_box) +\
+                    'div_%s = document.getElementById("%s_Dropdown");\n' % (input_box, input_box) +\
+                    'visible_a_%s = a_%s = div_%s.getElementsByTagName("a");\n' % (input_box,input_box,input_box) +\
+                    'div_%s.style.width=input_%s.clientWidth+"px";\n' % (input_box, input_box) +\
+                    '%s' % default_value +\
+                    'input_%s.addEventListener("click", function(event){\n'%input_box +\
+                        'if(div_%s.style.visibility==="visible"){\n' % input_box +\
+                            'div_%s.style.visibility="hidden";\n' % input_box +\
+                        '}\n' +\
+                        'else{\n' +\
+                            'div_%s.style.visibility="visible";\n' % input_box +\
+                        '}\n' +\
                     '});\n'+\
-                    'input.addEventListener("keyup", function(event){\n'+\
+                    'input_%s.addEventListener("keyup", function(event){\n' % input_box +\
                         'event.preventDefault();\n'+\
-                        'if(event.keyCode === 13){\n'+\
-                            'if(div.style.visibility==="visible"){\n'+\
-                                'div.style.visibility="hidden";\n'+\
-                            '}\n'+\
-                            'else{\n'+\
-                                'div.style.visibility="visible";\n'+\
-                            '}\n'+\
+                        'if(event.keyCode === 13){\n' +\
+                            'if(div_%s.style.visibility==="visible"){\n' % input_box +\
+                                'div_%s.style.visibility="hidden";\n' % input_box +\
+                            '}\n' +\
+                            'else{\n' +\
+                                'div_%s.style.visibility="visible";\n' % input_box +\
+                            '}\n' +\
+                        '}\n' +\
+                        'else{\n' +\
+                            'input_%s_hidden.value=""\n' % input_box +\
+                            'div_%s.style.visibility="visible";\n' % input_box +\
+                        '}\n' +\
+                        'if(select_%s >= 0){\n' % input_box +\
+                            'visible_a_%s[select_%s].style.backgroundColor="#f6f6f6";\n' % (input_box,input_box) +\
                         '}\n'+\
-                        'else{\n'+\
-                            'input_hidden.value=""\n'+\
-                            'div.style.visibility="visible";\n'+\
-                        '}\n'+\
-                        'if(select >= 0){\n'+\
-                            'visible_a[select].style.backgroundColor="#f6f6f6";\n'+\
-                        '}\n'+\
-                        'if(event.keyCode === 38 || event.keyCode === 40){\n'+\
+                        'if(event.keyCode === 38 || event.keyCode === 40){\n' +\
                             'if(event.keyCode === 38){\n'+\
-                                'if(select > 0){\n'+\
-                                    'select -= 1;\n'+\
+                                'if(select_%s > 0){\n' % input_box +\
+                                    'select_%s -= 1;\n' % input_box+\
                                 '}\n'+\
                                 'else{\n'+\
-                                    'select=visible_a.length-1;\n'+\
+                                    'select_%s=visible_a_%s.length-1;\n' % (input_box, input_box) +\
                                 '}\n'+\
                             '}\n'+\
                             'else{\n'+\
-                                'if(select < visible_a.length - 1){\n'+\
-                                    'select += 1;\n'+\
-                                '}\n'+\
-                                'else{\n'+\
-                                    'select=0;\n'+\
-                                '}\n'+\
+                                'if(select_%s < visible_a_%s.length - 1){\n' % (input_box, input_box) +\
+                                    'select_%s += 1;\n' % input_box +\
+                                '}\n' +\
+                                'else{\n' +\
+                                    'select_%s=0;\n' % input_box +\
+                                '}\n' +\
                             '}\n'+\
-                            'input_hidden.value=visible_a[select].getAttribute("value")\n'+\
-                            'input.value=visible_a[select].innerHTML;\n'+\
-                            'visible_a[select].style.backgroundColor="#ddd";\n'+\
+                            'input_%s_hidden.value=visible_a_%s[select_%s].getAttribute("value")\n' % (input_box,input_box,input_box) +\
+                            'input_%s.value=visible_a_%s[select_%s].innerHTML;\n' % (input_box, input_box, input_box) +\
+                            'visible_a_%s[select_%s].style.backgroundColor="#ddd";\n' % (input_box, input_box) +\
                         '}\n'+\
                         'else{\n'+\
-                            'select=-1;\n'+\
-                            'visible_a=[];\n'+\
-                            'filter=input.value.toUpperCase();\n'+\
-                            'for(i=0;i< a.length;i++){\n'+\
-                                'if(a[i].innerHTML.toUpperCase().search(filter) > -1){\n'+\
-                                    'a[i].style.display="";\n'+\
-                                    'visible_a.push(a[i]);\n'+\
+                            'select_%s=-1;\n' % input_box +\
+                            'visible_a_%s=[];\n' % input_box +\
+                            'filter=input_%s.value.toUpperCase();\n' % input_box +\
+                            'for(i=0;i< a_%s.length;i++){\n' % input_box +\
+                                'if(a_%s[i].innerHTML.toUpperCase().search(filter) > -1){\n' % input_box +\
+                                    'a_%s[i].style.display="";\n' % input_box +\
+                                    'visible_a_%s.push(a_%s[i]);\n' % (input_box, input_box) +\
                                 '}\n'+\
                                 'else{\n'+\
-                                    'a[i].style.display="none";\n'+\
+                                    'a_%s[i].style.display="none";\n' % input_box +\
                                 '}\n'+\
                             '}\n'+\
-                            'if(visible_a.length==1 && event.keyCode !==8){\n'+\
-                                'input_hidden.value=visible_a[0].getAttribute("value")\n'+\
-                                'input.value=visible_a[0].innerHTML;\n'+\
-                            '}\n'+\
+                            'if(visible_a_%s.length==1 && event.keyCode !==8){\n' % input_box +\
+                                'input_%s_hidden.value=visible_a_%s[0].getAttribute("value")\n' % (input_box, input_box) +\
+                                'input_%s.value=visible_a_%s[0].innerHTML;\n' % (input_box, input_box) +\
+                            '}\n' +\
                         '}\n'+\
                     '});\n'+\
-                    'div.addEventListener("click", function(e){\n'+\
-                        'input_hidden.value=e.target.getAttribute("value");\n'+\
-                        'input.value=e.target.innerHTML;\n'+\
-                        'if(div.style.visibility==="visible"){\n'+\
-                            'div.style.visibility="hidden";\n'+\
-                        '}\n'+\
-                        'else{\n'+\
-                            'div.style.visibility="visible";\n'+\
-                        '}\n'+\
+                    'div_%s.addEventListener("click", function(e){\n' % input_box +\
+                        'input_%s_hidden.value=e.target.getAttribute("value");\n' % input_box +\
+                        'input_%s.value=e.target.innerHTML;\n' % input_box +\
+                        'if(div_%s.style.visibility==="visible"){\n' % input_box +\
+                            'div_%s.style.visibility="hidden";\n' % input_box +\
+                        '}\n' +\
+                        'else{\n' +\
+                            'div_%s.style.visibility="visible";\n' % input_box +\
+                        '}\n' +\
                     '});\n'+\
                     'document.addEventListener("click",function(e){\n'+\
                         'if(e.target.getAttribute("id") != "%s"){\n' %input_box +\
-                            'div.style.visibility="hidden";\n'+\
+                            'div_%s.style.visibility="hidden";\n' % input_box +\
                         '}\n'+\
                     '});\n'+\
                     '$("form").bind("keypress", function(e){\n'+\
@@ -122,4 +123,3 @@ class Static:
                     '});\n'+\
                 '</script>\n'
         return script
-

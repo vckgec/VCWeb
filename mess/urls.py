@@ -3,11 +3,10 @@ from . import views
 app_name = 'mess'
 urlpatterns = [
     url(r'^$', views.index, name='home'),
-    url(r'^change/$', views.Change_Current_Status, name='change'),
-    url(r'^future/$', views.Future, name='future'),
-    url(r'^mealdish/$', views.Meal_Dish, name='mealdish'),
-    url(r'^guestmeal/$', views.guestmeal, name='guestmeal'),
-    url(r'^extraadjustment/$', views.ExtraAdjustment, name='extraadjustment'),
-    url(r'^storekeeper/$', views.Store_Keeper, name='storekeeper'),
-    url(r'^storekeeperedit/$', views.Store_Keeper_Edit, name='storekeeperedit'),
-    ]
+    url(r'^change/$', views.changeStatus, name='change'),
+    url(r'^mealdish/$', views.mealDish, name='mealdish'),
+    url(r'^guestmeal/$', views.guestMeal, name='guestmeal'),
+    url(r'^extraadjustment/$', views.extraAdjustment, name='extraadjustment'),
+    url(r'^storekeeper/$', views.storeKeeper, name='storekeeper'),
+    url(r'^storekeeperedit/$', views.storeKeeperEdit, name='storekeeperedit'),
+]
