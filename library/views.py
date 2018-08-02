@@ -227,12 +227,12 @@ def UserDashboard(request):
     context = {}
 
     my_requests = Request.objects.filter(user = request.user)
-
+    context['all'] = my_requests
     context['req_00'] = my_requests.filter(status=0, retstatus=0)
     context['req_01'] = my_requests.filter(status=0, retstatus=1)
     context['req_11'] = my_requests.filter(status=1, retstatus=1)
     context['req_10'] = my_requests.filter(status=1, retstatus=0)
 
-    context['req_01'] = context['req_01'].filter(self.due_date()>datetime.datetime.today())
+    # context['req_01'] = context['req_01'].filter(self.due_date()>datetime.datetime.today())
 
     return render(request, 'library/user_dashboard.html', context)
