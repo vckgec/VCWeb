@@ -6,7 +6,7 @@ from .models import *
 
 class BoarderAdmin(admin.ModelAdmin):
     list_filter = ('Year_Of_Passing', 'Eats_Fish', 'Eats_Chicken', 'Eats_Egg',
-                   'Morning_Presence', 'Evening_Presence', 'Department', 'Current_Boarder')
+                   'Department', 'Current_Boarder')
 
 
 admin.site.register(Boarder, BoarderAdmin)
