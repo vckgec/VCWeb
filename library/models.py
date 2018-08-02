@@ -78,6 +78,12 @@ class Request(models.Model):
         """Return Boolean depending on whether the book is overdue."""
         return datetime.today() > self.due_date()
 
+    def is_wanted(self):
+        """Returns whether the book issued is wanted by someone else."""
+        bk = self.book
+        reqs = Request.objects.filter(book=bk, status=False, retstatus=False)
+        return len(reqs)
+
     def __str__(self):
         if self.status == True:
             return str(self.user) + "'s request completed. Until: " + str(self.due_date())
