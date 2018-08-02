@@ -238,5 +238,12 @@ def UserDashboard(request):
     return render(request, 'library/user_dashboard.html', context)
 
 def deleteRequest(request, id):
-    """View to delete """
-    pass
+    """View to delete a request if it is archived or requested, only."""
+
+    r = get_object_or_404(Request, id=id)
+    if (request.user.is_staff or r.user == request.user) and r.status==False and r.retstatus==False:
+        Request.objects.get(id=id).delete()
+        messages.success(request, "Request successfully cancelled.")
+    else:
+        messages.error(request, "You may not permission to delete that request.")
+    return redirect('library:user_dashboard')

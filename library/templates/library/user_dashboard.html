@@ -12,8 +12,8 @@
     {% include 'library/mininav.html' %}
 {% endblock %}
 {% block content %}
-    {{ req_01 }}<br><br>
-    {% for req in req_01 %}
+
+    {% for req in req_00 %}
         <div class="req_outer col-sm-4 col-md-3">
             <div class="req_inner">
                 <div class="topbar">
@@ -27,7 +27,7 @@
                         {{ req.book.author }}</div>
                     <div class="date"><span class="title">Date requested</span>
                         {{ req.request_date }}</div>
-                    <div class="btn btn-warning">Cancel</div>
+                        <a href="{% url "library:delete_request" req.id %}"><div class="btn btn-warning">Cancel</div></a>
                             
                 </div>
                 <br><br>

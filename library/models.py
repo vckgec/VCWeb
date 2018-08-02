@@ -41,7 +41,7 @@ class Book(models.Model):
 class Request(models.Model):
 
     """
-    An explaination regarding status and retstatus is in order, obviously. 
+    An explanation regarding status and retstatus is in order, obviously. 
 
     To make things simple, let us consider all 
     the forms the combination of these two Booleans can take: 00, 01, 10, 11. 
