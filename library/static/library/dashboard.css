@@ -1,4 +1,4 @@
-.topbar {
+            .topbar {
     background-color: yellowgreen;
     border: 2px solid green;
     border-radius: 5px 5px 0 0;
@@ -29,8 +29,30 @@
 .title {
     font-weight: bold;
     opacity: 0.6;
+    float:left;
 }
 
 .req_outer .btn-warning {
     margin: 6px auto 10px 50%;
+}
+.stat_red{
+    width:10px;
+    height:10px;
+    background:red;
+    float:left;
+    margin:10px 10px;
+}
+.stat_yellow {
+    width: 10px;
+    height: 10px;
+    background: yellow;
+    float: left;
+    margin: 10px 10px;
+}
+.stat_green {
+    width: 10px;
+    height: 10px;
+    background: green;
+    float: left;
+    margin: 10px 10px;
 }
