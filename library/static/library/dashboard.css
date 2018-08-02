@@ -1,0 +1,36 @@
+.topbar {
+    background-color: yellowgreen;
+    border: 2px solid green;
+    border-radius: 5px 5px 0 0;
+    padding: 3%;
+    overflow: hidden;
+}
+
+.topbar .toggler {
+    float: right;
+}
+.req_outer {
+    padding:0;
+    box-shadow: 50px;
+}
+
+.req_inner {
+    border: 1px solid white;
+    margin: 8%;
+}
+
+.req_inner .body {
+    padding: 5%;
+    padding-bottom: 0;
+    background: skyblue;
+    border: 3px solid gold;
+}
+
+.title {
+    font-weight: bold;
+    opacity: 0.6;
+}
+
+.req_outer .btn-warning {
+    margin: 6px auto 10px 50%;
+}
