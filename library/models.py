@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User as AuthUser
@@ -76,7 +76,7 @@ class Request(models.Model):
     
     def is_overdue(self):
         """Return Boolean depending on whether the book is overdue."""
-        return datetime.today() > self.due_date()
+        return date.today() > self.due_date()
 
     def is_wanted(self):
         """Returns whether the book issued is wanted by someone else."""
