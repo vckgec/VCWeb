@@ -4,42 +4,44 @@
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'library.css'%}">
     <link rel="stylesheet" href="{% static 'library/dashboard.css'%}">
-
-    <!--script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-			  crossorigin="anonymous"></script-->
 {% endblock %}
 {% block mininav %}
     {% include 'library/mininav.html' %}
 {% endblock %}
 {% block content %}
-
-    {% for req in req_00 %}
-        <div class="req_outer col-sm-4 col-md-3">
-            <div class="req_inner">
-                <div class="topbar">
-                    <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
-                    {{ req.book.title }}
-                    <div class="toggler"><i class="fa fa-arrow-right"></i></div>
-                </div>
-                <div class="body"> 
-                    <div class="book">{{ req.book.title }}</div>
-                    <div class="author"><span class="title">Author</span>
-                        {{ req.book.author }}</div>
-                    <div class="date"><span class="title">Date requested</span>
-                        {{ req.request_date }}</div>
-                        <a href="{% url "library:delete_request" req.id %}"><div class="btn btn-warning">Cancel</div></a>
-                            
-                </div>
-                <br><br>
-            </div>
+    <div class="container-fluid">
+        <div class="row" style="padding-left:30px;background:linear-gradient(to right,rgb(72, 255, 0), yellow);">
+            <h1 style="color:black">Request</h1>
         </div>
-    {% endfor %}
+        <div class="row">
+            {% for req in req_00 %}
+                <div class="req_outer col-sm-4 col-md-3">
+                    <div class="req_inner">
+                        <div class="topbar">
+                            <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
+                            {{ req.book.title }}
+                            <div class="toggler"><i class="fa fa-arrow-right"></i></div>
+                        </div>
+                        <div class="body"> 
+                            <div class="book">{{ req.book.title }}</div>
+                            <div class="author"><span class="title">Author</span>
+                                {{ req.book.author }}</div>
+                            <div class="date"><span class="title">Date requested</span>
+                                {{ req.request_date }}</div>
+                                <a href="{% url "library:delete_request" req.id %}"><div class="btn btn-warning">Cancel</div></a>
+                                    
+                        </div>
+                        <br><br>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row" style="padding-left:30px;background:linear-gradient(to right,rgb(72, 255, 0), yellow);">
             <h1 style="color:black">Issued out</h1>
         </div>
         <div class="row">
-            <div class="container-fluid" style="padding-left:30px"><h1>Pending</h1></div>
             <div class="req_outer col-sm-4 col-md-3">
                 <div class="req_inner">
                     <div class="topbar">
@@ -52,33 +54,14 @@
                         <div class="author"><span class="title">Author</span>
                             {{ req.book.author }}</div>
                         <div class="date"><span class="title">Date requested</span>
+                            {{ req.request_date }}</div>
+                        <div class="date"><span class="title">Status</span>
                             {{ req.request_date }}</div>
                         <div class="btn btn-warning">Cancel</div>                            
                     </div>
                     <br><br>
                 </div>
             </div>            
-        </div>
-        <div class="row">
-            <div class="container-fluid" style="padding-left:30px"><h1>Complete</h1></div>
-            <div class="req_outer col-sm-4 col-md-3">
-                <div class="req_inner">
-                    <div class="topbar">
-                        <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
-                        {{ req.book.title }}
-                        <div class="toggler"><i class="fa fa-arrow-right"></i></div>
-                    </div>
-                    <div class="body"> 
-                        <div class="book">{{ req.book.title }}</div>
-                        <div class="author"><span class="title">Author</span>
-                            {{ req.book.author }}</div>
-                        <div class="date"><span class="title">Date requested</span>
-                            {{ req.request_date }}</div>
-                        <div class="btn btn-warning">Cancel</div>                            
-                    </div>
-                    <br><br>
-                </div>
-            </div>
         </div>
     </div>
     <div class="container-fluid">
