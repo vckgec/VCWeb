@@ -15,7 +15,7 @@ def ws_connect(message):
 def ws_message(message):
     try:
         if get_channel_layer().group_channels('headClient'):
-            get_channel_layer().group_channels('headClient')[message.content['reply_channel']]
+            get_channel_layer().group_channels('headClient')[message.content['reply_channel']]  #raise error if key not exist
             Channel(json.loads(message.get('text'))['reply_channel']).send({'text':
                                                                         json.dumps(json.loads(message.get('text'))['message'])},immediately=True)
         else:

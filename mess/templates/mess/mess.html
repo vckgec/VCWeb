@@ -34,13 +34,13 @@
                     <div class="text-center" style="width:50%;float:left;text-align:center"><b>Morning</b><br>
                         <label class="switch" id="morning">
                             {% csrf_token %}
-                            <input {{status_mo}} type="checkbox" id="MO" data-catid="{{request.user.boarder.id}}">
+                            <input {{status_mo}} type="checkbox" id="1MO">
                             <span class="slider" ></span>
                         </label>
                     </div> 
                     <div style="width:50%;float:right;text-align:center"><b>Evening</b><br>
                         <label class="switch"  id="evening">
-                            <input {{status_ev}} type="checkbox" id="EV" data-catid="{{request.user.boarder.id}}">
+                            <input {{status_ev}} type="checkbox" id="2EV">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -59,7 +59,7 @@
                             <button id="panelchange" type="button" data-toggle="collapse" data-target="#collapse1"class="btn btn-primary btn-block">On/Off</button>
                             <div id="collapse1" class="panel-collapse collapse">
                                 <div class="panel-body" style="background-color:#86ABF5">
-                                    <form class="form" id="changeform" >
+                                    <form class="form" id="changeform" method="post">
                                         {% csrf_token %}
                                         {% for field in changeform %}
                                             {{ field.errors }}
@@ -77,7 +77,7 @@
                                 <button id="panelmeal" type="button" data-toggle="collapse" data-target="#collapse2"class="btn btn-primary btn-block">Meal</button>
                                 <div id="collapse2" class="panel-collapse collapse">
                                     <div class="panel-body" style="background-color:#86ABF5">
-                                        <form id="mealform"> 
+                                        <form id="mealform" class="form" method="post"> 
                                             {% csrf_token %}
                                             {% for field in mealform %}
                                             {{ field.errors }}
@@ -97,15 +97,15 @@
         </div>
         <div class="row col-sm-8 container-fluid text-center" style="float:right">
             {% load custom_tags %}
-            {% for meal in meals_today|sort %}
-                <div id="{{meal.meal_half}}_details" class="text-center col-sm-6 col-xs-12">
+            {% for meal in meals_today|dictsort:"get_current_half" %}
+                <div id="{{meal.get_half}}_details" class="text-center col-sm-6 col-xs-12">
                     <div class="panel panel-primary" style="padding-top:0px">
                         <div class="panel-heading" style="height:50px;padding-top:1px">
-                            <h4><b style="color:whitesmoke">{{meal.meal_half}}</b></h4>
+                            <h4><b style="color:whitesmoke">{{meal.get_half}}</b></h4>
                         </div>
                         <div class="panel-body text-left">
-                            <b>Meal: {{ meal.meal_dishes }}</b><br />
-                            Boarder count: {{ meal.boarder.count }}<br />
+                            <b>Meal: {{ meal.meal_dish.dish }}</b><br />
+                            Boarder count: {{ meal.presence.count }}<br />
                             {% if meal.extra_meals %}
                                 Extra meals: {{ meal.extra_meals }}<br />
                             {% endif %}

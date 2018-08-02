@@ -7,7 +7,7 @@ from . import views
 app_name = 'library'
 
 urlpatterns = [
-	url(r'^$', views.LibHome, name='LibHome'),
+	url(r'^$', views.LibHome, name='home'),
 	url(r'^index/$', views.BookIndex.as_view(), name='library'),
 	url(r'^book/(?P<id>[0-9]+)/$', views.BookDetail, name='detail'),
 	url(r'^book/edit/(?P<pk>[0-9]+)/$', views.BookEdit.as_view(), name='edit'),

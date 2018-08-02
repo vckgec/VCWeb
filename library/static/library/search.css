@@ -19,7 +19,7 @@
 /* Center the loader */
 #loader {
     position: relative;
-    margin: -75px 0 0 -75px;
+    margin: auto;
     border: 6px solid #f3f3f3;
     border-radius: 50%;
     border-top: 6px solid #3498db;

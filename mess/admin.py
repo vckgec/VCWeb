@@ -3,8 +3,9 @@ from .models import *
 
 # Register your models here.
 
+admin.site.register(Store)
 admin.site.register(Presence)
-admin.site.register(FutureBoarder)
-admin.site.register(MealDishes)
+admin.site.register(MessManager)
+admin.site.register(MealDish)
 admin.site.register(GuestMeal)
 admin.site.register(StoreKeeper)

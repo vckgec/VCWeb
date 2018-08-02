@@ -6,15 +6,19 @@
     </div>
     <div class="collapse navbar-collapse" id="miniNavbar" style="padding-top:0px">
         <ul class="nav navbar-nav">
-            {% if not 'printscan' in request.resolver_match.url_name %}
-            <li>
-                <a href="{% url 'dues:printscan'%}">Print & Scan</a>
-            </li>
-            {% else %}
-            <li class="active">
-                <a href="{% url 'library:library'%}">Print & Scan</a>
-            </li>
-            {% endif %}
+            {% load get_data %}
+            {% define as fields %}
+            {% for field in fields %}
+                {% if field|getAttr != request.path_info|getType %}
+                    <li>
+                        <a href="{% url 'dues:manage' field|getAttr %}">{{field|getName}}</a>
+                    </li>
+                {% else %}
+                    <li class="active">
+                        <a href="{% url 'dues:manage' field|getAttr %}">{{field|getName}}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
         </ul>
     </div>
 </div>

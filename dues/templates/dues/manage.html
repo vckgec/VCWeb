@@ -1,0 +1,28 @@
+{% extends 'home/base.html' %}
+{% load get_data %}
+{% block title %}{{request.path_info|getType|title}} | Dues{% endblock %}
+{% block mininav %}
+    {% include 'dues/mininav.html' %}
+{% endblock %}
+{% block content %}
+    <div class="container-fluid" style="padding:2% 2%">
+        {% for form in forms %}
+            <div class="col-sm-3 col-sm-offset-2 row" style="background-color:#86ABF5;padding-top:0px;padding-bottom:20px">
+                <h4 style="margin-bottom:10px"><b>{{form.name}}</b></h4>
+                <p style="color:white">{% now "jS F Y" %}</p>
+                <form class="form" action="." method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}                     
+                        <label class="text-danger small" style="position:absolute;margin-top:-20px;">
+                            {{ field.errors }}
+                        </label>
+                        {{ field }}<br>
+                    {% endfor %}
+                    {% if request.user.is_staff %}
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    {% endif %}
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

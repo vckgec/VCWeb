@@ -1,25 +1,13 @@
 from django import forms
+from .models import Dues
 from account.models import Boarder
-from .fields import ListTextWidget,MyDataListWidget,TextDropdownWidget,CSSTextListWidget
+from .fields import CSSTextListWidget
 
-class Print_Scan(forms.Form):
-    user = forms.CharField(required=True)
-    def __init__(self, *args, **kwargs):
-        data_list = kwargs.pop('data_list', None)
-        super(Print_Scan, self).__init__(*args, **kwargs)
-        # the "name" parameter will allow you to use the same widget more than once in the same
-        # form, not setting this parameter differently will cuse all inputs display the
-        # same list.
-        self.fields['user'].widget = ListTextWidget(data_list=data_list, name='user')
-
-class Print__Scan(forms.Form):
-    user = forms.CharField(widget=MyDataListWidget(queryset=Boarder.objects.all(),attrs={'list':'list__user','class':'form-control'}))
-    
 class PrintScan(forms.Form):
-    user = forms.CharField(label="Name",widget=CSSTextListWidget(queryset=Boarder.objects.all(), dropdownId="myDropdown", attrs={"autocomplete": "off", "placeholder": "Search..", "id": "myInput", "class": "form-control"}))
+    user = forms.CharField(label="Name",widget=CSSTextListWidget(queryset=Boarder.objects.all(),attrs={"autocomplete": "off", "placeholder": "Search..", "id": "myInput", "class": "form-control"}))
     a4_paper = forms.DecimalField(required=False, label="No of A4 Papers", widget=forms.TextInput(
         attrs={'placeholder': 'No of A4 Papers', 'class': 'form-control', 'max_length': 16}))
-    bw_print_single = forms.DecimalField(required=False, label="No of B/W Prints or Xerox(Single Side)", widget=forms.TextInput(
+    bw_print_single = forms.FloatField(required=False, label="No of B/W Prints or Xerox(Single Side)", widget=forms.TextInput(
         attrs={'placeholder': 'No of B/W Prints or Xerox(Single Side)', 'class': 'form-control', 'max_length': 16}))
     bw_print_double = forms.DecimalField(required=False, label="No of B/W Prints or Xerox(Double Side)", widget=forms.TextInput(
         attrs={'placeholder': 'No of B/W Prints or Xerox(Double Side)', 'class': 'form-control', 'max_length': 16}))
@@ -48,6 +36,18 @@ class PrintScan(forms.Form):
         else:
             return parent and True
 
+class AddForm(forms.Form):
+    name='Add'
+    boarder_id = forms.CharField(widget=CSSTextListWidget(queryset=Boarder.objects.all(),first=(0,'All'),default=0, attrs={
+                           "autocomplete": "off", "placeholder": "Search..", "id": "addInput", "class": "form-control"}))
+    added = forms.FloatField(widget=forms.TextInput(attrs={'placeholder': 'Added', 'class': 'form-control', 'max_length': 16}))
+    remarks = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Cause', 'max_length': 100, 'class': 'form-control','style':'height:100px'}))
 
-
-
+class PaidForm(forms.Form):
+    name='Paid'
+    boarder_id = forms.CharField(widget=CSSTextListWidget(queryset=Boarder.objects.all(), first=(0, 'All'), default=0, attrs={
+        "autocomplete": "off", "placeholder": "Search..", "id": "paidInput", "class": "form-control"}))
+    paid = forms.FloatField(widget=forms.TextInput(
+        attrs={'placeholder': 'Paid', 'class': 'form-control', 'max_length': 16}))
+    remarks = forms.CharField(widget=forms.Textarea(
+        attrs={'placeholder': 'Cause', 'max_length': 100, 'class': 'form-control', 'style': 'height:100px'}))
