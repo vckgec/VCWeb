@@ -43,10 +43,11 @@ def BookDetail(request, id):
     if request.method == 'GET':
         form = BookRequest(None)
         return render(request, 'library/detail.html', {'form': form, 'reqbook': reqbook})
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
         form = BookRequest(request.POST)
         if form.is_valid():
             req = form.save(commit=False)
+            req.user = request.user
             req.book = reqbook  # adding current book to the request.
             req.save()
             if reqbook.issued == True:
@@ -67,14 +68,10 @@ def NewForm(request):
         form = New(None)
     return render(request, 'library/new.html', {'form': form})
 
-# @login_required
-
 
 class BookAdd(CreateView):
     template_name = 'library/add.html'
     form_class = BookAdd
-
-# @login_required
 
 
 class BookEdit(UpdateView):
@@ -90,15 +87,19 @@ class Requests(generic.ListView):
     def get_queryset(self):
         return Request.objects.all()
 
-
+@login_required
 def IssueBook(request, id):
     req = get_object_or_404(Request, id=id)
     book = req.book
+    if not request.user.is_staff:
+        messages.warning(request, 'You aren\'t authorized to issue. Please contact a librarian.')
+        return redirect('library:home')
     if not book.issued:
         book.issued = True
-        book.name = req.name
         book.save()
         req.status = True
+        req.issued_by = request.user
+        req.issue_date = date.today()
         req.save()
         messages.success(
             request, 'You issued out this book to ' + req.name + '.')
@@ -108,22 +109,26 @@ def IssueBook(request, id):
             request, 'Oops! Something went wrong! Looks like this book was already issued.')
     return redirect('library:req')
 
-
+@login_required
 def ReturnBook(request, id):
     req = get_object_or_404(Request, id=id)
     book = req.book
-    if not book.issued:
+    if not (book.issued and (req.user==request.user or request.user.is_staff)):
         messages.warning(
-            request, 'It doesn\'t look like this book had been issued out. Contact an admin.')
+            request, 'It doesn\'t look like this book had been issued out to you. Contact an admin.')
     req.retstatus = True
+    req.return_request_date = date.today()
     req.save()
     messages.success(request, 'You asked for this book to be collected.')
     return redirect('library:req')
 
-
+@login_required
 def CollectBook(request, id):
     req = get_object_or_404(Request, id=id)
     book = req.book
+    if not request.user.is_staff:
+        messages.warning(request, 'You aren\'t authorized to collect. Please contact a librarian.')
+        return redirect('library:home')
     if not book.issued:
         messages.warning(
             request, 'It doesn\'t look like this book had been issued out. Contact an admin.')
@@ -131,6 +136,8 @@ def CollectBook(request, id):
         book.issued = False
         book.save()
         req.status = False
+        req.returned_by = request.user
+        req.return_date = date.today()
         req.save()
         messages.success(request, 'You collected this book.')
     return redirect('library:req')
@@ -227,12 +234,44 @@ def UserDashboard(request):
     context = {}
 
     my_requests = Request.objects.filter(user = request.user)
-
+    context['all'] = my_requests
     context['req_00'] = my_requests.filter(status=0, retstatus=0)
     context['req_01'] = my_requests.filter(status=0, retstatus=1)
     context['req_11'] = my_requests.filter(status=1, retstatus=1)
     context['req_10'] = my_requests.filter(status=1, retstatus=0)
 
-    context['req_01'] = context['req_01'].filter(self.due_date()>datetime.datetime.today())
+    # context['req_01'] = context['req_01'].filter(self.due_date()>datetime.datetime.today())
 
     return render(request, 'library/user_dashboard.html', context)
+
+def deleteRequest(request, id):
+    """View to delete a request if it is archived or requested, only."""
+
+    r = get_object_or_404(Request, id=id)
+    if (request.user.is_staff or r.user == request.user) and r.status==False and r.retstatus==False:
+        Request.objects.get(id=id).delete()
+        messages.success(request, "Request successfully cancelled.")
+    else:
+        messages.error(request, "You may not permission to delete that request.")
+    return redirect('library:user_dashboard')
+
+@login_required
+def adminDash(request, id):
+    """Dashboard for librarian."""
+
+    r = Request.objects.all()
+    req_01 = r.filter(status=0, retstatus=0)
+    req_10 = r.filter(status=1, retstatus=0)
+    req_11 = r.filter(status=1, retstatus=1)
+
+    req_pending = req_00.filter(book.issued==False)
+    ret_overdue = req_10.filter(due_date()<datetime.today())
+    print(ret_overdue, 'are overdue books.')
+
+    context = {
+        'requests': req_pending,
+        'overdue': ret_overdue,
+        'returns': req_11
+    }
+
+    return render(request, 'library/dashboard.html', context)

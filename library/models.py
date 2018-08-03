@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User as AuthUser
@@ -41,7 +41,7 @@ class Book(models.Model):
 class Request(models.Model):
 
     """
-    An explaination regarding status and retstatus is in order, obviously. 
+    An explanation regarding status and retstatus is in order, obviously. 
 
     To make things simple, let us consider all 
     the forms the combination of these two Booleans can take: 00, 01, 10, 11. 
@@ -73,6 +73,16 @@ class Request(models.Model):
         requeested by somebody else. A soft limit.'''
 
         return self.issue_date + timedelta(days=15)
+    
+    def is_overdue(self):
+        """Return Boolean depending on whether the book is overdue."""
+        return date.today() > self.due_date()
+
+    def is_wanted(self):
+        """Returns whether the book issued is wanted by someone else."""
+        bk = self.book
+        reqs = Request.objects.filter(book=bk, status=False, retstatus=False)
+        return len(reqs)
 
     def __str__(self):
         if self.status == True:
