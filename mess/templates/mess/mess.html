@@ -71,25 +71,23 @@
                             </div>
                         </div>
                     </div>
-                    {% if request.user.is_staff %}
-                        <div class="panel-group">
-                            <div class="panel panel-primary">
-                                <button id="panelmeal" type="button" data-toggle="collapse" data-target="#collapse2"class="btn btn-primary btn-block">Meal</button>
-                                <div id="collapse2" class="panel-collapse collapse">
-                                    <div class="panel-body" style="background-color:#86ABF5">
-                                        <form id="mealform" class="form" method="post"> 
-                                            {% csrf_token %}
-                                            {% for field in mealform %}
-                                            {{ field.errors }}
-                                            {{ field }}<br />
-                                            {% endfor %}
-                                            <input class="btn btn-success" style="float:right" type="submit" value="Submit"/>
-                                        </form>
-                                    </div>
+                    <div class="panel-group">
+                        <div class="panel panel-primary">
+                            <button id="panelmeal" type="button" data-toggle="collapse" data-target="#collapse2"class="btn btn-primary btn-block">Meal</button>
+                            <div id="collapse2" class="panel-collapse collapse">
+                                <div class="panel-body" style="background-color:#86ABF5">
+                                    <form id="mealform" class="form" method="post"> 
+                                        {% csrf_token %}
+                                        {% for field in mealform %}
+                                        {{ field.errors }}
+                                        {{ field }}<br />
+                                        {% endfor %}
+                                        <input class="btn btn-success" style="float:right" type="submit" value="Submit"/>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                    {% endif %}
+                    </div>
                 </div>
             {% else %}
                 <b>Please Login to Change Status</b>

@@ -1,5 +1,4 @@
 import datetime
-import numpy as np
 from django.db import models
 from django.db import connection
 from account.models import Boarder
@@ -130,8 +129,8 @@ class Store(models.Model):
                             string_list.append(string[j:i+j]+string[k:k+length-i])
             return string_list
 
-        kwargs = np.array([{'boarder__Eats_Mutton': not self.meal_dish.has_mutton}, {'boarder__Eats_Chicken': not self.meal_dish.has_chicken}, {
-                          'boarder__Eats_Fish': not self.meal_dish.has_fish}, {'boarder__Eats_Egg': not self.meal_dish.has_egg}])
+        kwargs = [{'boarder__Eats_Mutton': not self.meal_dish.has_mutton}, {'boarder__Eats_Chicken': not self.meal_dish.has_chicken}, {
+                          'boarder__Eats_Fish': not self.meal_dish.has_fish}, {'boarder__Eats_Egg': not self.meal_dish.has_egg}]
 
         required_kwargs = lambda mutton=None, chicken=None, fish=None, egg=None: {
             **(mutton if mutton else {}), **(chicken if chicken else {}), **(fish if fish else {}), **(egg if egg else {})}
@@ -146,8 +145,8 @@ class Store(models.Model):
             string_list = generate_length_wise_string(string, string_list, l)
 
         for generate_string in string_list:
-            minusAllNonFromEachNon = self.presence.filter(**required_kwargs(*kwargs[np.array(list(map(int, generate_string)))-1])).count(
-            )-self.presence.filter(**required_kwargs(*kwargs[np.array(list(map(int, string)))-1])).count()  # -1 bcz indexing starting from 0
+            minusAllNonFromEachNon = self.presence.filter(**required_kwargs(*map(kwargs.__getitem__,map(lambda x:int(x)-1, generate_string)))).count(
+            )-self.presence.filter(**required_kwargs(*map(kwargs.__getitem__,map(lambda x:int(x)-1,string)))).count()  # -1 bcz indexing starting from 0
 
             if minusAllNonFromEachNon:
                 iteration.append([minusAllNonFromEachNon, generate_string])
@@ -176,17 +175,20 @@ class Store(models.Model):
             except:
                 break
                 
-        main_string = np.array(['Mutton', 'Chicken', 'Fish', 'Egg'])
-        required_string= lambda string: 'Non %s: '%' and '.join(main_string[list(map(int,string))])
+        main_string = ['Mutton', 'Chicken', 'Fish', 'Egg']
+        required_string= lambda string: 'Non %s: '%' and '.join(map(main_string.__getitem__,map(lambda x:int(x)-1,string)))
 
+        uncount_veg=0
         for i in iteration:
             count_string.append(required_string(i[1])+str(i[0]))
+            uncount_veg+=i[0]
+            
         try:
-            veg = self.presence.filter(**required_kwargs(*kwargs[np.array(list(map(int, string)))-1])).count()
+            veg = self.presence.filter(**required_kwargs(*map(kwargs.__getitem__,map(lambda x:int(x)-1,string)))).count()
             if veg:
                 count_string.append('Veg: '+str(veg))
-            if self.get_total_meals()-veg:
-                count_string.append('Non Veg: '+str(self.get_total_meals()-veg))
+            if self.get_total_meals()-veg -uncount_veg:
+                count_string.append('Non Veg: '+str(self.get_total_meals()-veg-uncount_veg))
         except:
             pass
         if self.adjust_count:
