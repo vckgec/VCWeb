@@ -5,7 +5,7 @@ from .models import *
 
 
 class BoarderAdmin(admin.ModelAdmin):
-    list_filter = ('Year_Of_Passing', 'Eats_Fish', 'Eats_Chicken', 'Eats_Egg',
+    list_filter = ('Year_Of_Passing', 'Eats_Mutton', 'Eats_Chicken', 'Eats_Fish','Eats_Egg',
                    'Department', 'Current_Boarder')
 
 
