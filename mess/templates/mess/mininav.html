@@ -6,6 +6,11 @@
     </div>
     <div class="collapse navbar-collapse" id="miniNavbar" style="padding-top:0px">
         <ul class="nav navbar-nav">
+            {% if not 'getlist' in request.resolver_match.url_name %}
+                <li><a  href="{% url 'mess:getlist' %}">List</a></li>
+            {% else %}
+                <li class="active"><a>List</a></li>
+            {% endif %}
             {% if not 'storekeeper' in request.resolver_match.url_name %}
                 <li><a  href="{% url 'mess:storekeeper' %}">Store Keeper</a></li>
             {% else %}
