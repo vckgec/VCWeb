@@ -1,0 +1,67 @@
+{% extends 'home/base.html' %}
+{% block title %} List | Mess {% endblock %}
+{% block styles %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'mess/list.css' %}">
+{% endblock %}
+{% block mininav %}
+    {% include 'mess/mininav.html' %}
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        {% regroup boarder by Year_Of_Passing as batch_list %}
+        <ul class="nav nav-tabs">
+            {% for batch in batch_list %}
+                {% if forloop.counter == 1 %}
+                    <li class="active"><a data-toggle="tab" href="#{{batch.grouper}}">Batch {{batch.grouper}}</a></li>
+                {% else %}
+                    <li><a data-toggle="tab" href="#{{batch.grouper}}">Batch {{batch.grouper}}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>        
+        <div class="tab-content">
+            {% for batch in batch_list %}
+                {% if forloop.counter == 1 %}
+                    <div id="{{batch.grouper}}" class="tab-pane fade in active">
+                {% else %}
+                    <div id="{{batch.grouper}}" class="tab-pane fade">
+                {% endif %}
+                <table class="table table-striped" style="border:1px solid #ddd;border-top:none">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Eats Mutton</th>
+                            <th scope="col">Eats Chicken</th>
+                            <th scope="col">Eats Fish</th>
+                            <th scope="col">Eats Egg</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for boarder in batch.list %}
+                            <tr>
+                                <td scope="row">{{boarder.Name}}</td>
+                                <td><div class="{{boarder.status}}"></div></td>
+                                <td>{{boarder.Eats_Mutton}}</td>
+                                <td>{{boarder.Eats_Chicken}}</td>
+                                <td>{{boarder.Eats_Fish}}</td>
+                                <td>{{boarder.Eats_Egg}}</td>
+                            </tr>
+                        {% endfor %}
+                        {% for boarder in off_batch.list %}
+                            <tr>
+                                <td scope="row">{{boarder.Name}}</td>
+                                <td>OFF</td>
+                                <td>{{boarder.Eats_Mutton}}</td>
+                                <td>{{boarder.Eats_Chicken}}</td>
+                                <td>{{boarder.Eats_Fish}}</td>
+                                <td>{{boarder.Eats_Egg}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            {% endfor %}
+        </div>        
+    </div>
+{% endblock %}

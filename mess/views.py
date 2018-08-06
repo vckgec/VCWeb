@@ -2,7 +2,8 @@ import datetime
 import calendar
 from .forms import *
 from .models import *
-from django.db.models import F,Q
+from django.db.models import F,Q,Value
+from account.models import Boarder
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -28,6 +29,14 @@ def index(request):
         context = {'changeform': changeform, 'mealform': mealform,'meals_today': meal_today}
     return render(request, 'mess/mess.html', context)
 
+def getList(request):
+    store=Store.objects.filter(date=datetime.date.today(),half='2EV').first()
+    on_presence=store.presence.all().values_list('boarder')
+    on_boarder=list(map(lambda item: dict(item, status='ON'),Boarder.objects.filter(id__in=on_presence).values('Name','Eats_Mutton','Year_Of_Passing','Eats_Chicken','Eats_Fish','Eats_Egg')))
+    off_boarder=list(map(lambda item: dict(item, status='OFF'),Boarder.objects.exclude(id__in=on_presence).values('Name','Eats_Mutton','Year_Of_Passing','Eats_Chicken','Eats_Fish','Eats_Egg')))
+    boarder=on_boarder+off_boarder
+    boarder.sort(key=lambda x:x['Year_Of_Passing'])
+    return render(request,'mess/list.html',{'boarder':boarder})
 
 def storeUpdate(request):
     half = request.POST['half']
@@ -159,3 +168,16 @@ def storeKeeperEdit(request):
         messages.success(request, "Successfully submitted data")
         return redirect('mess:storekeeper')
     return render(request, 'mess/storekeeperedit.html', {'juniors': second_year})
+
+def allOn(request):
+    boarders=Boarder.objects.all()
+    presence_objs = []
+    for boarder in boarders:
+        presence_objs.append(Presence(boarder=boarder, date=datetime.date.today(), status='on', half='2EV'))
+    Presence.objects.bulk_create(presence_objs)
+    presences=Presence.objects.filter(date=datetime.date.today(), status='on', half='2EV')
+    store = Store.objects.filter(half='2EV',date=datetime.date.today())
+    store[0].presence.clear()
+    store[0].presence.add(*presences)
+    return HttpResponse('OK')
+
