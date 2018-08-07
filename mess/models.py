@@ -182,13 +182,14 @@ class Store(models.Model):
         for i in iteration:
             count_string.append(required_string(i[1])+str(i[0]))
             uncount_veg+=i[0]
-            
+    
         try:
-            veg = self.presence.filter(**required_kwargs(*map(kwargs.__getitem__,map(lambda x:int(x)-1,string)))).count()
-            if veg:
-                count_string.append('Veg: '+str(veg))
-            if self.get_total_meals()-veg -uncount_veg:
-                count_string.append('Non Veg: '+str(self.get_total_meals()-veg-uncount_veg))
+            if string:
+                veg = self.presence.filter(**required_kwargs(*map(kwargs.__getitem__,map(lambda x:int(x)-1,string)))).count()
+                if veg:
+                    count_string.append('Veg: '+str(veg))
+                if self.get_total_meals()-veg -uncount_veg:
+                    count_string.append('Non Veg: '+str(self.get_total_meals()-veg-uncount_veg))
         except:
             pass
         if self.adjust_count:

@@ -2,7 +2,7 @@ import datetime
 import calendar
 from .forms import *
 from .models import *
-from django.db.models import F,Q,Value
+from django.db.models import F,Q
 from account.models import Boarder
 from django.contrib import messages
 from django.http import HttpResponse
@@ -88,7 +88,6 @@ def changeStatus(request):
 
 @mess_member_required
 def mealDish(request):  # meal import in MealDish model
-    print('hi')
     if request.method == 'POST':
         temp={}
         temp['dish'] = request.POST['dish'].upper()
