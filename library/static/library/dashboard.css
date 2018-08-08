@@ -56,3 +56,16 @@
     float: left;
     margin: 10px 10px;
 }
+
+.nav-tabs>li>a{
+    font-size: 20px;
+    font-weight: bold;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    color: white;
+    background-color: #f00;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
