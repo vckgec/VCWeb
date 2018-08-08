@@ -8,154 +8,155 @@
     {% include 'library/mininav.html' %}
 {% endblock %}
 {% block content %}
-    <!--Request-->
     <div class="container-fluid">
-        <div class="row" style="padding-left:30px;background:linear-gradient(to right,rgb(72, 255, 0), yellow);">
-            <label style="color:black;font-size:30px">Request</label>
-        </div>
-        <div class="row" style="padding-bottom:40px">
-            {% for req in req_00 %}
-                <div class="req_outer col-sm-4 col-md-3">
-                    <div class="req_inner">
-                        <div class="topbar">
-                            <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
-                            {{ req.book.title }}
-                            <div class="toggler"><i class="fa fa-arrow-right"></i></div>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#req_00">Request</a></li>
+            <li><a data-toggle="tab" href="#req_10">Issued Out</a></li>
+            <li><a data-toggle="tab" href="#req_11">Request for Returns</a></li>
+            <li style="display:none"><a data-toggle="tab" href="#rft">Request for Transfers</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="req_00" class="tab-pane fade in active">
+                <div class="row">
+                    {% for req in req_00 %}
+                        <div class="req_outer col-sm-4 col-md-3">
+                            <div class="req_inner">
+                                <div class="topbar">
+                                    <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
+                                    {{ req.book.title }}
+                                    <div class="toggler"><i class="fa fa-arrow-right"></i></div>
+                                </div>
+                                <div class="body"> 
+                                    <div class="book">{{ req.book.title }}</div>
+                                    <div class="author">
+                                        <span class="title">Author:&nbsp;</span>
+                                        {{ req.book.author }}
+                                    </div>
+                                    <div class="date">
+                                        <span class="title">Date requested:&nbsp;</span>
+                                        {{ req.request_date }}
+                                    </div>
+                                    <a href="{% url "library:delete_request" req.id %}">
+                                        <div class="btn btn-warning">Cancel</div>
+                                    </a>                                        
+                                </div>
+                                <br><br>
+                            </div>
                         </div>
-                        <div class="body"> 
-                            <div class="book">{{ req.book.title }}</div>
-                            <div class="author"><span class="title">Author:&nbsp;</span>
-                                {{ req.book.author }}</div>
-                            <div class="date"><span class="title">Date requested:&nbsp;</span>
-                                {{ req.request_date }}</div>
-                                <a href="{% url "library:delete_request" req.id %}"><div class="btn btn-warning">Cancel</div></a>
-                                    
-                        </div>
-                        <br><br>
-                    </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
-    </div>
-    <!--Issued out 10-->
-    <div class="container-fluid">
-        <div class="row" style="padding-left:30px;background:linear-gradient(to right,rgb(72, 255, 0), yellow);">
-            <label style="color:black;font-size:30px">Issued out</label>
-        </div>
-        <div class="row" style="padding-bottom:40px">
-            {% for req in req_10 %}
-                <div class="req_outer col-sm-4 col-md-3">
-                    <div class="req_inner">
-                        <div class="topbar">
-                            <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
-                            {{ req.book.title }}
-                            <div class="toggler"><i class="fa fa-arrow-right"></i></div>
+            </div>
+            <div id="req_10" class="tab-pane fade">
+                <div class="row">
+                    {% for req in req_10 %}
+                        <div class="req_outer col-sm-4 col-md-3">
+                            <div class="req_inner">
+                                <div class="topbar">
+                                    <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
+                                    {{ req.book.title }}
+                                    <div class="toggler"><i class="fa fa-arrow-right"></i></div>
+                                </div>
+                                <div class="body"> 
+                                    <div class="book">{{ req.book.title }}</div>
+                                    <div class="author"><span class="title">Author:&nbsp;</span>
+                                        {{ req.book.author }}</div>
+                                    <div class="date"><span class="title">Date requested:&nbsp;</span>
+                                        {{ req.request_date }}</div>
+                                    <div class="date"><span class="title">Status:&nbsp;</span>
+                                        {% if req.is_overdue %}
+                                            {% if req.is_wanted %}
+                                                <div class="stat_red"></div>
+                                                Return Pending
+                                            {% else %}
+                                                <div class="stat_yellow"></div>
+                                                Overdrawn
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="stat_green"></div>
+                                            OK
+                                        {% endif %}
+                                    </div>                  
+                                </div>
+                                <br><br>
+                            </div>
                         </div>
-                        <div class="body"> 
-                            <div class="book">{{ req.book.title }}</div>
-                            <div class="author"><span class="title">Author:&nbsp;</span>
-                                {{ req.book.author }}</div>
-                            <div class="date"><span class="title">Date requested:&nbsp;</span>
-                                {{ req.request_date }}</div>
-                            <div class="date"><span class="title">Status:&nbsp;</span>
-                                {% if req.is_overdue %}
-                                    {% if req.is_wanted %}
-                                        <div class="stat_red"></div>
-                                        Return Pending
-                                    {% else %}
-                                        <div class="stat_yellow"></div>
-                                        Overdrawn
-                                    {% endif %}
-                                {% else %}
-                                    <div class="stat_green"></div>
-                                    OK
-                                {% endif %}
-                            </div>                  
-                        </div>
-                        <br><br>
-                    </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}          
-        </div>
-    </div>
-    <!--Request for returns-->
-    <div class="container-fluid">
-        <div class="row" style="padding-left:30px;background:linear-gradient(to right,rgb(72, 255, 0), yellow);">
-            <label style="color:black;font-size:30px">Request for returns</label>
-        </div>
-        <div class="row" style="padding-bottom:40px">
-            {% for req in req_11 %}
-                <div class="req_outer col-sm-4 col-md-3">
-                    <div class="req_inner">
-                        <div class="topbar">
-                            <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
-                            {{ req.book.title }}
-                            <div class="toggler"><i class="fa fa-arrow-right"></i></div>
+            </div>
+            <div id="req_11" class="tab-pane fade">
+                <div class="row">
+                    {% for req in req_11 %}
+                        <div class="req_outer col-sm-4 col-md-3">
+                            <div class="req_inner">
+                                <div class="topbar">
+                                    <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
+                                    {{ req.book.title }}
+                                    <div class="toggler"><i class="fa fa-arrow-right"></i></div>
+                                </div>
+                                <div class="body"> 
+                                    <div class="book">{{ req.book.title }}</div>
+                                    <div class="author">
+                                        <span class="title">Author:&nbsp;</span>
+                                        {{ req.book.author }}
+                                    </div>
+                                    <div class="date">
+                                        <span class="title">Date requested:&nbsp;</span>
+                                        {{ req.request_date }}
+                                    </div>
+                                    <a class="btn btn-success" href="{{ req.get_return_url }}">Retuen</a>                            
+                                </div>
+                                <br><br>
+                            </div>
                         </div>
-                        <div class="body"> 
-                            <div class="book">{{ req.book.title }}</div>
-                            <div class="author"><span class="title">Author:&nbsp;</span>
-                                {{ req.book.author }}</div>
-                            <div class="date"><span class="title">Date requested:&nbsp;</span>
-                                {{ req.request_date }}</div>
-                            <a class="btn btn-success" href="{{ req.get_return_url }}">Retuen</a>                            
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="rft" class="tab-pane fade">
+                <!--Pending-->
+                <div class="row">
+                    <div class="container-fluid" style="padding-left:30px"><h1>Pending</h1></div>
+                    <div class="req_outer col-sm-4 col-md-3">
+                        <div class="req_inner">
+                            <div class="topbar">
+                                <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
+                                {{ req.book.title }}
+                                <div class="toggler"><i class="fa fa-arrow-right"></i></div>
+                            </div>
+                            <div class="body"> 
+                                <div class="book">{{ req.book.title }}</div>
+                                <div class="author"><span class="title">Author:&nbsp;</span>
+                                    {{ req.book.author }}</div>
+                                <div class="date"><span class="title">Date requested:&nbsp;</span>
+                                    {{ req.request_date }}</div>
+                                <div class="btn btn-warning">Cancel</div>                            
+                            </div>
+                            <br><br>
                         </div>
-                        <br><br>
-                    </div>
+                    </div>            
                 </div>
-            {% endfor %}          
-        </div>
-    </div>
-    <!--Request transfers-->
-    <div class="container-fluid" style="display:none">
-        <div class="row" style="padding-left:30px;background:linear-gradient(to right,rgb(72, 255, 0), yellow);">
-            <label style="color:black;font-size:30px">Request Transfers</label>
-        </div>
-        <!--Pending-->
-        <div class="row" style="padding-bottom:40px">
-            <div class="container-fluid" style="padding-left:30px"><h1>Pending</h1></div>
-            <div class="req_outer col-sm-4 col-md-3">
-                <div class="req_inner">
-                    <div class="topbar">
-                        <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
-                        {{ req.book.title }}
-                        <div class="toggler"><i class="fa fa-arrow-right"></i></div>
+                <!--Completed-->
+                <div class="row" style="padding-bottom:40px">
+                    <div class="container-fluid" style="padding-left:30px"><h1>Complete</h1></div>
+                    <div class="req_outer col-sm-4 col-md-3">
+                        <div class="req_inner">
+                            <div class="topbar">
+                                <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
+                                {{ req.book.title }}
+                                <div class="toggler"><i class="fa fa-arrow-right"></i></div>
+                            </div>
+                            <div class="body"> 
+                                <div class="book">{{ req.book.title }}</div>
+                                <div class="author"><span class="title">Author:&nbsp;</span>
+                                    {{ req.book.author }}</div>
+                                <div class="date"><span class="title">Date requested:&nbsp;</span>
+                                    {{ req.request_date }}</div>
+                                <div class="btn btn-warning">Cancel</div>                            
+                            </div><br><br>
+                        </div>
                     </div>
-                    <div class="body"> 
-                        <div class="book">{{ req.book.title }}</div>
-                        <div class="author"><span class="title">Author:&nbsp;</span>
-                            {{ req.book.author }}</div>
-                        <div class="date"><span class="title">Date requested:&nbsp;</span>
-                            {{ req.request_date }}</div>
-                        <div class="btn btn-warning">Cancel</div>                            
-                    </div>
-                    <br><br>
-                </div>
-            </div>            
-        </div>
-        <!--Completed-->
-        <div class="row" style="padding-bottom:40px">
-            <div class="container-fluid" style="padding-left:30px"><h1>Complete</h1></div>
-            <div class="req_outer col-sm-4 col-md-3">
-                <div class="req_inner">
-                    <div class="topbar">
-                        <b>{{ req.book.subject.code }}{{ req.book.id }}</b>
-                        {{ req.book.title }}
-                        <div class="toggler"><i class="fa fa-arrow-right"></i></div>
-                    </div>
-                    <div class="body"> 
-                        <div class="book">{{ req.book.title }}</div>
-                        <div class="author"><span class="title">Author:&nbsp;</span>
-                            {{ req.book.author }}</div>
-                        <div class="date"><span class="title">Date requested:&nbsp;</span>
-                            {{ req.request_date }}</div>
-                        <div class="btn btn-warning">Cancel</div>                            
-                    </div>
-                    <br><br>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script src="{% static 'library/dashboard.js' %}" type="text/javascript"></script>
+    <script src="{% static 'library/dashboard.js' %}" type="text/javascript"></script>
 {% endblock %}
