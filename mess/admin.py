@@ -3,7 +3,7 @@ from .models import *
 
 # Register your models here.
 class PresenceAdmin(admin.ModelAdmin):
-    list_filter = ('boarder__Year_Of_Passing','half','status','boarder__Current_Boarder')
+    list_filter = ('boarder__Year_Of_Passing','date','half','status','boarder__Current_Boarder')
 
 admin.site.register(Store)
 admin.site.register(Presence,PresenceAdmin)
