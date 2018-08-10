@@ -52,7 +52,7 @@ def mealDishCreate(half):
     return messManagerCreate(half)
 
 def presenceCreate():
-    threading.Timer(86400.0, presenceCreate).start()
+    threading.Timer(43200.0, presenceCreate).start()
     store = Store.objects.filter(date=datetime.date.today())
     if not store:
         half=['1MO','2EV']
