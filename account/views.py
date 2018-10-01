@@ -144,7 +144,7 @@ def edit_details(request):
         form=Edit_Details(None)
     return render(request,'account/editdetails.html',{'form':form})
 
-@login_required
+# @login_required
 def Json_Working(request):
     data=None
     if request.method=='POST':        
