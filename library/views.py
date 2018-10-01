@@ -102,7 +102,7 @@ def IssueBook(request, id):
         req.issue_date = date.today()
         req.save()
         messages.success(
-            request, 'You issued out this book to ' + req.name + '.')
+            request, 'You issued out this book to ' + req.user.first_name + '.')
         return redirect('library:req')
     else:
         messages.error(
@@ -256,22 +256,26 @@ def deleteRequest(request, id):
     return redirect('library:user_dashboard')
 
 @login_required
-def adminDash(request, id):
+def adminDash(request):
     """Dashboard for librarian."""
 
     r = Request.objects.all()
-    req_01 = r.filter(status=0, retstatus=0)
+    req_00 = r.filter(status=0, retstatus=0)
+    req_01 = r.filter(status=0, retstatus=1)
     req_10 = r.filter(status=1, retstatus=0)
     req_11 = r.filter(status=1, retstatus=1)
 
-    req_pending = req_00.filter(book.issued==False)
-    ret_overdue = req_10.filter(due_date()<datetime.today())
-    print(ret_overdue, 'are overdue books.')
+    # req_pending = req_00.filter(book__issued==False)
+    # ret_overdue = req_10.filter(due_date() < datetime.today())
 
     context = {
-        'requests': req_pending,
-        'overdue': ret_overdue,
-        'returns': req_11
+        # 'requests': req_pending,
+        # 'overdue': ret_overdue,
+        # 'returns': req_11
+        'req_00': req_00,
+        'req_01': req_01,
+        'req_10': req_10,
+        'req_11': req_11,
     }
 
     return render(request, 'library/dashboard.html', context)

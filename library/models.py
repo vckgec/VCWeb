@@ -41,10 +41,10 @@ class Book(models.Model):
 class Request(models.Model):
 
     """
-    An explanation regarding status and retstatus is in order, obviously. 
+    An explanation regarding status and retstatus is in order, obviously.
 
-    To make things simple, let us consider all 
-    the forms the combination of these two Booleans can take: 00, 01, 10, 11. 
+    To make things simple, let us consider all
+    the forms the combination of these two Booleans can take: 00, 01, 10, 11.
     00: User makes a reequest, and both are inititalised as False.
     10: The book has been delivered, request has been marked to be completed.
     11: The issuer wants to return the book. He expresses this desire by marking retstatus as True.
