@@ -11,20 +11,23 @@
             {% else %}
                 <li class="active"><a  href="{% url 'library:library'%}">All Books</a></li>
             {% endif %}
-            {% if not 'req' in request.resolver_match.url_name %}
-                <li><a  href="{% url 'library:req'%}">Issued Out Books</a></li>
+            {% if not 'dashboard' in request.resolver_match.url_name %}
+                <li><a  href="{% url 'library:user_dashboard'%}">Dashboard</a></li>
             {% else %}
-                <li class="active"><a  href="{% url 'library:req' %}">Issued Out Books</a></li>
+                <li class="active"><a  href="{% url 'library:user_dashboard' %}">Dashboard</a></li>
             {% endif %}
             {% if not 'add' in request.resolver_match.url_name %}
                 <li><a href="{% url 'library:add'%}">Add a Book</a></li>
             {% else %}
                 <li class="active"><a href="{% url 'library:add'%}">Add a Book</a></li>
             {% endif %}
-            {% if not 'new' in request.resolver_match.url_name %}
+            {% comment %} {% if not 'new' in request.resolver_match.url_name %}
                 <li><a href="{% url 'library:new'%}">Request Unregistered</a></li>
             {% else %}
                 <li class="active"><a href="{% url 'library:new'%}">Request Unregistered</a></li>
+            {% endif %} {% endcomment %}
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'library:admin_dash'%}">Admin Dashboard</a></li>
             {% endif %}
         </ul>
         <div class="col-sm-3 col-md-3 col-xs-12" style="float:right">
