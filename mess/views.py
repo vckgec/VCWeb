@@ -34,12 +34,13 @@ def getList(request):
     data=[]
     for key in half.keys():
         store=Store.objects.filter(date=datetime.date.today(),half=key).first()
-        on_presence=store.presence.all().values_list('boarder')
-        on_boarder=list(map(lambda item: dict(item, status='ON'),Boarder.objects.filter(id__in=on_presence).values('Name','Eats_Mutton','Year_Of_Passing','Eats_Chicken','Eats_Fish','Eats_Egg')))
-        off_boarder=list(map(lambda item: dict(item, status='OFF'),Boarder.objects.exclude(id__in=on_presence).values('Name','Eats_Mutton','Year_Of_Passing','Eats_Chicken','Eats_Fish','Eats_Egg')))
-        boarder=on_boarder+off_boarder
-        boarder.sort(key=lambda x:x['Year_Of_Passing'])
-        data.append({'half':half[key],'boarder':boarder})
+        if store:
+            on_presence=store.presence.all().values_list('boarder')
+            on_boarder=list(map(lambda item: dict(item, status='ON'),Boarder.objects.filter(id__in=on_presence).values('Name','Eats_Mutton','Year_Of_Passing','Eats_Chicken','Eats_Fish','Eats_Egg')))
+            off_boarder=list(map(lambda item: dict(item, status='OFF'),Boarder.objects.exclude(id__in=on_presence).values('Name','Eats_Mutton','Year_Of_Passing','Eats_Chicken','Eats_Fish','Eats_Egg')))
+            boarder=on_boarder+off_boarder
+            boarder.sort(key=lambda x:x['Year_Of_Passing'])
+            data.append({'half':half[key],'boarder':boarder})
     return render(request,'mess/list.html',{'data_list':data})
 
 def storeUpdate(request):
