@@ -34,13 +34,13 @@ SECRET_KEY = 'bab9a676-9463-43ee-8bd9-b7d0a5463980'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['vckgec.herokuapp.com']
+ALLOWED_HOSTS = ['vckgec.sytes.net','127.0.0.1']
 ADMINS=(('Bibhas', 'bibhasmondal96@gmail.com'))
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 # Application definition
 
