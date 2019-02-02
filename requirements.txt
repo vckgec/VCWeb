@@ -8,3 +8,6 @@ dj_database_url==0.4.2
 websocket-client==0.47.0
 django-relativedelta==1.0.3
 psycopg2-binary==2.7.5
+requests==2.20.1
+beautifulsoup4==4.6.3
+lxml==4.2.5
