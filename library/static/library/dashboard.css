@@ -1,9 +1,10 @@
-            .topbar {
-    background-color: yellowgreen;
+.topbar {
+    background-color: yellow;
     border: 2px solid green;
     border-radius: 5px 5px 0 0;
     padding: 3%;
     overflow: hidden;
+    color: black;
 }
 
 .topbar .toggler {
@@ -20,10 +21,10 @@
 }
 
 .req_inner .body {
-    padding: 5%;
-    padding-bottom: 0;
-    background: skyblue;
+    padding: 10px 10px;
+    background: gray;
     border: 3px solid rgb(31, 26, 0);
+    color: black;
 }
 
 .title {
@@ -65,7 +66,7 @@
     color: #555;
     cursor: default;
     color: white;
-    background-color: #f00;
+    background-color: #555;
     border: 1px solid #ddd;
     border-bottom-color: transparent;
 }

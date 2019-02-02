@@ -7,5 +7,6 @@ channel_routing = [
     # Include sub-routing from an app.
     include("chat.routing.websocket_routing", path=r"^/chat"),
     include("mess.routing.websocket_routing", path=r"^/mess"),
+    include("library.routing.websocket_routing", path=r"^/library"),
     include("account.routing.websocket_routing", path=r"^/account"),
 ]

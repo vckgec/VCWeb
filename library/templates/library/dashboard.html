@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %}
-{% block title %} Library | Dashboard | VC {% endblock %}
+{% block title %} Library | Dashboard {% endblock %}
 {% block styles %}
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'library/dashboard.css'%}">
@@ -38,12 +38,12 @@
                                         <span class="title">Date requested:&nbsp;</span>
                                         {{ req.request_date }}
                                     </div>
-                                    <a href="{% url "library:delete_request" req.id %}">
+                                    <a href="{% url "library:delete_request" req.id %}" style="margin-left:-100px">
                                         <div class="btn btn-warning">Cancel</div>
                                     </a>
-                                    <a href="{% url "library:issue" req.id %}">
+                                    <a href="{% url "library:issue" req.id %}" style="margin-left:50px">
                                         <div class="btn btn-success">Issue</div>
-                                    </a>                                        
+                                    </a>
                                 </div>
                                 <br><br>
                             </div>
@@ -80,10 +80,7 @@
                                             <div class="stat_green"></div>
                                             OK
                                         {% endif %}
-                                    </div>                  
-                                        <a href="{% url "library:return" req.id %}">
-                                            <div class="btn btn-success">Initialize Return</div>
-                                        </a>
+                                    </div>
                                 </div>
                                 <br><br>
                             </div>
@@ -111,7 +108,7 @@
                                         <span class="title">Date requested:&nbsp;</span>
                                         {{ req.request_date }}
                                     </div>
-                                    <a class="btn btn-success" href="{{ req.get_collect_url }}">Collect</a>                            
+                                    <a class="btn btn-success" href="{{ req.get_collect_url }}">Collect</a>
                                 </div>
                                 <br><br>
                             </div>

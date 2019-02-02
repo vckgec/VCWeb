@@ -16,18 +16,24 @@
             {% else %}
                 <li class="active"><a  href="{% url 'library:user_dashboard' %}">Dashboard</a></li>
             {% endif %}
-            {% if not 'add' in request.resolver_match.url_name %}
-                <li><a href="{% url 'library:add'%}">Add a Book</a></li>
-            {% else %}
-                <li class="active"><a href="{% url 'library:add'%}">Add a Book</a></li>
-            {% endif %}
-            {% comment %} {% if not 'new' in request.resolver_match.url_name %}
-                <li><a href="{% url 'library:new'%}">Request Unregistered</a></li>
-            {% else %}
-                <li class="active"><a href="{% url 'library:new'%}">Request Unregistered</a></li>
-            {% endif %} {% endcomment %}
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'library:admin_dash'%}">Admin Dashboard</a></li>
+            {% if request.user.is_superuser %}
+                {% if not 'add' in request.resolver_match.url_name %}
+                    <li><a href="{% url 'library:add'%}">Add a Book</a></li>
+                {% else %}
+                    <li class="active"><a href="{% url 'library:add'%}">Add a Book</a></li>
+                {% endif %}
+                {% comment %}
+                    {% if not 'new' in request.resolver_match.url_name %}
+                        <li><a href="{% url 'library:new'%}">Request Unregistered</a></li>
+                    {% else %}
+                        <li class="active"><a href="{% url 'library:new'%}">Request Unregistered</a></li>
+                    {% endif %}
+                {% endcomment %}
+                {% if not 'admin_dash' in request.resolver_match.url_name %}
+                    <li><a href="{% url 'library:admin_dash'%}">Admin Dashboard</a></li>
+                {% else %}
+                    <li class="active"><a href="{% url 'library:admin_dash'%}">Admin Dashboard</a></li>
+                {% endif %}
             {% endif %}
         </ul>
         <div class="col-sm-3 col-md-3 col-xs-12" style="float:right">

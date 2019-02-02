@@ -16,22 +16,6 @@ import base64
 import websocket
 import json
 
-# Create your views here.
-
-def send(request,message):
-    try:
-        ws_scheme = "wss" if request.is_secure() else "ws"        
-        ws = websocket.create_connection(ws_scheme+"://"+request.get_host()+"/account/")
-        ws.send(json.dumps({'type': 'account', 'message':message }))
-        result=ws.recv()
-        ws.close()
-        if result == 'Head client not found':
-            return False
-        else:
-            return True
-    except:
-        return False
-
 #@csrf_exempt
 def login_user(request):
     logout(request)
@@ -114,17 +98,16 @@ def change_password(request):
 def forgot_password(request):
     if request.method=='POST':
         form = ForgotPassword(request.POST)
-        if form.is_valid():            
+        if form.is_valid():
             try:
                 user=User.objects.get(username=form.cleaned_data['username'])
                 reset_password=user.password[-11:-1]
-                #asyncio.get_event_loop().run_until_complete(hello(reset_password))                
-                if send(request,{'email': form.cleaned_data['email'], 'password': reset_password}):
+                if send_mail('Password reset','Your password is %s'%reset_password, EMAIL_HOST_USER, [EMAIL_HOST_USER, form.cleaned_data['email']],fail_silently=False):
                     user.set_password(reset_password)
                     user.save()
                     messages.success(request, 'Password is send to '+form.cleaned_data['email'])
                 else:
-                    messages.warning(request,'Head client not found')
+                    messages.warning(request,'Connection Error')
             except Exception as e:
                 messages.warning(request, e)
 
@@ -139,15 +122,15 @@ def edit_details(request):
         if form.is_valid():
             request.user.boarder.dp = base64.encodestring(
                 form.cleaned_data['dp'].read()).decode('utf-8')
-            request.user.boarder.save()            
+            request.user.boarder.save()
     else:
         form=Edit_Details(None)
     return render(request,'account/editdetails.html',{'form':form})
 
-# @login_required
+@login_required
 def Json_Working(request):
     data=None
-    if request.method=='POST':        
+    if request.method=='POST':
         dumpform = JsonDumpForm(request.POST)
         loadform=JsonLoadForm(request.POST,request.FILES)
         if dumpform.is_valid():

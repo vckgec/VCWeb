@@ -96,6 +96,7 @@ def IssueBook(request, id):
         return redirect('library:home')
     if not book.issued:
         book.issued = True
+        book.issued_name = req.user
         book.save()
         req.status = True
         req.issued_by = request.user
@@ -103,11 +104,11 @@ def IssueBook(request, id):
         req.save()
         messages.success(
             request, 'You issued out this book to ' + req.user.first_name + '.')
-        return redirect('library:req')
+        return redirect('library:admin_dash')
     else:
         messages.error(
             request, 'Oops! Something went wrong! Looks like this book was already issued.')
-    return redirect('library:req')
+    return redirect('library:admin_dash')
 
 @login_required
 def ReturnBook(request, id):
@@ -120,7 +121,7 @@ def ReturnBook(request, id):
     req.return_request_date = date.today()
     req.save()
     messages.success(request, 'You asked for this book to be collected.')
-    return redirect('library:req')
+    return redirect('library:user_dashboard')
 
 @login_required
 def CollectBook(request, id):
@@ -140,7 +141,7 @@ def CollectBook(request, id):
         req.return_date = date.today()
         req.save()
         messages.success(request, 'You collected this book.')
-    return redirect('library:req')
+    return redirect('library:admin_dash')
 
 
 def UndoReturn(request, id):
@@ -148,7 +149,7 @@ def UndoReturn(request, id):
     req.retstatus = False
     req.save()
     messages.success(request, "This return was cancelled.")
-    return redirect('library:req')
+    return redirect('library:user_dashboard')
 
 
 import re
@@ -157,7 +158,6 @@ import operator
 
 def Search(request):
     if request.GET.get('q'):
-        global query
         message = "you submitted " + request.GET['q']
         query = request.GET['q']
         q = query.lower()

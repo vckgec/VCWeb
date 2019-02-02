@@ -1,5 +1,5 @@
 {% extends 'home/base.html' %}
-{% block title %} Library | Dashboard | VC {% endblock %}
+{% block title %} Library | Dashboard {% endblock %}
 {% block styles %}
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'library/dashboard.css'%}">
@@ -36,9 +36,9 @@
                                         <span class="title">Date requested:&nbsp;</span>
                                         {{ req.request_date }}
                                     </div>
-                                    <a href="{% url "library:delete_request" req.id %}">
+                                    <a href="{% url 'library:delete_request' req.id %}">
                                         <div class="btn btn-warning">Cancel</div>
-                                    </a>                                        
+                                    </a>
                                 </div>
                                 <br><br>
                             </div>
@@ -75,7 +75,8 @@
                                             <div class="stat_green"></div>
                                             OK
                                         {% endif %}
-                                    </div>                  
+                                    </div>
+                                    <a class="btn btn-success" href="{{ req.get_return_url }}">Return</a>
                                 </div>
                                 <br><br>
                             </div>
@@ -103,7 +104,7 @@
                                         <span class="title">Date requested:&nbsp;</span>
                                         {{ req.request_date }}
                                     </div>
-                                    <a class="btn btn-success" href="{{ req.get_return_url }}">Retuen</a>                            
+                                    <a class="btn btn-success" href="{{ req.get_undo_url }}">Undo Return</a>
                                 </div>
                                 <br><br>
                             </div>

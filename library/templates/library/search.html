@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-sm-6" style="float:left">
                 <h3 style="text-align:left">{{ results|length }} book{{ results|pluralize }} found.</h3>
-                     <div class="row container-fluid text-left">
+                    <div class="row container-fluid text-left">
                         {% for book, count in results %} 
                             <div class="container-fluid {% cycle 'row1' 'row2' %}" style="text-align:left">
                                 <a href="{{ book.get_absolute_url }}">
@@ -20,7 +20,7 @@
                                     <div class="col-sm-3"> {{ book.author }}</div>
                                     <div class="col-sm-7">
                                         {{book.title}}
-                                        {% if book.issued %}<sup>[Issued Out]</sup><sub style="margin-left:-55px">{{book.name}}</sub>{% endif %}
+                                        {% if book.issued %}<sup>[Issued Out]</sup><sub style="margin-left:-55px">{{book.issued_name.student}}</sub>{% endif %}
                                     </div>
                                 </a>
                             </div>
@@ -30,7 +30,7 @@
             <div class="col-sm-6 col-xs-12" id="results">
                 <div class="container-fluid">
                     <h3 style="text-align:left" id="ebookscount">Searching ebooks...</h3>
-                     <div style="display:none" class="row text-left animate-bottom" id="ebooksdata">
+                    <div style="display:none" class="row text-left animate-bottom" id="ebooksdata">
                             
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-         <div class="row">
+        <div class="row">
             <div class="col-sm-2"><a href="{% url 'library:search' %}?q=Fiction">Fiction</a></div>
         </div>
     </div>
