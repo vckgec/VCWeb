@@ -1,0 +1,11 @@
+.ON,.True {
+    width: 20px;
+    height: 20px;
+    background: green;
+}
+
+.OFF,.False {
+    width: 20px;
+    height: 20px;
+    background: red;
+}
