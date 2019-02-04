@@ -1,14 +1,17 @@
 {% extends 'home/base.html' %}
-{% block title %} Gallery | VC {% endblock %}
+{% block title %} Index of {{ directory }} {% endblock %}
 {% block content %}
-{% load staticfiles %}
-{% load path_tags%}
+    {% load staticfiles %}
+    {% load path_tags%}
     <div class="container-fluid">
-        <h1>Gallery</h1>        
-            {% for result in results %}
-                <a style="width:120px;height:120px;margin-left:10px;margin-right:10px;margin-top:10px;margin-bottom:10px;float:left" href="{% static result|get_path:'gallery' %}">
-                    {{result}}
-                </a>            
+        <h1>Index of {{ directory }}</h1>
+        <ul>
+            {% if directory != "/" %}
+                <li><a href="../">../</a></li>
+            {% endif %}
+            {% for f in file_list %}
+                <li><a href="{{ f|urlencode }}">{{ f }}</a></li>
             {% endfor %}
+        </ul>
     </div>
 {% endblock %}
