@@ -10,7 +10,7 @@ $(document).ready(function () {
     }
     else
     {
-        $('#img1,#img2,#img3').height(screen.availHeight - $('nav').height() - $('footer').height() - 2 * (screen.height - screen.availHeight - 7) + "px");
+        $('#img1,#img2,#img3').height(screen.availHeight - $('nav').height() - $('footer').height() - 2*(screen.height - screen.availHeight-3) + "px");
         /*$('#img1,#img2,#img3').height("100%")*/
 
     }

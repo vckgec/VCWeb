@@ -1,8 +1,8 @@
 {% extends 'home/base.html' %}
-{% block title %} Index of {{ directory }} {% endblock %}
+{% block title %} Index of {{ src }} {% endblock %}
 {% block content %}
     {% load staticfiles %}
-    <video controls>
+    <!-- <video style="width: 100%;height: 100%;position: absolute" controls>
         <source src="{% url 'gallery:home' src %}" type="video/mp4">
-    </video>
+    </video> -->
 {% endblock %}
