@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load staticfiles %}
+        <!--Meta tags-->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--title-->
+        <title>VIDYASAGAR CHHATRABAS</title>
+
+        <!---Favicon--->
+        <link rel="shortcut icon" href="favicon/index.ico" type="image/x-icon"> 
+        <link rel="stylesheet" type="text/css" href="{% static 'home_new/css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'home_new/font-awesome/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home_new/css/owl/owl.carousel.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home_new/css/owl/owl.theme.default.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home_new/css/animate.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home_new/css/swiper.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'home_new/css/style.css' %}">
+    </head>
+    <body>
+        <!--preloader-->
+        <div id="preloader">
+            <div id="status">&nbsp;</div>
+        </div>
+        <!-- Header -->
+        <header>
+            <nav class="navbar navbar-fixed-top white-nav-top">
+                <div class="container-fluid">
+                    <div class="site-nav-wrapper">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#home" >
+                                <img src="{% static 'home/vc_logo.png' %}" alt="logo" height=40>
+                            </a>
+                        </div>
+                        <div class="container">
+                            <div class="collapse navbar-collapse">
+                                <ul class="nav navbar-nav pull-left">
+                                    <li><a href="#Home">Home</a></li>
+                                    <li><a href="#about">About</a></li>
+                                    <li><a href="#team">Team</a></li>
+                                    <li><a href="{% url 'library:home' %}">Library</a></li>
+                                    <li><a href="#contact">Contact</a></li>
+                                    {% comment %}<li><a href="#Galery">Gallery</a></li>{% endcomment %}
+                                </ul>
+                                <ul class="nav navbar-nav navbar-right" >
+                                    <li><a href="signup.html"><span class="glyphicon glyphicon-user" ></span> Sign Up</a></li>
+                                    <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                                    <li><a href=""><span class="glyphicon glyphicon-user">Committee</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Home -->
+        <section id="Home">
+            <!-- Background Video -->
+            <video id="home-bg-video" poster="{% static 'home_new/image/img.jpg' %}"  autoplay loop muted>
+                <source src="{% static 'home_new/image/vc.mp4' %}" type="video/mp4">
+                    <source src="{% static 'home_new/image/vc.webm' %}" type="video/webm">
+                        <source src="{% static 'home_new/image/vc.ogg' %}" type="video/ogg">
+            </video>
+            <!-- overlay -->
+            <div id="home-overlay"></div>
+            <!-- Home Content -->
+            <div id="home-content">
+                <div id="home-content-inner"class="text-center">
+                    <div id="home-heading">
+                        <h1 id="home-heading-1 style=" font-family:'Dancing Script'; "> vidyasagar chhatrabas</h1>
+                    </div>
+                    <div id="home-text">
+                        <p>Kalyani Government Engineering College</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- about section -->
+        <section id="about">
+            <!-- about-01 -->
+            <div id="about-01">
+                <div class="content-box-lg">
+                    <div class="container">
+                        <div class="row">
+                            <!-- about left side -->
+                            <div class="col-md-6">
+                                <div id="about-left">
+                                    <div class="vertical-heading">
+                                        <h4>Who We Are</h4>
+                                        <div id="storyof"><h3>A Story About</div>
+                                        <div id="vcians">
+                                            VC-ians
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- about right side -->
+                            <div class="col-md-6">
+                                <div id="about-right">
+                                    <p>
+                                        Established in 1997, Vidyasagar Chhatrabas is the only hostel of Kalyani Government Engineering College situated outside of the college campus, in the ambient surroundings of Kalyani Silpanchal area.It was founded as a B.Tech senior boys’ hostel for Kalyani Government Engineering College.
+                                    </p>
+                                    <p>
+
+                                        <br>
+                                        Hostel Superintendent: <em>Mr. Debashish Biswas</em>
+
+                                        <br>
+                                        Hostel Superintendent’s phone: <em>7003099341</em></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- about bottom -->
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="about-bottom">
+                                    <img src="{% static 'home_new/image/vc1.jpg' %}" alt="about ut" class="img-responsive">	
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="hall">
+
+                <h1 id='rendezvous'>
+                    <span>R</span>
+                    <span>E</span>
+                    <span>N</span>
+                    <span>D</span>
+                    <span>E</span>
+                    <span>Z</span>
+                    <span>V</span>
+                    <span>O</span>
+                    <span>U</span>
+                    <span>S</span>
+                </h1>	
+                <video src="{% static 'home_new/image/smoke.mp4' %}" autoplay muted loop></video>
+            </div>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" >
+                        <div class="imgBx">
+                            <img src="{% static 'home_new/image/1.jpg' %}">
+                        </div>
+                        <div class="details">
+                            <h3></h3>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" >
+                        <div class="imgBx">
+                            <img src="{% static 'home_new/image/4.jpg' %}">
+                        </div>
+                        <div class="details">
+                            <h3></h3>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" >
+                        <div class="imgBx">
+                            <img src="{% static 'home_new/image/5.jpg' %}">
+                        </div>
+                        <div class="details">
+                            <h3></h3>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" >
+                        <div class="imgBx">
+                            <img src="{% static 'home_new/image/6.jpg' %}">
+                        </div>
+                        <div class="details">
+                            <h3></h3>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" >
+                        <div class="imgBx">
+                            <img src="{% static 'home_new/image/7.jpg' %}">
+                        </div>
+                        <div class="details">
+                            <h3></h3>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" >
+                        <div class="imgBx">
+                            <img src="{% static 'home_new/image/9.jpg' %}">
+                        </div>
+                        <div class="details">
+                            <h3></h3>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" >
+                        <div class="imgBx">
+                            <img src="{% static 'home_new/image/10.jpg' %}">
+                        </div>
+                        <div class="details">
+                            <h3></h3>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" >
+                        <div class="imgBx">
+                            <img src="{% static 'home_new/image/11.jpg' %}">
+                        </div>
+                        <div class="details">
+                            <h3></h3>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+
+        <!-- statement -->
+        <section id="statement">
+            <div class="content-box-lg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="vc-statement" class="text-center">
+                                <h3><i class="fa fa-quote-left"></i> Hostel will never give you friends. It will give you family.<i class="fa fa-quote-right"></i></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- contact -->
+        <section id="contact">
+            <div class="content-box-md">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- left side -->
+                            <div id="contact-left">
+                                <div class="vertical-heading">
+                                    <h2 style="color: #95a518;">Contact Us</h2>
+                                </div>
+                                <p></p>
+                                <div id="offices">
+                                    <div class="row">
+                                        <div class="col-md-offset-6 col-md-6">
+                                            <h4>Kalyani</h4>
+                                            <ul class="office-details">
+                                                <li><i class="fa fa-map-marker"></i>VIDYASAGAR CHHATRABAS<br>Kalyani Silpanchal<br>PIN: 741235</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="col-md-offset-6 social-list">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google"></i></a></li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- right side -->
+                            <div id="contact-right">
+                                <form>
+                                    <h4>Send Message</h4>
+                                    <p>Get in touch with us.</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" id="email" placeholder="Email Address">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="Phone No" placeholder="Phone No">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="Subject" class="form-control" id="Subject" placeholder="Subject Here">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="Message" placeholder="Send Your Message"></textarea>
+                                    </div>
+                                    <div id="submit-btn">
+                                        <a class="btn btn-warning" href="#" title="text" role="button">SUBMIT</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- google maps -->
+        <section id="google-map">
+            <div class="container-fluid">
+                <div class="row">
+                    <div id="map">
+                        <div class="mapouter">
+                            <div class="gmap_canvas">
+                                <iframe width="100%" height="600" id="gmap_canvas" src="https://maps.google.com/maps?q=vidyasagar%20chhatrabas&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- footer section -->
+        <footer class="text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>&copy; 2019 All Right Reserved By <span> Vidyasagar Chhatrabas</span></p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--jquery-->
+        <script src="{% static 'home_new/js/jquery.js' %}"></script>
+        <script src="{% static 'home_new/js/bootstrap.js' %}"></script>
+        <script src="{% static 'home_new/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'home_new/js/jquery.waypoints.min.js' %}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6OouytAiXKRkip-65CqsN9BE4v5K5_rY">
+        </script>
+
+            <script type="text/javascript" src="{% static 'home_new/js/swiper.min.js' %}"></script>
+
+        <script>
+            var swiper = new Swiper('.swiper-container', {
+                effect: 'coverflow',
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                coverflowEffect: {
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows : true,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+            });
+        </script>
+        <!-- javascript -->
+        <script src="{% static 'home_new/js/script.js' %}"></script>
+    </body>
+</html>
+
